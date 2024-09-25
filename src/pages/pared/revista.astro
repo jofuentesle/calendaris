@@ -1,0 +1,36 @@
+---
+import Layout from '~/layouts/LandingLayout2.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+
+import Img1 from '~/assets/images/pared/ParedRevista.jpg';
+import Img2 from '~/assets/images/pared/ParedRevista1.jpg';
+import Img3 from '~/assets/images/pared/ParedRevista2.jpg';
+import Img4 from '~/assets/images/pared/ParedRevista3.jpg';
+
+const galleryImages = [
+  { src: Img1.src, alt: 'Descripción de la imagen 1' },
+  { src: Img2.src, alt: 'Descripción de la imagen 2' },
+  { src: Img3.src, alt: 'Descripción de la imagen 3' },
+  { src: Img4.src, alt: 'Descripción de la imagen 4' },
+];
+
+const metadata = {
+  title: 'Calendarios revista pared',
+};
+---
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero2
+    tagline="Calendario revista"
+    title="Calendario tipo revista para pared del 2025."
+    subtitle="Craft a tantalizing Coming Soon or Pre-Launch Landing Page that leaves visitors eagerly awaiting your launch."
+    actions={[
+      { variant: 'primary', text: 'Pide tu oferta!', href: '/formularios/pared', icon: 'tabler:square-rounded-arrow-right' },
+      { text: 'Saber más', href: '#' },
+    ]}
+    galleryImages={galleryImages}
+    
+  />
+ 
+</Layout>

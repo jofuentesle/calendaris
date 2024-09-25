@@ -1,0 +1,39 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/icons/reprodisseny.png";
+import logoB from "~/assets/icons/ReprodissenyLogoB.png";
+---
+
+<span
+  class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white"
+>
+  <Image
+    loading="lazy"
+    class="logo-responsive logo block dark:hidden" 
+    src={logo}
+    alt="Una descripción de mi imagen."
+    />
+
+    <Image
+    loading="lazy"
+    class="logo-responsive logo hidden dark:block" 
+    src={logoB}
+    alt="Una descripción de mi imagen."
+    />
+</span>
+
+<!-- Estilos encapsulados para el componente Header.astro -->
+
+<style>
+  .logo-responsive {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    .logo-responsive {
+      max-width: 100px; /* Reducción del tamaño en pantallas pequeñas */
+    }
+  }
+</style>

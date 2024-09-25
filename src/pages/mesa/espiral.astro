@@ -1,0 +1,39 @@
+---
+import Layout from '~/layouts/LandingLayout2.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import Img1 from '~/assets/images/mesa/SobremesaEspiral.jpg';
+import Img2 from '~/assets/images/mesa/SobremesaEspiral1.jpg';
+import Img3 from '~/assets/images/mesa/SobremesaEspiral2.jpg';
+import Img4 from '~/assets/images/mesa/SobremesaEspiral3.jpg';
+
+
+const galleryImages = [
+  { src: Img1.src, alt: 'Descripción de la imagen 1' },
+  { src: Img2.src, alt: 'Descripción de la imagen 2' },
+  { src: Img3.src, alt: 'Descripción de la imagen 3' },
+  { src: Img4.src, alt: 'Descripción de la imagen 4' },
+];
+
+const metadata = {
+  title: 'Calendarios para mesa espiral',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero2
+    tagline="Calendario para mesa"
+    title="Diseña y Personaliza tus Calendarios de Sobremesa 2025."
+    subtitle="Calendarios de mesa con espiral personalizados: elegancia y funcionalidad para tu escritorio, impresos en alta calidad. ¡Haz tu consulta!"
+    actions={[
+     { variant: 'primary', text: 'Pide tu oferta!', href: '/formularios/mesa', icon: 'tabler:square-rounded-arrow-right' },
+     { text: 'Saber más', href: '#priceCalEspiral' },
+    ]}
+    galleryImages={galleryImages}
+    
+  />
+  
+  
+    
+</Layout>
