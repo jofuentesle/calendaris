@@ -181,11 +181,12 @@ export interface Testimonial {
 }
 
 export interface Input {
-  type: HTMLInputTypeAttribute;
+  type: HTMLInputTypeAttribute | text | select | options;
   name: string;
   label?: string;
   autocomplete?: string;
   placeholder?: string;
+  options?:{value: string, label:string}[]
 }
 
 export interface Textarea {

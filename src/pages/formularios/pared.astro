@@ -1,60 +1,24 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
-import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
-import sendGrid from '@sendgrid/mail';
-import 'dotenv/config';
 
-sendGrid.setApiKey( import.meta.env.SENDGRID_API_KEY );
-
-
-if (Astro.request.method === 'POST') {
-  try{
-    // Getting posted data from our contact form
-    const data = await Astro.request.formData();
-    const name = data.get('name');
-    const email = data.get('email');
-    const message = data.get('message');
-
-    console.log(message);
-    // TODO: Do not forget to do validation and error handling over received data from your contact form.
-
-    // Sending email
-    const msg = {
-      to: email, // Change to your recipient
-      from: 'noreply@reprodisseny.com', // Change to your verified sender
-      replyTo: {email:email, name:name},
-      subject: `Contact form submission from ${name}`,
-      text: message,
-    }
-    await sendGrid.send(msg).then(() => {
-      console.log('Email sent')
-    }).catch((error) => {
-      console.error(error)
-    });
-
-  } catch (error) {
-    console.error(error);
-  }
-}
-
+import PriceQuoteForm from '~/components/ui/PriceQuoteForm.astro';
 
 const metadata = {
-  title: 'Contacta con nosotros para calendarios de pared',
+  title: 'Contacta con nosotros para calendarios de mesa',
 };
+
 ---
 
 <Layout metadata={metadata}>
   <!-- HeroText Widget ******************* -->
 
   <HeroText 
-  tagline="contacto" title="Solicita información calidendarios para pared" />
+  tagline="calendarios de pared" title="Solicita información sobre los calendarios de pared" />
+  
 
-  <ContactUs
-    id="form"
-    title="Envíanos tus consultas sobre calendarios para pared"
-    subtitle="Estamos aquí para ayudarte a crear el calendario perfecto para pared, desde el diseño hasta la impresión, con opciones personalizadas y soporte en cada paso."
+  <PriceQuoteForm
     inputs={[
       {
         type: 'text',
@@ -63,13 +27,13 @@ const metadata = {
       },
       {
         type: 'text',
-        name: 'empresa',
-        label: 'Empresa',
+        name: 'phone',
+        label: 'Teléfono',
       },
       {
         type: 'text',
-        name: 'telefono',
-        label: 'Teléfono',
+        name: 'business',
+        label: 'Empresa',
       },
       {
         type: 'email',
@@ -77,33 +41,46 @@ const metadata = {
         label: 'Correo electrónico',
       },
       {
-        type: 'selects',
-        name: 'selects',
-        label: 'Seleciona modelo',
+        type: 'select',
+        name: 'model',
+        label: 'Selecciona model',
+        options: [
+          { value: 'espiral', label: 'Calendario pared espiral' },
+          { value: 'revista', label: 'Calendario pared revista' }
+        ],
       },
       {
         type: 'select',
-        name: 'Acabado',
-        label: 'Brillante o mate del calendario',
+        name: 'finish',
+        label: 'Selecciona el acabado',
+        options: [
+          { value: 'brillante', label: 'Brillante' },
+          { value: 'mate', label: 'Mate' },
+          { value: 'Personalizado', label: 'Personalizado' },
+        ],
       },
       {
         type: 'select',
-        name: 'Medida',
-        label: 'Medida del calendario',
-      },
-      {
-        type: 'select',
-        name: 'Cantidad',
-        label: 'Selecciona cantidad',
+        name: 'quantity',
+        label: 'Selectiona la medida',
+        options: [
+          { value: '50', label: '50' },
+          { value: '100', label: '100' },
+          { value: '250', label: '250' },
+          { value: '500', label: '500' },
+          { value: '1000', label: '1000' },
+          { value: '2000', label: '2000' },
+          { value: '3000', label: '3000' },
+        ],
       },
     ]}
-  
     disclaimer={{
       label:
         'He leído y acepto la Política de Privacidad.',
     }}
     description="Nuestro equipo contactará lo antes posible."
   />
+
 
   <!-- Features2 Widget ************** -->
 
@@ -142,3 +119,4 @@ const metadata = {
     ]}
   />
 </Layout>
+

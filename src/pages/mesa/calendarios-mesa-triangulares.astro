@@ -1,0 +1,126 @@
+---
+import Layout from '~/layouts/LandingLayout2.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import Img1 from '~/assets/images/mesa/SobremesaTriangular.jpg';
+import Img2 from '~/assets/images/mesa/SobremesaTriangular1.jpg';
+import Img3 from '~/assets/images/mesa/SobremesaTriangular2.jpg';
+import Img4 from '~/assets/images/mesa/SobremesaTriangular3.jpg';
+
+const galleryImages = [
+  { src: Img1.src, alt: 'Imagen de dos calendarios de mesa triangulares diseñados e impresos en Barcelona por Repro Disseny'},
+  { src: Img2.src, alt: 'Imagen de calendarios de sobremesa personalizados por Repro Disseny en Barcelona' },
+  { src: Img3.src, alt: 'Imagen de una impresión de calendarios triangulares impresos por Repro Disseny en Barcelona' },
+  { src: Img4.src, alt: 'Descripción de la imagen 4' },
+];
+
+const metadata = {
+  title: "Calendarios de Mesa Triangulares Personalizados | Tu Empresa",
+  description: "Descubre nuestros calendarios de mesa triangulares personalizados, ideales para oficinas y empresas. Promociona tu marca todo el año con calendarios publicitarios económicos y personalizados.",
+  keywords: [
+    "calendarios de mesa triangulares", 
+    "calendarios de sobremesa personalizados", 
+    "calendario publicitario", 
+    "calendarios para empresas", 
+    "calendarios económicos", 
+    "impresión de calendarios triangulares"
+  ],
+  canonical: "https://calendarios.reprodisseny.com/calendarios-mesa-triangulares",
+  jsonLd: {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Calendarios de Mesa Triangulares Personalizados",
+    "description": "Personaliza calendarios de mesa triangulares para empresas y oficinas. Perfectos para promocionar tu marca durante todo el año.",
+    "image": "https://tusitio.com/images/calendario-mesa-triangular.jpg",
+    "brand": {
+      "@type": "Brand",
+      "name": "Repro Disseny"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://tusitio.com/calendarios-mesa-triangulares",
+      "priceCurrency": "EUR",
+      "price": "5.99",
+      "availability": "https://schema.org/InStock"
+    },
+    "keywords": "calendarios de mesa triangulares, calendarios de sobremesa personalizados, calendario publicitario, calendarios para empresas, calendarios económicos, impresión de calendarios triangulares"
+  }
+};
+
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero2
+    tagline="Calendario triangular de mesa"
+    title="Calendarios de Mesa Triangulares Personalizados."
+    subtitle="Descubre nuestros calendarios de mesa triangulares personalizados, una opción económica y publicitaria que maximiza la visibilidad en cualquier escritorio."
+    actions={[
+     { variant: 'primary', text: 'Pide tu oferta!', href: '/formularios/mesa', icon: 'tabler:square-rounded-arrow-right' },
+     { text: 'Saber más', href: '#features' },
+    ]}
+       galleryImages={galleryImages}
+       
+  />
+  <Features 
+  id="features"
+  tagline="Caracteristicas principales"
+  title="6 Beneficios Clave de Nuestros Calendarios de Mesa Triangulares" 
+  subtitle="Conoce las características de nuestros calendarios de mesa triangulares personalizados, que ofrecen visibilidad, funcionalidad y un diseño económico perfecto para tu negocio."
+  items={[
+    {
+      title: 'Visibilidad diaria',
+      description:
+        'Los calendarios de mesa triangulares personalizados ofrecen exposición constante, mostrando tu marca todos los días del año.',
+      icon: 'tabler:calendar-check',
+    },
+    {
+      title: 'Ahorro de espacio​',
+      description:
+        'El diseño compacto de estos calendarios triangulares de sobremesa es ideal para escritorios pequeños.',
+      icon: 'tabler:desk',
+    },
+    {
+      title: 'Personalización completa',
+      description:
+        'Los calendarios publicitarios personalizados permiten añadir tu logotipo y colores corporativos.',
+      icon: 'tabler:calendar-heart',
+    },
+    {
+      title: 'Costo efectivo',
+      description:
+        'Los calendarios de mesa personalizados son una opción económica para publicidad.',
+      icon: 'tabler:calendar-dollar',
+    },
+    {
+      title: 'Prácticos y funcionales',
+      description:
+        "Estos calendarios de mesa facilitan la consulta rápida de fechas y eventos.",
+      icon: 'tabler:calendar-smile',
+    },
+    {
+      title: 'Durabilidad',
+      description:
+        'Fabricados con materiales resistentes, los calendarios triangulares de sobremesa aseguran visibilidad todo el año.',
+      icon: 'tabler:hammer',
+    },
+  ]}
+/>
+<!-- CallToAction (2/3 width on large screens) -->
+   
+    <CallToAction
+    title="Solicita tu presupuesto"
+    subtitle="Nuestros comerciales contactaran con la mejor oferta"
+    actions={[
+        {
+        variant: 'primary',
+        text: 'Solicita oferta',
+        href: '/formularios/mesa',
+        icon: 'tabler:mail',
+        },
+      ]}
+/>
+  </Layout>

@@ -2,58 +2,39 @@
 import type { Form as Props } from '~/types';
 import Button from '~/components/ui/Button.astro';
 
-const { inputs, selects, textarea, disclaimer, button = 'Contacta', description = '' } = Astro.props;
+const { 
+        inputs = [], 
+        textarea, 
+        disclaimer, 
+        button = 'Contact us', 
+        description = '' 
+      } = Astro.props;
 ---
 
-<form>
-  {
-    inputs &&
-      inputs.map(
-        ({ type = 'text', name,  label = '', autocomplete = 'on', placeholder = '' }) =>
-          name && (
-            <div class="mb-6">
-              {label && (
-                <label for={name} class="block text-sm font-medium">
-                  {label}
-                </label>
-              )}
-              <input
-                type={type}
-                name={name}
-                id={name}
-                autocomplete={autocomplete}
-                placeholder={placeholder}
-                class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
-              />
-            </div>
-          )
-      )}
-      {
-      selects &&
-      selects.map(
-        ({ type = 'select', name,  label = 'asfasf', autocomplete = 'on', placeholder = '' }) =>
-          name && (
-            <div class="mb-6">
-              {label && (
-                <label for={name} class="block text-sm font-medium">
-                  {label}
-                </label>
-              )}
-              <input
-                type={type}
-                name={name}
-                id={name}
-                autocomplete={autocomplete}
-                placeholder={placeholder}
-                class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
-              />
-              <select  class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>   
-            </div>
+<form method="POST">
+  {inputs && inputs.map(({ type = 'text', name, label = '', options = [] }) => (
+    <div class="mb-6">
+      <label for={name} class="block text-sm font-medium">{label}</label>
+      {type === 'select' ? (
+        <select name={name} id={name} required class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200">
+          <option value="" disabled selected>Selecciona una opción</option>
+          {options.map(option => (
+            <option value={option.value}>{option.label}</option>
           ))}
+        </select>
+      ) : (
+        <input
+          type={type}
+          name={name}
+          id={name}
+          required
+          class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200"
+          placeholder={`Ingrese su ${label.toLowerCase()}`}
+        />
+      )}
+    </div>
+  ))}
+ 
   {
     textarea && (
       <div>

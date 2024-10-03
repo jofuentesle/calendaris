@@ -1,58 +1,24 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
-import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
-import sendGrid from '@sendgrid/mail';
-import 'dotenv/config';
 
-sendGrid.setApiKey( import.meta.env.SENDGRID_API_KEY );
-
-
-if (Astro.request.method === 'POST') {
-  try{
-    // Getting posted data from our contact form
-    const data = await Astro.request.formData();
-    const name = data.get('name');
-    const email = data.get('email');
-    const message = data.get('message');
-
-    // Sending email
-    const msg = {
-      to: email, // Change to your recipient
-      from: 'noreply@reprodisseny.com', // Change to your verified sender
-      replyTo: {email:email, name:name},
-      subject: `Contact form submission from ${name}`,
-      text: message,
-    }
-    await sendGrid.send(msg).then(() => {
-      console.log('Email sent')
-    }).catch((error) => {
-      console.error(error)
-    });
-
-  } catch (error) {
-    console.error(error);
-  }
-}
-
+import PriceQuoteForm from '~/components/ui/PriceQuoteForm.astro';
 
 const metadata = {
   title: 'Contacta con nosotros para calendarios de mesa',
 };
+
 ---
 
 <Layout metadata={metadata}>
   <!-- HeroText Widget ******************* -->
 
   <HeroText 
-  tagline="contacto" title="Solicita información calidendarios de sobremesa" />
+  tagline="calendarios de mesa" title="Solicita información sobre los calidendarios de sobremesa" />
+  
 
-  <ContactUs
-    id="form"
-    title="Envíanos tus consultas sobre calendarios para mesa personalizados"
-    subtitle="Estamos aquí para ayudarte a crear el calendario perfecto para pared, desde el diseño hasta la impresión, con opciones personalizadas y soporte en cada paso."
-    icons=''
+  <PriceQuoteForm
     inputs={[
       {
         type: 'text',
@@ -61,13 +27,13 @@ const metadata = {
       },
       {
         type: 'text',
-        name: 'empresa',
-        label: 'Empresa',
+        name: 'phone',
+        label: 'Teléfono',
       },
       {
         type: 'text',
-        name: 'telefono',
-        label: 'Teléfono',
+        name: 'business',
+        label: 'Empresa',
       },
       {
         type: 'email',
@@ -76,26 +42,48 @@ const metadata = {
       },
       {
         type: 'select',
-        name: 'selects',
-        label: 'Seleciona modelo',
-      },
-      {
-        type: 'options',
-        name: 'Acabado',
-        label: 'Brillante o mate del calendario',
-      },
-      {
-        type: 'select',
-        name: 'Medida',
-        label: 'Medida del calendario',
+        name: 'model',
+        label: 'Selecciona model',
+        options: [
+          { value: 'espiral', label: 'Calendario con espiral' },
+          { value: 'triangular', label: 'Calendario triangualar' }
+        ],
       },
       {
         type: 'select',
-        name: 'Cantidad',
-        label: 'Selecciona cantidad',
+        name: 'finish',
+        label: 'Selecciona el acabado',
+        options: [
+          { value: 'brillante', label: 'Brillante' },
+          { value: 'mate', label: 'Mate' },
+          { value: 'Personalizado', label: 'Personalizado' },
+        ],
+      },
+      {
+        type: 'select',
+        name: 'medida',
+        label: 'Selectiona la medida',
+        options: [
+          { value: '21x10', label: '21x10 cm' },
+          { value: '15x15', label: '15x15 cm' },
+          { value: '21x15', label: '21x15 cm' },
+        ],
+      },
+      {
+        type: 'select',
+        name: 'quantity',
+        label: 'Selectiona la medida',
+        options: [
+          { value: '50', label: '50' },
+          { value: '100', label: '100' },
+          { value: '250', label: '250' },
+          { value: '500', label: '500' },
+          { value: '1000', label: '1000' },
+          { value: '2000', label: '2000' },
+          { value: '3000', label: '3000' },
+        ],
       },
     ]}
-  
     disclaimer={{
       label:
         'He leído y acepto la Política de Privacidad.',
@@ -139,4 +127,5 @@ const metadata = {
       },
     ]}
   />
+
 </Layout>

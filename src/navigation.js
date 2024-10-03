@@ -33,7 +33,7 @@ export const headerData = {
         },
         {
           text: 'Triangular',
-          href: getPermalink('/mesa/triangular'),
+          href: getPermalink('/mesa/calendarios-mesa-triangulares'),
         }
       ]
     },
