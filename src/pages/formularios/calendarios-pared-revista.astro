@@ -1,56 +1,22 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
-import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
-import sendGrid from '@sendgrid/mail';
-import 'dotenv/config';
-
-sendGrid.setApiKey( import.meta.env.SENDGRID_API_KEY );
-
-
-if (Astro.request.method === 'POST') {
-  try{
-    // Getting posted data from our contact form
-    const data = await Astro.request.formData();
-    const name = data.get('name');
-    const email = data.get('email');
-    const message = data.get('message');
-
-    console.log(message);
-    // TODO: Do not forget to do validation and error handling over received data from your contact form.
-
-    // Sending email
-    const msg = {
-      to: email, // Change to your recipient
-      from: 'noreply@reprodisseny.com', // Change to your verified sender
-      replyTo: {email:email, name:name},
-      subject: `Contact form submission from ${name}`,
-      text: message,
-    }
-    await sendGrid.send(msg).then(() => {
-      console.log('Email sent')
-    }).catch((error) => {
-      console.error(error)
-    });
-
-  } catch (error) {
-    console.error(error);
-  }
-}
-
+import ContactUs from '~/components/widgets/Contact.astro';
 
 
 const metadata = {
-  title: 'Contacta con nosotros',
+  title: 'Contacta con nosotros para calendarios de mesa',
 };
+
 ---
 
 <Layout metadata={metadata}>
   <!-- HeroText Widget ******************* -->
 
-  <HeroText tagline="contacto" title="Hola! ¿Necesitas ayuda?" />
-
+  <HeroText 
+  tagline="calendarios para pared" title="Solicita información sobre los calendarios de pared revista" />
+  
   <ContactUs
     id="form"
     title="Envíanos tus consultas sobre calendarios"
@@ -62,15 +28,56 @@ const metadata = {
         label: 'Nombre',
       },
       {
+        type: 'text',
+        name: 'empresa',
+        label: 'Empresa',
+      },
+      {
+        type: 'text',
+        name: 'telefono',
+        label: 'Número de teléfono',
+      },
+      {
         type: 'email',
         name: 'email',
-        label: 'Correo electrónicssss',
+        label: 'Correo electrónico',
       },
+      {
+        type: 'select',
+        name: 'medida',
+        label: 'Medida calendario',
+        options: [
+          { value: '21x10', label: 'Rectangular 21 x 10 cm' },
+          { value: '15x15', label: 'Cuadrado 15 x 15 cm' },
+          { value: 'A5', label:'Din A5 21 x 15 cm' }
+        ],
+      },
+    {
+      type: 'select',
+        name: 'acabdo',
+        label: 'Acabado calendario',
+        options: [
+          { value: 'brillo', label: 'Acabado brillante' },
+          { value: 'mate', label: 'Acabado mate' }
+        ],
+    },
+    {
+        type: 'select',
+        name: 'quantity',
+        label: 'Selectiona la medida',
+        options: [
+          { value: '50', label: '50' },
+          { value: '100', label: '100' },
+          { value: '250', label: '250' },
+          { value: '500', label: '500' },
+          { value: '1000', label: '1000' },
+          { value: '2000', label: '2000' },
+          { value: '3000', label: '3000' },
+        ],
+      },   
+      
     ]}
-    textarea={{
-      label: 'Mensaje',
-      name: 'msg'
-    }}
+   
     disclaimer={{
       label:
         'He leído y acepto la Política de Privacidad.',
@@ -79,7 +86,6 @@ const metadata = {
   />
 
   <!-- Features2 Widget ************** -->
-
   <Features2
     title="Estamos aquí para ayuderte!"
     items={[
@@ -114,4 +120,5 @@ const metadata = {
       },
     ]}
   />
+
 </Layout>

@@ -2,8 +2,8 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+import ContactUs from '~/components/widgets/Contact.astro';
 
-import PriceQuoteForm from '~/components/ui/PriceQuoteForm.astro';
 
 const metadata = {
   title: 'Contacta con nosotros para calendarios de mesa',
@@ -15,10 +15,12 @@ const metadata = {
   <!-- HeroText Widget ******************* -->
 
   <HeroText 
-  tagline="calendarios de mesa" title="Solicita información sobre los calidendarios de sobremesa" />
+  tagline="calendarios de pared" title="Solicita información sobre los calendarios de paared con espiral" />
   
-
-  <PriceQuoteForm
+  <ContactUs
+    id="form"
+    title="Envíanos tus consultas sobre calendarios"
+    subtitle="Estamos aquí para ayudarte a crear el calendario perfecto, desde el diseño hasta la impresión, con opciones personalizadas y soporte en cada paso."
     inputs={[
       {
         type: 'text',
@@ -27,13 +29,13 @@ const metadata = {
       },
       {
         type: 'text',
-        name: 'phone',
-        label: 'Teléfono',
+        name: 'empresa',
+        label: 'Empresa',
       },
       {
         type: 'text',
-        name: 'business',
-        label: 'Empresa',
+        name: 'telefono',
+        label: 'Número de teléfono',
       },
       {
         type: 'email',
@@ -42,34 +44,24 @@ const metadata = {
       },
       {
         type: 'select',
-        name: 'model',
-        label: 'Selecciona model',
-        options: [
-          { value: 'espiral', label: 'Calendario con espiral' },
-          { value: 'triangular', label: 'Calendario triangualar' }
-        ],
-      },
-      {
-        type: 'select',
-        name: 'finish',
-        label: 'Selecciona el acabado',
-        options: [
-          { value: 'brillante', label: 'Brillante' },
-          { value: 'mate', label: 'Mate' },
-          { value: 'Personalizado', label: 'Personalizado' },
-        ],
-      },
-      {
-        type: 'select',
         name: 'medida',
-        label: 'Selectiona la medida',
+        label: 'Medida calendario',
         options: [
-          { value: '21x10', label: '21x10 cm' },
-          { value: '15x15', label: '15x15 cm' },
-          { value: '21x15', label: '21x15 cm' },
+          { value: '21x10', label: 'Rectangular 21 x 10 cm' },
+          { value: '15x15', label: 'Cuadrado 15 x 15 cm' },
+          { value: 'A5', label:'Din A5 21 x 15 cm' }
         ],
       },
-      {
+    {
+      type: 'select',
+        name: 'acabdo',
+        label: 'Acabado calendario',
+        options: [
+          { value: 'brillo', label: 'Acabado brillante' },
+          { value: 'mate', label: 'Acabado mate' }
+        ],
+    },
+    {
         type: 'select',
         name: 'quantity',
         label: 'Selectiona la medida',
@@ -82,8 +74,10 @@ const metadata = {
           { value: '2000', label: '2000' },
           { value: '3000', label: '3000' },
         ],
-      },
+      },   
+      
     ]}
+   
     disclaimer={{
       label:
         'He leído y acepto la Política de Privacidad.',
@@ -92,7 +86,6 @@ const metadata = {
   />
 
   <!-- Features2 Widget ************** -->
-
   <Features2
     title="Estamos aquí para ayuderte!"
     items={[

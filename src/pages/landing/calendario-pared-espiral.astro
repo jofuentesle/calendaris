@@ -1,0 +1,127 @@
+---
+import Layout from '~/layouts/LandingLayout2.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+//Importamos images para las rutas
+import Img1 from '~/assets/images/pared/ParedEspiral.jpg';
+import Img2 from '~/assets/images/pared/ParedEspiral1.jpg';
+import Img3 from '~/assets/images/pared/ParedEspiral2.jpg';
+import Img4 from '~/assets/images/pared/ParedEspiral3.jpg';
+
+const galleryImages = [
+  { src: Img1.src, alt: 'Descripción de la imagen 1' },
+  { src: Img2.src, alt: 'Descripción de la imagen 2' },
+  { src: Img3.src, alt: 'Descripción de la imagen 3' },
+  { src: Img4.src, alt: 'Descripción de la imagen 4' },
+];
+
+const metadata = {
+  title: "Calendarios de Pared con Espiral: Herramienta Visual y Práctica para la Promoción Empresarial",
+  description: "Los calendarios de pared con espiral personalizados son una herramienta eficaz para promocionar tu empresa durante todo el año.",
+  keywords: [
+    "Calendarios de pared con espiral personalizados", 
+    "Impresión de calendarios con espiral para pared", 
+    "Calendarios publicitarios de pared", 
+    "Calendarios de pared promocionales", 
+    "Diseño de calendarios de pared con espiral",
+    "Calendarios anuales para pared" ,
+    "Calendarios de pared para empresas"
+  ],
+  canonical: "https://calendarios.reprodisseny.com/calendarios-mesa-triangulares",
+  jsonLd: {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Calendarios de Mesa con Espiral Personalizados ",
+    "description": "Personaliza calendarios de mesa triangulares para empresas y oficinas. Perfectos para promocionar tu marca durante todo el año.",
+    "image": `${Img1.src}`,
+    "brand": {
+      "@type": "Brand",
+      "name": "Repro Disseny" 
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://tusitio.com/calendarios-mesa-triangulares",
+      "priceCurrency": "EUR",
+      "price": "5.99",
+      "availability": "https://schema.org/InStock"
+    },
+    "keywords": "calendarios de mesa triangulares, calendarios de sobremesa personalizados, calendario publicitario, calendarios para empresas, calendarios económicos, impresión de calendarios triangulares"
+  }
+};
+---
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero2
+    tagline="Calendario de pared con espital"
+    title="Promoción empresarial efectiva y visual que mantiene tu marca presente todo el año."
+    subtitle="Los calendarios de pared con espiral son una herramienta publicitaria clave para tu empresa, ofreciendo visibilidad continua a lo largo del año."
+    actions={[
+      { variant: 'primary', text: 'Pide tu oferta!', href: '/formularios/pared', icon: 'tabler:square-rounded-arrow-right' },
+      { text: 'Saber más', href: '#' },
+    ]}
+    galleryImages={galleryImages}
+    
+  />
+
+  <Features 
+    id="features"
+    tagline="Caracteristicas principales"
+    title="Calendarios para mesa con espiral" 
+    subtitle="Nuestros calendarios de mesa personalizados con espiral ofrecen alta calidad de impresión, visibilidad todo el año y precios competitivos en Barcelona. Ideal para promocionar tu marca con diseños únicos y duraderos."
+    items={[
+      {
+        title: 'Diseño a medida',
+        description:
+          'Personaliza tus calendarios de mesa con espiral para destacar la marca de tu empresa en la oficina.',
+        icon: 'tabler:calendar',
+      },
+      {
+        title: 'Calidad superior de impresión',
+        description:
+          'Garantizamos una impresión nítida en cuatricromía para que tus calendarios luzcan profesionales.',
+        icon: 'tabler:moneybag',
+      },
+      {
+        title: 'Formato ideal',
+        description:
+          ' Nuestros calendarios están diseñados para encajar perfectamente en cualquier escritorio, disponibles en diversos tamaños.',
+        icon: 'tabler:heart-handshake',
+      },
+      {
+        title: 'Durabilidad y practicidad',
+        description:
+          'El espiral garantiza que el calendario sea resistente y fácil de usar durante todo el año.',
+        icon: 'tabler:calendar-event',
+      },
+      {
+        title: 'Perfecto para regalos corporativos',
+        description:
+          " Ideal para sorprender a tus clientes con un detalle útil y publicitario.",
+        icon: 'tabler:arrows-right-left',
+      },
+      {
+        title: 'Entrega rápida en Barcelona',
+        description:
+          'Desde la solicitud de presupuesto hasta la entrega, ofrecemos tiempos ágiles de producción y envío.',
+        icon: 'tabler:world',
+      },
+    ]}
+  />
+       <!-- CallToAction (2/3 width on large screens) -->
+          <CallToAction
+            title="Solicita tu presupuesto"
+            subtitle="Nuestros comerciales contactaran con la mejor oferta"
+            actions={[
+                {
+                variant: 'primary',
+                text: 'Solicita oferta',
+                href: '/formularios/mesa',
+                icon: 'tabler:mail',
+                },
+              ]}
+            />
+ 
+</Layout>

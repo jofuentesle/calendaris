@@ -24,12 +24,33 @@ export const headerData = {
       ],
     },*/
     {
+    text: 'Selecciona tu calendario',
+      links: [
+        {
+          text: 'Calendario para pared con espiral',
+          href: getPermalink('/landing/calendario-pared-espiral'),
+        },
+        {
+          text: 'Calendario para pared tipo revista',
+          href: getPermalink('/landing/calendario-pared-revista'),
+        },
+        {
+          text: 'Calendario para mesa triangular',
+          href: getPermalink('/landing/calendarios-mesa-triangulares'),
+        },
+        {
+          text: 'Calendario para mesa con espiral',
+          href: getPermalink('/landing/calendarios-mesa-espiral'),
+        },
+      ],
+    },
+    /*{
       text: 'Mesa',
       href: "#calTable",
       links: [
         {
           text: 'Espiral',
-          href: getPermalink('/mesa/espiral'),
+          href: getPermalink('/mesa/calendarios-mesa-espiral'),
         },
         {
           text: 'Triangular',
@@ -50,15 +71,8 @@ export const headerData = {
           href:  getPermalink('/pared/revista'),
         }
       ]
-    },
-    {
-      text: 'Nosotros',
-      href: 'https://reprodisseny.com/page/sobre-nosotros'
-    },
-    {
-      text: 'Contacto',
-      href: 'contacto  '
-    },
+    },*/
+
   ]
 };
 

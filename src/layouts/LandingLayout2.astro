@@ -22,7 +22,8 @@ const { metadata } = Astro.props;
           links={headerData?.links[0] ? [headerData.links[0]] : undefined}
           actions={[
             {
-              text: 'Aprovecha el descuento',
+              class: 'btn-primary',
+              text: 'Solicita presupuesto hoy!',
               href: '/contacto',
             },
           ]}
