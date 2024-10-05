@@ -89,12 +89,12 @@ export const footerData = {
 
   ],
   socialLinks: [
-    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-    { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: '#' },
+    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/reprodissenybcn/?hl=es' },
+    { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://es.linkedin.com/company/repro-disseny-s.l' },
 
   ],
   footNote: `
     
-    Repro Disseny 2024 <a class="text-blue-600 underline dark:text-muted" href="https://reprodisseny.com/page/aviso-legal"> Aviso legal</a> · Todos los derechos reservados.
+    Repro Disseny 2024 <a class="text-blue-600 underline dark:text-muted" href="https://reprodisseny.com/page/aviso-legal" target="_blank"> Aviso legal</a> · Todos los derechos reservados.
   `,
 };
