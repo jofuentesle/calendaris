@@ -1,78 +1,30 @@
 import { getPermalink} from './utils/permalinks';
+import IconSvg from './assets/icons/IconRepro.svg';
 
 export const headerData = {
   links: [
-   /* {
-      text: 'Inicio',
-      links: [
-        {
-          text: 'SaaS',
-          href: getPermalink('/homes/saas'),
-        },
-        {
-          text: 'Startup',
-          href: getPermalink('/homes/startup'),
-        },
-        {
-          text: 'Mobile App',
-          href: getPermalink('/homes/mobile-app'),
-        },
-        {
-          text: 'Personal',
-          href: getPermalink('/homes/personal'),
-        },
-      ],
-    },*/
     {
     text: 'Selecciona tu calendario',
       links: [
         {
-          text: 'Calendario para pared con espiral',
-          href: getPermalink('/landing/calendario-pared-espiral'),
+          text: 'Calendario para mesa triangular',
+          href: getPermalink('/landing/calendario-mesa-triangulares'),
+        },
+        {
+          text: 'Calendario para mesa con espiral',
+          href: getPermalink('/landing/calendario-mesa-espiral'),
         },
         {
           text: 'Calendario para pared tipo revista',
           href: getPermalink('/landing/calendario-pared-revista'),
         },
         {
-          text: 'Calendario para mesa triangular',
-          href: getPermalink('/landing/calendarios-mesa-triangulares'),
+          text: 'Calendario para pared con espiral',
+          href: getPermalink('/landing/calendario-pared-espiral'),
         },
-        {
-          text: 'Calendario para mesa con espiral',
-          href: getPermalink('/landing/calendarios-mesa-espiral'),
-        },
+        
       ],
     },
-    /*{
-      text: 'Mesa',
-      href: "#calTable",
-      links: [
-        {
-          text: 'Espiral',
-          href: getPermalink('/mesa/calendarios-mesa-espiral'),
-        },
-        {
-          text: 'Triangular',
-          href: getPermalink('/mesa/calendarios-mesa-triangulares'),
-        }
-      ]
-    },
-    {
-      text: 'Pared',
-      href:'#',
-      links: [ 
-        {
-          text: 'Espiral',
-          href:  getPermalink('/pared/espiral'),
-        },
-        {
-          text: 'Revista',
-          href:  getPermalink('/pared/revista'),
-        }
-      ]
-    },*/
-
   ]
 };
 
@@ -94,7 +46,41 @@ export const footerData = {
 
   ],
   footNote: `
-    
-    Repro Disseny 2024 <a class="text-blue-600 underline dark:text-muted" href="https://reprodisseny.com/page/aviso-legal" target="_blank"> Aviso legal</a> · Todos los derechos reservados.
+  <div class="footNote text-xs text-muted flex flex-wrap items-center justify-center py-4">
+  <!-- Imagen del logo -->
+  <img
+    class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 rtl:mr-0 rtl:ml-1.5 float-left rtl:float-right rounded-sm"
+    src="${IconSvg.src}"
+    alt="Logo de Repro Disseny, especialista en impresión de calendarios personalizados para 2025 en Barcelona"
+    loading="lazy"
+  />
+
+  <!-- Texto y enlaces -->
+  <span class="ml-2">
+    &copy; 2024 
+    <a
+      href="https://reprodisseny.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hover:underline"
+      aria-label="Sitio web de Repro Disseny, especialistas en impresión de calendarios personalizados para 2025"
+    >
+      Repro Disseny
+    </a> 
+    · Todos los derechos reservados.
+  </span>
+
+  <!-- Aviso legal -->
+  <a
+    href="https://reprodisseny.com/page/aviso-legal"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="text-blue-600 underline ml-2 dark:text-muted hover:text-blue-500"
+    aria-label="Página de aviso legal de Repro Disseny"
+  >
+    Aviso legal
+  </a>
+</div>
+
   `,
 };
