@@ -9,16 +9,16 @@ import logoB from "~/assets/icons/ReprodissenyLogoB.png";
 >
   <Image
     loading="lazy"
-    class="logo-responsive logo block dark:hidden" 
+    class="logo-responsive logo block dark:hidden w-32 md:w-24" 
     src={logo}
-    alt="Una descripción de mi imagen."
+    alt="Logo tipo de Repro Disseny, imprenta digital y offset en Barcelona"
     />
 
     <Image
     loading="lazy"
-    class="logo-responsive logo hidden dark:block" 
+    class="logo-responsive logo hidden dark:block w-32 md:w-24" 
     src={logoB}
-    alt="Una descripción de mi imagen."
+    alt="Logo tipo de Repro Disseny, imprenta digital y offset en Barcelona"
     />
 </span>
 
@@ -33,7 +33,7 @@ import logoB from "~/assets/icons/ReprodissenyLogoB.png";
 
   @media (max-width: 768px) {
     .logo-responsive {
-      max-width: 100px; /* Reducción del tamaño en pantallas pequeñas */
+      max-width: 180px; /* Reducción del tamaño en pantallas pequeñas */
     }
   }
 </style>
