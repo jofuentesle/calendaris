@@ -8,7 +8,7 @@ export const headerData = {
       links: [
         {
           text: 'Calendario para mesa triangular',
-          href: getPermalink('/landing/calendario-mesa-triangulares'),
+          href: getPermalink('/landing/calendario-mesa-triangular'),
         },
         {
           text: 'Calendario para mesa con espiral',

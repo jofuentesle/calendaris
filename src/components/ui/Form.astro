@@ -12,7 +12,7 @@ const {
 ---
 
 <form method="POST">
-  {inputs && inputs.map(({ type = 'text', name, label = '', options = [] }) => (
+  {inputs && inputs.map(({ type = 'text', name,  label = '', options = [] }) => (
     <div class="mb-6">
       <label for={name} class="block text-sm font-medium">{label}</label>
       {type === 'select' ? (

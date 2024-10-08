@@ -10,26 +10,60 @@ import Img3 from '~/assets/images/pared/ParedRevista2.jpg';
 import Img4 from '~/assets/images/pared/ParedRevista3.jpg';
 
 const galleryImages = [
-  { src: Img1.src, alt: 'Descripción de la imagen 1' },
-  { src: Img2.src, alt: 'Descripción de la imagen 2' },
-  { src: Img3.src, alt: 'Descripción de la imagen 3' },
-  { src: Img4.src, alt: 'Descripción de la imagen 4' },
+    { src: Img1.src, alt: 'Calendario de pared tipo revista 2025' },
+    { src: Img2.src, alt: 'Calendario de pared 2025 con espiral, diseño personalizado' },
+    { src: Img3.src, alt: 'Calendario tipo revista personalizado para empresas 2025' },
+    { src: Img4.src, alt: 'Calendario promocional de pared con espiral 2025' },
 ];
 
 const metadata = {
-  title: 'Calendarios revista pared',
+  title: "Calendarios Personalizados para Pared | Reprodisseny en Barcelona",
+  description: "Compra calendarios tipo revista para pared 2025 personalizados y de alta calidad en Barcelona.",
+  keywords: [
+      "Calendarios personalizados Barcelona",
+    "Calendarios tipo revista para pared 2025",
+    "Impresión de calendarios en Barcelona",
+    "Calendarios de pared publicitarios",
+    "Compra calendarios tipo revista online",
+    "Calendarios de empresa 2025",
+    "Calendarios de pared personalizados",
+    "Calendarios de diseño para empresas",
+    "Calendarios de pared de calidad en Barcelona"
+  ],
+  canonical: "https://calendarios.reprodisseny.com/calendarios-pared-revista",
+  jsonLd: {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Calendarios de Mesa con Espiral Personalizados ",
+    "description": "Personaliza calendarios de mesa personalizados para empresas y oficinas. Perfectos para promocionar tu marca durante todo el año.",
+    "image": `${Img1.src}`,
+    "brand": {
+      "@type": "Brand",
+      "name": "Repro Disseny" 
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://calendarios.reprodisseny.com/landing/calendario-mesa-espiral",
+      "priceCurrency": "EUR",
+      "price": "5.99",
+      "availability": "https://schema.org/InStock"
+    },
+    "keywords": "calendario mesa personalizado, calendario sobremesa personalizado, calendarios de mesa personalizados, calendarios de sobremesa, alendarios sobremesa, calendarios de mesa, calendario personalizado, calendarios económicos, calendario publicitario,calendarios corporativos,imprimir calendarios sobremesa Barcelona"
+  }
 };
+
+
 ---
 <Layout metadata={metadata}>
   <!-- Hero2 Widget ******************* -->
 
   <Hero2
-    tagline="Calendario revista"
-    title="Calendario tipo revista para pared del 2025."
-    subtitle="Craft a tantalizing Coming Soon or Pre-Launch Landing Page that leaves visitors eagerly awaiting your launch."
+    tagline="Calendario tipo revista"
+    title="Calendarios de pared 2025 personalizados"
+    subtitle="Impresión de alta calidad y diseño atractivo para promocionar tu marca en Barcelona."
     actions={[
-      { variant: 'primary', text: 'Pide tu oferta!', href: '/formularios/pared', icon: 'tabler:square-rounded-arrow-right' },
-      { text: 'Saber más', href: '#' },
+      { variant: 'primary', text: 'Pide tu oferta!', href: '/formularios/calendarios-pared-revista', icon: 'tabler:square-rounded-arrow-right' },
+      { text: 'Saber más', href: '#features' },
     ]}
     galleryImages={galleryImages}
     
@@ -37,58 +71,58 @@ const metadata = {
   
   
   <Features 
-    id="features"
-    tagline="Caracteristicas principales"
-    title="Calendarios para mesa con espiral" 
-    subtitle="Nuestros calendarios de mesa personalizados con espiral ofrecen alta calidad de impresión, visibilidad todo el año y precios competitivos en Barcelona. Ideal para promocionar tu marca con diseños únicos y duraderos."
-    items={[
-      {
-        title: 'Diseño a medida',
-        description:
-          'Personaliza tus calendarios de mesa con espiral para destacar la marca de tu empresa en la oficina.',
-        icon: 'tabler:calendar',
-      },
-      {
-        title: 'Calidad superior de impresión',
-        description:
-          'Garantizamos una impresión nítida en cuatricromía para que tus calendarios luzcan profesionales.',
-        icon: 'tabler:moneybag',
-      },
-      {
-        title: 'Formato ideal',
-        description:
-          ' Nuestros calendarios están diseñados para encajar perfectamente en cualquier escritorio, disponibles en diversos tamaños.',
-        icon: 'tabler:heart-handshake',
-      },
-      {
-        title: 'Durabilidad y practicidad',
-        description:
-          'El espiral garantiza que el calendario sea resistente y fácil de usar durante todo el año.',
-        icon: 'tabler:calendar-event',
-      },
-      {
-        title: 'Perfecto para regalos corporativos',
-        description:
-          " Ideal para sorprender a tus clientes con un detalle útil y publicitario.",
-        icon: 'tabler:arrows-right-left',
-      },
-      {
-        title: 'Entrega rápida en Barcelona',
-        description:
-          'Desde la solicitud de presupuesto hasta la entrega, ofrecemos tiempos ágiles de producción y envío.',
-        icon: 'tabler:world',
-      },
-    ]}
-  />
+  id="features"
+  tagline="Características Clave"
+  title="¿Por qué elegir nuestros calendarios de pared"
+  subtitle="Impresión de alta calidad y diseño atractivo para promocionar tu marca en Barcelona."
+  items={[
+    {
+      title: 'Impresión Personalizada',
+      description: 'Personaliza calendarios tipo revista para pared con tu logotipo y diseño único. Ideales para promociones efectivas en Barcelona.',
+      icon: 'tabler:calendar',
+    },
+    {
+      title: 'Alta Calidad de Impresión',
+      description:
+        'Usamos tecnología de impresión avanzada para asegurar que cada calendario sea visualmente atractivo y duradero.',
+      icon: 'tabler:printer',
+    },
+    {
+      title: 'Diseño Promocional',
+      description:
+        'Destaca tu marca todo el año con nuestros calendarios de pared que combinan funcionalidad y estética.',
+      icon: 'tabler:printer',
+    },
+    {
+      title: 'Entrega rápida en toda la península',
+      description:
+        'Ofrecemos tiempos de entrega rápidos para que recibas tus calendarios cuando los necesites.',
+      icon: 'tabler:truck',
+    },
+    {
+      title: 'Ideal para Empresas',
+      description:
+        'Perfectos para empresas que buscan soluciones publicitarias duraderas y efectivas.',
+      icon: 'tabler:building',
+    },
+    {
+      title: 'Fácil Instalación',
+      description:
+        'Nuestros calendarios con espiral son fáciles de colgar, adaptándose a cualquier espacio de trabajo.',
+      icon: 'tabler:wall',
+    },
+  ]}
+/>
+
        <!-- CallToAction (2/3 width on large screens) -->
           <CallToAction
-            title="Solicita tu presupuesto"
-            subtitle="Nuestros comerciales contactaran con la mejor oferta"
+            title="Solicita tu Presupuesto para Calendarios Personalizados"
+            subtitle="Compra calendarios tipo revista para pared y recibe la mejor oferta. Impresión rápida y entrega en toda Barcelona."
             actions={[
                 {
                 variant: 'primary',
-                text: 'Solicita oferta',
-                href: '/formularios/mesa',
+                text: '¡Solicita oferta hoy',
+                href: '/formularios/calendarios-pared-revista',
                 icon: 'tabler:mail',
                 },
               ]}

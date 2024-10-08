@@ -19,14 +19,25 @@ const metadata = {
   
   <ContactUs
     id="form"
-    title="Envíanos tus consultas sobre calendarios"
-    subtitle="Estamos aquí para ayudarte a crear el calendario perfecto, desde el diseño hasta la impresión, con opciones personalizadas y soporte en cada paso."
+    title="¡Contáctanos!"
+    subtitle="Estamos aquí para ayudarte. Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible"
     inputs={[
       {
         type: 'text',
         name: 'name',
-        label: 'Nombre',
+        label: 'Nombre'
       },
+      {
+        type: 'radio',
+        name: 'size',
+        label: "Medida calendariod",
+        options : [
+          { value: 'red', label: 'Red' },
+          { value: 'green', label: 'Green' },
+          { value: 'blue', label: 'Blue' },
+        ]
+      },
+     
       {
         type: 'text',
         name: 'empresa',
@@ -64,7 +75,7 @@ const metadata = {
     {
         type: 'select',
         name: 'quantity',
-        label: 'Selectiona la medida',
+        label: 'Selecciona la cantidad',
         options: [
           { value: '50', label: '50' },
           { value: '100', label: '100' },
