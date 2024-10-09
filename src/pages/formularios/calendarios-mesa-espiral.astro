@@ -4,6 +4,8 @@ import HeroText from '~/components/widgets/HeroText.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import ContactUs from '~/components/widgets/Contact.astro';
 
+import img1 from '../../assets/images/forms/a6.png';
+import img2 from '../../assets/images/forms/a5.png';
 
 const metadata = {
   title: 'Contacta con nosotros para calendarios de mesa',
@@ -25,7 +27,16 @@ const metadata = {
       {
         type: 'text',
         name: 'name',
-        label: 'Nombre'
+        label: 'Nombre',
+      },
+      {
+        type: 'radio',
+        name: 'preferencia',
+        label: 'Selecciona la medida',
+        options: [
+          { value: 'A5', label: 'Tamaño A5', image: img1.src },
+          { value: 'A6', label: 'Tamaño A6', image: img2.src},
+        ],
       },
       {
         type: 'text',
@@ -127,5 +138,10 @@ section {
   padding: 20px;
   background-color: red;
   border-radius: 8px;
+}
+
+#a5{
+  border: 10px solid red;
+  padding: 15px;
 }
 </style>

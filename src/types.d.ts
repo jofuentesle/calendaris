@@ -186,7 +186,8 @@ export interface Input {
   label?: string;
   autocomplete?: string;
   placeholder?: string;
-  options?:{value: string, label:string}[]
+  options?:{value: string, label:string,  image?: string }[];
+  icons?: string;
 }
 
 export interface Textarea {
@@ -231,7 +232,6 @@ export interface Form {
   disclaimer?: Disclaimer;
   button?: string;
   description?: string;
-  icons?: string;
 }
 
 // WIDGETS
@@ -312,5 +312,6 @@ export interface Contact extends Omit<Headline, 'classes'>, Form, Widget {
   name?: string;
   label?: string;
   icons?: string;
-  options?: Array<{ value: string; label: string }>;
+  options?: Array<{ value: string; label: string; image:string; }>;
+  
 }

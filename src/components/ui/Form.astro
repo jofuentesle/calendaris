@@ -12,8 +12,8 @@ const {
 ---
 
 <form method="POST">
-  {inputs && inputs.map(({ type = 'text', name,  label = '', options = [] }) => (
-    <div class="mb-6">
+  {inputs && inputs.map(({ type = 'text', name,  label = '', options = [], icons = null }) => (
+    <div class="mb-6 content-between">
       <label for={name} class="block text-sm font-medium">{label}</label>
       {type === 'select' ? (
         <select name={name} id={name} required class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200">
@@ -22,7 +22,39 @@ const {
             <option value={option.value}>{option.label}</option>
           ))}
         </select>
+      ) : type ==='radio' ? (
+
+          // Lógica para Radio Buttons
+          options.map(option => (
+          <div class="inline-flex items-center mb-2">
+            <input 
+              type="radio" 
+              id={option.value} 
+              name={name} 
+              value={option.value} 
+              class="hidden" 
+              required
+            />
+            <label for={option.value} class="cursor-pointer">
+              <img 
+                src={option.image}
+                alt={option.label} 
+                class="h-10 w-10 rounded-full border-2 border-gray-300"
+              />
+              <span class="text-sm font-medium text-gray-700">{option.label}</span>
+            </label>
+          </div>
+        ))
       ) : (
+
+        <div class="relative">
+          {icons && (
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {icons}
+              </svg>
+            </span>
+          )}
         <input
           type={type}
           name={name}
@@ -31,6 +63,7 @@ const {
           class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200"
           placeholder={`Ingrese su ${label.toLowerCase()}`}
         />
+        </div>
       )}
     </div>
   ))}

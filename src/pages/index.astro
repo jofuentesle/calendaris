@@ -10,31 +10,110 @@ import ImgTbl from '~/assets/images/mesa/SobremesaHome.jpg';
 import ImgTbl0 from '~/assets/images/pared/ParedEspiral.jpg';
 import ImgTb3 from '~/assets/images/calendarios/calendarDesktop.png';
 
-
-
-
 const metadata = {
-  title: 'Calendarios para empresas',
+  title: "Calendarios 2025 Personalizados para Imprimir | Solicita Presupuesto",
   ignoreTitleTemplate: true,
+  description: "Descubre nuestros calendarios 2025 personalizados para imprimir. Elige entre formatos mensuales y anuales. Ideal para empresas o uso personal. Solicita tu presupuesto online.",
+  keywords: [
+  'calendarios para imprimir',
+  'calendario para imprimir 2025',
+  'calendario mensual para imprimir',
+  'calendario 2025 para imprimir',
+  'calendario mensual 2025',
+  'imprimir calendario',
+  'calendario imprimible gratis',
+  'calendarios en blanco',
+  'imprimir calendario mensual',
+  'imprimir calendarios 2025',
+  'calendario 2025 pdf',
+  'calendario en blanco para imprimir',
+  'calendario con festivos 2025',
+  ],
+  canonical: "https://calendarios.reprodisseny.com/",
+  jsonLd: {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Calendarios de Mesa con Espiral Personalizados ",
+    "description": "Personaliza calendarios de mesa personalizados para empresas y oficinas. Perfectos para promocionar tu marca durante todo el año.",
+    "image": `${ImgTbl.src}`,
+    "brand": {
+      "@type": "Brand",
+      "name": "Repro Disseny" 
+    },
+   
+    "keywords": "calendario mesa personalizado, calendario sobremesa personalizado, calendarios de mesa personalizados, calendarios de sobremesa, alendarios sobremesa, calendarios de mesa, calendario personalizado, calendarios económicos, calendario publicitario,calendarios corporativos,imprimir calendarios sobremesa Barcelona"
+  },
+  faqSchema: [
+    {
+      "@type": "Question",
+      "name": "¿Puedo personalizar los calendarios 2025?",
+      "acceptedAnswer": {
+        "@type": "Answer", "text": "¡Sí! Ofrecemos una amplia variedad de calendarios 2025 personalizados. Puedes añadir tu logotipo, colores corporativos y elegir entre diferentes plantillas para imprimir."
+      }
+    },
+   {
+      "@type": "Question",
+      "name": "¿Cómo puedo solicitar un presupuesto para calendarios?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Solo necesitas completar nuestro formulario online con los detalles de tu pedido. Ofrecemos presupuestos rápidos y personalizados para la impresión de calendarios para empresas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué tipos de calendarios ofrecen para imprimir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Disponemos de calendarios de sobremesa y pared mensuales, semestrales o anuales para imprimir. También puedes optar por calendarios en blanco o personalizados con tus propios diseños."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Los calendarios están disponibles para entrega en toda España?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, realizamos entregas en toda España peninsular, incluyendo calendarios personalizados para Cataluña y otras regiones. Solicita tu calendario 2025 y lo recibirás en la fecha acordada. Otros destinos consultar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuáles son los beneficios de imprimir calendarios personalizados?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Imprimir calendarios personalizados es una excelente herramienta de marketing. Mantendrás tu marca visible durante todo el año y te ayudarán a organizar tus tareas de manera eficiente."
+    }
+  },
+  {
+      "@type": "Question",
+      "name": "¿Cuáles son los beneficios de imprimir calendarios personalizados?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Imprimir calendarios personalizados es una excelente herramienta de marketing. Mantendrás tu marca visible durante todo el año y te ayudarán a organizar tus tareas de manera eficiente."
+    }
+  }
+
+  ]
 };
+
+
 ---
 
 <Layout metadata={metadata}>
   <Hero>
     <Fragment slot="title">
-        Calendarios de <span class="hidden xl:inline">empresas</span>, la
-        <span class="text-accent highlight"> publicidad mas efectiva</span> 365 días al año.
+
+        Calendarios 2025 <span class="">Personalizados para Imprimir</span> <br> Solicita tu Presupuesto
       </Fragment>
   
       <Fragment slot="subtitle">
-        <span class="hidden sm:inline">Descubre los 
-          <span class="font-semibold">calendarios para 2025 de Repro Disseny.</span> Equilibrio perfecto entre diseño, funcionalidad y sostenibilidad. Nuestros calendarios no solo marcan días, sino que inspiran y decoran tu espacio, adaptándose a tus necesidades y gustos.</span>
+        <span class="hidden sm:inline">Nuestros 
+          <span class="font-semibold">calendarios 2025 personalizados para imprimir</span> son perfectos para promocionar tu marca o para uso personal. Ofrecemos una amplia gama de plantillas mensuales, y anuales, ideales para empresas. Imprime tus calendarios en alta calidad y solicita un presupuesto sin compromiso.</span>
         </Fragment>
   </Hero>
   <!-- Features Widget *************** -->
 <Features
     id="features"
-    tagline="Beneficios y retorno de lainversión"
+    tagline="Beneficios y retorno de la inversión"
     title="Calendarios de empresa para 2025" 
     subtitle="Reparte calendarios 2025 personalizados y asegura que tu marca esté presente en la vida diaria de tus clientes durante todo el año. Un regalo útil que refuerza tu visibilidad y fideliza a tu público. ¡Solicita tu presupuesto hoy mismo y destaca con calendarios únicos!."
     items={[
@@ -136,7 +215,7 @@ const metadata = {
     ]}
     image={{
       src: ImgTbl0,
-      alt: 'Calendarios de mesa',
+      alt: 'calendarios de mesa triangulares plegados',
     }}
   >
     <Fragment slot="content">
@@ -193,29 +272,29 @@ const metadata = {
     classes={{ container: 'max-w-6xl' }}
     items={[
       {
-        title: '¿Qué tipo de calendarios ofrece Reprodisseny?',
+        title: '¿Puedo personalizar los calendarios 2025?',
         description:
-          "En Reprodisseny, ofrecemos calendarios personalizados en diversos formatos: de pared, de mesa y de bolsillo. Utilizamos impresión digital de alta calidad para asegurar un acabado profesional y duradero. Personaliza tu calendario a tu medida con nuestro servicio de impresión digital.",
+          "¡Sí! Ofrecemos una amplia variedad de calendarios 2025 personalizados. Puedes añadir tu logotipo, colores corporativos y elegir entre diferentes plantillas para imprimir.",
       },
       {
-        title: '¿Cómo puedo solicitar un presupuesto para la impresión digital de calendarios?',
+        title: '¿Cómo puedo solicitar un presupuesto para calendarios?',
         description:
-          "Para obtener un presupuesto preciso para la impresión digital de calendarios, indícanos la cantidad de calendarios que necesitas, el tipo (pared, de mesa, etc.), el diseño, el tamaño y las especificaciones de personalización. Cuanta más información proporciones, más detallado será el presupuesto que recibas." 
+          "Solo necesitas completar nuestro formulario online con los detalles de tu pedido. Ofrecemos presupuestos rápidos y personalizados para la impresión de calendarios para empresas." 
       },
       {
-        title: '¿Qué información necesito proporcionar para obtener un presupuesto de calendarios?',
+        title: '¿Qué tipos de calendarios ofrecen para imprimir?',
         description:
-          'Para recibir un presupuesto exacto, indícanos la cantidad, tipo (pared, mesa, etc.), diseño, tamaño y especificaciones de personalización. Cuanta más información proporciones, más detallado será el presupuesto.',
+          'Disponemos de calendarios de sobremesa y pared mensuales, semestrales o anuales para imprimir. También puedes optar por calendarios en blanco o personalizados con tus propios diseños.',
       },
       {
-        title: "¿Cómo puedo personalizar mi calendario con Reprodisseny?",
+        title: "¿Los calendarios están disponibles para entrega en toda España?",
         description:
-          "Personalizar tu calendario es fácil. Elige el formato, agrega tus fotos o gráficos y selecciona las fechas importantes. Nuestro equipo te asistirá para que el calendario refleje tu estilo y necesidades."
+          "Sí, realizamos entregas en toda España peninsular, incluyendo calendarios personalizados para Cataluña y otras regiones. Solicita tu calendario 2025 y lo recibirás en la fecha acordada. Otros destinos consultar."
       },    
       {
-        title: '¿Cuáles son los beneficios de elegir impresión digital para calendarios?',
+        title: '¿Cuáles son los beneficios de imprimir calendarios personalizados?',
         description:
-          "La impresión digital garantiza alta precisión y reproducción fiel de colores, ideal para calendarios personalizados. Además, ofrece tiempos de entrega rápidos y la posibilidad de realizar cambios de última hora sin costos adicionales.",
+          "Imprimir calendarios personalizados es una excelente herramienta de marketing. Mantendrás tu marca visible durante todo el año y te ayudarán a organizar tus tareas de manera eficiente.",
       },
       {
         title: '¿Cómo es el proceso de compra y envío para los calendarios personalizados?',
