@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 
 import { defineConfig } from 'astro/config';
 import netlify from '@astrojs/netlify';
+import preact from '@astrojs/preact';
 
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
@@ -13,8 +14,6 @@ import compress from 'astro-compress';
 
 import astrowind from './vendor/integration';
 
-import node from '@astrojs/node';
-
 import {
   readingTimeRemarkPlugin,
   responsiveTablesRehypePlugin,
@@ -22,7 +21,7 @@ import {
 } from './src/utils/frontmatter.mjs';
 
 
-import vercel from '@astrojs/vercel/serverless';
+//import vercel from '@astrojs/vercel/serverless';
 
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -37,7 +36,9 @@ export default defineConfig({
     edgeMiddleware: true
   }),
 
+
   integrations: [
+    preact(),
     tailwind({
       applyBaseStyles: false,
     }),
@@ -100,4 +101,5 @@ export default defineConfig({
       },
     },
   },
+
 });

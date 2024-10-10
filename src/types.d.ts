@@ -63,6 +63,7 @@ export interface Post {
   readingTime?: number;
 }
 
+
 export interface Taxonomy {
   slug: string;
   title: string;
