@@ -1,52 +1,55 @@
 ---
-     const test =  async function enviarFormulario(event) {
-        event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+import sendGrid from '@sendgrid/mail';
+sendGrid.setApiKey( import.meta.env.SENDGRID_API_KEY );
 
-        const form = event.target;
-        const formData = new FormData(form);
-        console.log("holasasfdds")
-        // Enviar los datos del formulario a la API usando fetch
-        try {
-          const response = await fetch('../api/send-quotes.ts', {
-            method: 'POST',
-            body: formData,
-          });
+if (Astro.request.method === 'POST') {
+  try{
+    // Getting posted data from our contact form
+    const data = await Astro.request.formData();
+    const name = data.get('name');
+    const email = data.get('email');
+    const message = data.get('message');
 
-          if (response.ok) {
-            // Redirigir a la página principal si el envío fue exitoso
-            window.location.href = '/';
-          } else {
-            // Manejar errores en el envío
-            alert('Error al enviar el correo. Por favor, inténtalo de nuevo.');
-          }
-        } catch (error) {
-          console.error('Error en la solicitud:', error);
-          alert('Error en la solicitud. Por favor, inténtalo de nuevo.');
-        }
-      }
+    // TODO: Do not forget to do validation and error handling over received data from your contact form.
 
+    // Sending email
+    const msg = {
+      to: 'jordi@reprodisseny.com', // Change to your recipient
+      from: 'noreply@reprodisseny.com', // Change to your verified sender
+      replyTo: {email:email, name:name},
+      subject: `Contact form submission from ${name}`,
+      text: message,
+    }
+    await sendGrid.send(msg).then(() => {
+      console.log('Email sent')
+    }).catch((error) => {
+      console.error(error)
+    });
+
+  } catch (error) {
+    console.error(error);
+  }
+}
 ---
-
 <html lang="en">
   <head>
-    <title>Enviar Correo</title>
+    <title>Contact Me</title>
   </head>
   <body>
-    <h1>Enviar Correo Electrónico</h1>
-    <form>
+    <h1>Say Hi to me!</h1>
+    <form method="POST">
       <div>
-        <input type="email" name="to" placeholder="Destinatario" required />
+        <input type="text" name="name" placeholder="Name" />
       </div>
       <div>
-        <input type="text" name="subject" placeholder="Asunto" required />
+        <input type="email" name="email" placeholder="Email" />
       </div>
       <div>
-        <textarea name="message" placeholder="Mensaje" required></textarea>
+        <textarea name="message" placeholder="Message"></textarea>
       </div>
       <div>
-        <button type="submit"  onclick="enviarFormulario(event)">Enviar</button>
+        <button type="submit">Send</button>
       </div>
     </form>
   </body>
 </html>
-

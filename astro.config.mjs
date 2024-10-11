@@ -21,7 +21,7 @@ import {
 } from './src/utils/frontmatter.mjs';
 
 
-//import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel/serverless';
 
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -32,9 +32,11 @@ const whenExternalScripts = (items = []) =>
 
 export default defineConfig({
   output: 'server', // Esta es la clave para habilitar SSR
-  adapter:  netlify({
-    edgeMiddleware: true
-  }),
+  
+  adapter: vercel(),
+  //adapter:  netlify({
+    //edgeMiddleware: true
+  //}),
 
 
   integrations: [
