@@ -22,7 +22,7 @@ const SimpleDynamicForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4">
+    <form onSubmit={handleSubmit} action='../../pages/api/send-quotes.ts' className="max-w-md mx-auto p-4">
       <div className="mb-4">
         <label className="block text-sm font-medium">Email</label>
         <input
@@ -69,7 +69,7 @@ const SimpleDynamicForm = () => {
       )}
 
       <div className="mt-6">
-        <button type="submit" className="btn btn-primary">Enviarlo</button>
+        <button type="submit" className="btn btn-primary">Enviar</button>
       </div>
     </form>
   );
