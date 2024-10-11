@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import { defineConfig } from 'astro/config';
-import netlify from '@astrojs/netlify';
+
 import preact from '@astrojs/preact';
 
 import sitemap from '@astrojs/sitemap';
