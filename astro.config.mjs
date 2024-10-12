@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 
 import { defineConfig } from 'astro/config';
 import netlify from '@astrojs/netlify';
-import preact from '@astrojs/preact';
+
 
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
@@ -38,7 +38,6 @@ export default defineConfig({
 
 
   integrations: [
-    preact(),
     tailwind({
       applyBaseStyles: false,
     }),
