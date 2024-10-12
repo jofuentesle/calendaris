@@ -4,22 +4,18 @@ const options = {
     {
       value: 'mesa-espiral',
       label: 'Mesa Espiral',
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M4 2h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v14h16V4H4zm1 1h14v5H5V5zM7 13v3h2v-3H7zm4 0v3h2v-3h-2zm4 0v3h2v-3h-2z"/></svg>',
     },
     {
       value: 'mesa-triangular',
       label: 'Mesa Triangular',
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M3 4v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1zm1 1h16v14H4V5zm1 2v10h14V7H5zm3 1h8v1H8V8zm0 2h8v1H8v-1z"/></svg>',
     },
     {
       value: 'pared-revista',
       label: 'Pared Revista',
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M3 4v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1zm1 1h16v14H4V5zm1 2v10h14V7H5zm3 1h8v1H8V8zm0 2h8v1H8v-1z"/></svg>',
     },
     {
       value: 'pared-espiral',
       label: 'Pared Espiral',
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M3 4v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1zm1 1h16v14H4V5zm1 2v10h14V7H5zm3 1h8v1H8V8zm0 2h8v1H8v-1z"/></svg>',
     },
   ],
   size: {
@@ -42,45 +38,40 @@ const options = {
   <h2 class="text-2xl font-bold mb-4 text-center">Configura tu Calendario</h2>
 
   <form id="calendar-form" class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full" method="POST">
-    <!-- Nombre con SVG -->
+    <!-- Nombre con validación obligatoria -->
     <div class="relative w-full">
-      <sl-input label="Nombre" name="nombre" required class="w-full rounded-lg">
-        <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4z"/></svg>
-      </sl-input>
+      <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre *</label>
+      <sl-input id="nombre" name="nombre" required placeholder="Introduce tu nombre" class="w-full rounded-lg"></sl-input>
     </div>
 
-    <!-- Email con SVG -->
+    <!-- Email con validación obligatoria -->
     <div class="relative w-full">
-      <sl-input label="Email" name="email" type="email" required class="w-full rounded-lg">
-        <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm8 2l-4 3 4 3 4-3-4-3z"/></svg>
-      </sl-input>
+      <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
+      <sl-input id="email" name="email" type="email" required placeholder="Introduce tu email" class="w-full rounded-lg"></sl-input>
     </div>
 
-    <!-- Teléfono (opcional) con SVG -->
+    <!-- Teléfono (opcional) -->
     <div class="relative w-full">
-      <sl-input label="Teléfono" name="telefono" type="tel" class="w-full rounded-lg">
-        <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M6 2h12c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2zm12 4H6v12h12V6z"/></svg>
-      </sl-input>
+      <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+      <sl-input id="telefono" name="telefono" type="tel" placeholder="Introduce tu teléfono" class="w-full rounded-lg"></sl-input>
     </div>
 
-    <!-- Empresa (opcional) con SVG -->
+    <!-- Empresa (opcional) -->
     <div class="relative w-full">
-      <sl-input label="Empresa" name="empresa" class="w-full rounded-lg">
-        <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M4 2h16v16H4V2zm2 2v12h12V4H6zM7 7h10v2H7V7zm0 4h10v2H7v-2z"/></svg>
-      </sl-input>
+      <label for="empresa" class="block text-sm font-medium text-gray-700">Empresa</label>
+      <sl-input id="empresa" name="empresa" placeholder="Introduce el nombre de tu empresa" class="w-full rounded-lg"></sl-input>
     </div>
 
     <!-- Tipo de Calendario con botones redondeados -->
     <div class="col-span-2">
-      <label for="tipoCalendario" class="block text-sm font-medium text-gray-700 mb-2">Tipo de Calendario</label>
-      <div id="tipoCalendario" class="flex gap-4">
+      <label for="tipoCalendario" class="block text-sm font-medium text-gray-700 mb-2">Tipo de Calendario *</label>
+      <div id="tipoCalendario" class="flex gap-4 flex-wrap">
         {options.type.map(option => (
           <button
             type="button"
-            class="calendar-btn py-2 px-4 rounded-full border border-gray-300 hover:bg-green-100 focus:outline-none flex items-center gap-2"
+            class="calendar-btn py-2 px-4 rounded-full border border-gray-300 hover:bg-green-100 focus:bg-green-500 focus:text-white flex items-center gap-2"
             data-value={option.value}
           >
-            <span set:html={option.icon}></span>
             {option.label}
           </button>
         ))}
@@ -90,19 +81,19 @@ const options = {
 
     <!-- Tamaño dinámico según el tipo de calendario -->
     <div class="col-span-2">
-      <label for="tamaño" class="block text-sm font-medium text-gray-700 mb-2">Tamaño</label>
-      <div id="tamaño" class="flex gap-4"></div>
+      <label for="tamaño" class="block text-sm font-medium text-gray-700 mb-2">Tamaño *</label>
+      <div id="tamaño" class="flex gap-4 flex-wrap"></div>
       <input type="hidden" name="tamaño" id="tamaño-input" required />
     </div>
 
     <!-- Cantidad -->
     <div class="col-span-2">
-      <label for="cantidad" class="block text-sm font-medium text-gray-700 mb-2">Cantidad</label>
-      <div id="cantidad" class="flex gap-2">
+      <label for="cantidad" class="block text-sm font-medium text-gray-700 mb-2">Cantidad *</label>
+      <div id="cantidad" class="flex gap-2 flex-wrap">
         {options.quantity.map(qty => (
           <button
             type="button"
-            class="quantity-btn py-2 px-4 rounded-full border border-gray-300 hover:bg-green-100 focus:outline-none"
+            class="quantity-btn py-2 px-4 rounded-full border border-gray-300 hover:bg-green-100 focus:bg-green-500 focus:text-white"
             data-value={qty}
           >
             {qty}
@@ -113,7 +104,7 @@ const options = {
     </div>
 
     <!-- Aceptación de política de privacidad -->
-    <sl-checkbox name="politicaPrivacidad" required class="w-full col-span-2">Acepto la política de privacidad</sl-checkbox>
+    <sl-checkbox name="politicaPrivacidad" required class="w-full col-span-2">Acepto la política de privacidad *</sl-checkbox>
   </form>
 
   <!-- Botón de Envío -->
@@ -137,7 +128,6 @@ const options = {
 
   const cantidadBtns = document.querySelectorAll('.quantity-btn');
   const cantidadInput = document.getElementById('cantidad-input');
-
   const calendarBtns = document.querySelectorAll('.calendar-btn');
 
   // Manejar la selección de tipo de calendario
@@ -177,3 +167,6 @@ const options = {
     });
   });
 </script>
+
+
+
