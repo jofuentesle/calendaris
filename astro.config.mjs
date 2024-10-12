@@ -31,8 +31,8 @@ const whenExternalScripts = (items = []) =>
 export default defineConfig({
   output: 'server', // Esta es la clave para habilitar SSR
   
-  adapter: vercel(),
-  //adapter:  netlify({
+  //adapter: vercel(),
+  adapter:  netlify({
     //edgeMiddleware: true
   //}),
 
