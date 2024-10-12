@@ -10,6 +10,8 @@ import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import compress from 'astro-compress';
 
+import netlify from '@astrojs/netlify'; // Asegúrate de que esto está presente
+
 import astrowind from './vendor/integration';
 
 import {
