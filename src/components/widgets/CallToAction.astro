@@ -3,6 +3,7 @@ import WidgetWrapper from '../ui/WidgetWrapper.astro';
 import type { CallToAction, Widget } from '~/types';
 import Headline from '~/components/ui/Headline.astro';
 import Button from '~/components/ui/Button.astro';
+import DynamicForm from './DynamicForm.astro';
 
 interface Props extends Widget {
   title?: string;
@@ -17,7 +18,6 @@ const {
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
   actions = await Astro.slots.render('actions'),
-
   id,
   isDark = false,
   classes = {},
@@ -29,6 +29,7 @@ const {
   <div
     class="max-w-3xl mx-auto text-center p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600"
   >
+    <!-- Headline -->
     <Headline
       title={title}
       subtitle={subtitle}
@@ -39,20 +40,24 @@ const {
         subtitle: 'text-xl text-muted dark:text-slate-400',
       }}
     />
-    {
-      actions && (
-        <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 mt-6">
-          {Array.isArray(actions) ? (
-            actions.map((action) => (
-              <div class="flex w-full sm:w-auto">
-                <Button {...(action || {})} class="w-full sm:mb-0" />
-              </div>
-            ))
-          ) : (
-            <Fragment set:html={actions} />
-          )}
-        </div>
-      )
-    }
+
+    <!-- Formulario Dinámico -->
+    <div class="mt-8 w-full">
+      <DynamicForm />
+    </div>
+
+    <!-- Botón de Envío del Formulario -->
+    <div class="max-w-xs sm:max-w-md m-auto flex justify-center gap-4 mt-6">
+      <!-- El botón es el botón de CallToAction -->
+      {Array.isArray(actions) ? (
+        actions.map((action) => (
+          <div class="flex w-full sm:w-auto">
+            <Button {...(action || {})} class="w-full sm:mb-0" form="calendar-form" />
+          </div>
+        ))
+      ) : (
+        <Fragment set:html={actions} />
+      )}
+    </div>
   </div>
 </WidgetWrapper>

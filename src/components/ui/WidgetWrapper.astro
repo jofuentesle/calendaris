@@ -1,8 +1,10 @@
 ---
 import type { HTMLTag } from 'astro/types';
-import type { Widget } from '~/types';
+import type {  CallToAction, Widget } from '~/types';
 import { twMerge } from 'tailwind-merge';
 import Background from './Background.astro';
+import Headline from '~/components/ui/Headline.astro';
+
 
 export interface Props extends Widget {
   containerClass?: string;
