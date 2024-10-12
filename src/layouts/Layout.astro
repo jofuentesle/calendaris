@@ -41,6 +41,7 @@ const { language, textDirection } = I18N;
     <SiteVerification />
     <Analytics />
 
+  
     <!-- Comment the line below to disable View Transitions -->
     <ViewTransitions />
   </head>
@@ -49,6 +50,18 @@ const { language, textDirection } = I18N;
     <slot />
 
     <BasicScripts />
+     <!-- Importar solo los componentes de Shoelace necesarios -->
+     <script type="module">
+      import { setBasePath } from '/shoelace/utilities/base-path.js';
+      import '/shoelace/components/button/button.js';
+      import '/shoelace/components/select/select.js';
+      import '/shoelace/components/menu-item/menu-item.js';
+      import '/shoelace/components/input/input.js';
+      import '/shoelace/components/checkbox/checkbox.js';
+
+      // Establecer el path base para Shoelace
+      setBasePath('/shoelace/');
+    </script>
 
     <style is:global>
       img {

@@ -1,0 +1,80 @@
+---
+import Layout from '../../layouts/LandingLayout2.astro';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import '@shoelace-style/shoelace/dist/components/select/select.js';
+import '@shoelace-style/shoelace/dist/components/menu-item/menu-item.js';
+import '@shoelace-style/shoelace/dist/components/input/input.js';
+import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
+---
+
+<Layout>
+  <section id="form-section" class="p-6 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10">
+    <h2 class="text-2xl font-bold mb-4 text-center">Configura tu Calendario</h2>
+
+    <form id="calendar-form">
+      <!-- Nombre -->
+      <sl-input label="Nombre" name="nombre" required></sl-input>
+
+      <!-- Email -->
+      <sl-input label="Email" name="email" type="email" required></sl-input>
+
+      <!-- Teléfono (opcional) -->
+      <sl-input label="Teléfono" name="telefono" type="tel"></sl-input>
+
+      <!-- Empresa (opcional) -->
+      <sl-input label="Empresa" name="empresa"></sl-input>
+
+      <!-- Tipo de Calendario -->
+      <sl-select label="Tipo de Calendario" name="tipoCalendario" id="tipoCalendario" required>
+        <sl-menu-item value="sobremesa">Calendario de Sobremesa</sl-menu-item>
+        <sl-menu-item value="pared">Calendario de Pared</sl-menu-item>
+      </sl-select>
+
+      <!-- Tamaño -->
+      <sl-select label="Tamaño" name="tamaño" id="tamaño" required>
+        <sl-menu-item value="pequeño">Pequeño</sl-menu-item>
+        <sl-menu-item value="mediano">Mediano</sl-menu-item>
+        <sl-menu-item value="grande">Grande</sl-menu-item>
+      </sl-select>
+
+      <!-- Acabado -->
+      <sl-select label="Acabado" name="acabado" required>
+        <sl-menu-item value="mate">Mate</sl-menu-item>
+        <sl-menu-item value="brillante">Brillante</sl-menu-item>
+      </sl-select>
+
+      <!-- Laminado (opcional) -->
+      <sl-checkbox name="laminado">Laminado</sl-checkbox>
+
+      <!-- Color del Wire-O (opcional, solo si es espiral) -->
+      <sl-select label="Color del Wire-O" name="colorWireO" id="colorWireO" class="hidden">
+        <sl-menu-item value="negro">Negro</sl-menu-item>
+        <sl-menu-item value="blanco">Blanco</sl-menu-item>
+        <sl-menu-item value="plateado">Plateado</sl-menu-item>
+      </sl-select>
+
+      <!-- Cantidad -->
+      <sl-input label="Cantidad" name="cantidad" type="number" min="1" required></sl-input>
+
+      <!-- Aceptación de política de privacidad -->
+      <sl-checkbox name="politicaPrivacidad" required>Acepto la política de privacidad</sl-checkbox>
+
+      <!-- Botón de envío -->
+      <sl-button variant="primary" type="submit" class="w-full mt-4">Solicitar presupuesto</sl-button>
+    </form>
+  </section>
+</Layout>
+
+<script type="module" client:load>
+  const tipoCalendario = document.getElementById('tipoCalendario');
+  const colorWireO = document.getElementById('colorWireO');
+
+  tipoCalendario.addEventListener('sl-change', (event) => {
+    const selectedType = event.target.value;
+    if (selectedType === 'sobremesa') {
+      colorWireO.classList.remove('hidden');
+    } else {
+      colorWireO.classList.add('hidden');
+    }
+  });
+</script>

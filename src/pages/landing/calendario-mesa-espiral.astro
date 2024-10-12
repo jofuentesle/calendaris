@@ -4,12 +4,17 @@ import Hero2 from '../../components/widgets/Hero2.astro';
 import Features from '../../components/widgets/Features.astro';
 import CallToAction from '../../components/widgets/CallToAction.astro';
 
+//Importamos componente form
+import DynamicForm from '../../components/widgets/DynamicForm.astro'; // Importa el componente aquí
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import '@shoelace-style/shoelace/dist/components/select/select.js';
+import '@shoelace-style/shoelace/dist/components/menu-item/menu-item.js';
+
 //Importamos images galeria
 import Img1 from '~/assets/images/mesa/SobremesaEspiral.jpg';
 import Img2 from '~/assets/images/mesa/SobremesaEspiral1.jpg';
 import Img3 from '~/assets/images/mesa/SobremesaEspiral2.jpg';
 import Img4 from '~/assets/images/mesa/SobremesaEspiral3.jpg';
-
 
 const galleryImages = [
   { src: Img1.src, alt: 'Calendario de mesa personalizado con espiral para empresas en Barcelona, perfecto para regalos corporativos.' },
@@ -115,6 +120,12 @@ const metadata = {
       },
     ]}
   />
+
+  <section>
+    <DynamicForm client:load /> <!-- El código JavaScript se cargará y ejecutará en el cliente -->
+  </section>
+  
+  </section>
        <!-- CallToAction (2/3 width on large screens) -->
           <CallToAction
             title="Solicita tu presupuesto"
