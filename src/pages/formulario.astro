@@ -1,0 +1,100 @@
+---
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import '@shoelace-style/shoelace/dist/components/select/select.js';
+import '@shoelace-style/shoelace/dist/components/menu-item/menu-item.js';
+import '@shoelace-style/shoelace/dist/components/input/input.js';
+import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
+
+const options = {
+  type: [
+    { value: 'sobremesa', label: 'Calendario de Sobremesa' },
+    { value: 'pared', label: 'Calendario de Pared' },
+  ],
+  size: {
+    sobremesa: ['Pequeño', 'Mediano', 'Grande'],
+    pared: ['A3', 'A4', 'A5'],
+  },
+  finishes: ['Mate', 'Brillante', 'Satinado'],
+};
+---
+
+<head>
+  <!-- Importar los estilos de Shoelace -->
+  <link rel="stylesheet" href="/shoelace/themes/light.css">
+</head>
+
+<section id="form-section" class="p-6 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10">
+  <h2 class="text-2xl font-bold mb-4 text-center">Configura tu Calendario</h2>
+
+  <form id="calendar-form">
+    <!-- Nombre -->
+    <sl-input label="Nombre" name="nombre" required></sl-input>
+
+    <!-- Email -->
+    <sl-input label="Email" name="email" type="email" required></sl-input>
+
+    <!-- Teléfono (opcional) -->
+    <sl-input label="Teléfono" name="telefono" type="tel"></sl-input>
+
+    <!-- Empresa (opcional) -->
+    <sl-input label="Empresa" name="empresa"></sl-input>
+
+    <!-- Tipo de Calendario -->
+    <sl-select label="Tipo de Calendario" name="tipoCalendario" id="tipoCalendario" required>
+      {options.type.map(option => (
+        <sl-menu-item value={option.value}>{option.label}</sl-menu-item>
+      ))}
+    </sl-select>
+
+    <!-- Tamaño -->
+    <sl-select label="Tamaño" name="tamaño" id="tamaño" required>
+      {options.size.sobremesa.map(size => (
+        <sl-menu-item value={size}>{size}</sl-menu-item>
+      ))}
+    </sl-select>
+
+    <!-- Acabado -->
+    <sl-select label="Acabado" name="acabado" required>
+      <sl-menu-item value="mate">Mate</sl-menu-item>
+      <sl-menu-item value="brillante">Brillante</sl-menu-item>
+    </sl-select>
+
+    <!-- Laminado (opcional) -->
+    <sl-checkbox name="laminado">Laminado</sl-checkbox>
+
+    <!-- Cantidad -->
+    <sl-input label="Cantidad" name="cantidad" type="number" min="1" required></sl-input>
+
+    <!-- Aceptación de política de privacidad -->
+    <sl-checkbox name="politicaPrivacidad" required>Acepto la política de privacidad</sl-checkbox>
+
+    <!-- Botón de envío -->
+    <sl-button variant="primary" type="submit" class="w-full mt-4">Solicitar presupuesto</sl-button>
+  </form>
+</section>
+
+<script type="module" client:load>
+  const tipoCalendario = document.getElementById('tipoCalendario');
+  const tamañoSelect = document.getElementById('tamaño');
+
+  const sizeOptions = {
+    sobremesa: ['Pequeño', 'Mediano', 'Grande'],
+    pared: ['A3', 'A4', 'A5'],
+  };
+
+  tipoCalendario.addEventListener('sl-change', (event) => {
+    const selectedType = event.target.value;
+    const sizes = sizeOptions[selectedType];
+
+    // Limpiar las opciones anteriores
+    tamañoSelect.innerHTML = '';
+
+    // Añadir nuevas opciones según el tipo de calendario
+    sizes.forEach((size) => {
+      const option = document.createElement('sl-menu-item');
+      option.value = size.toLowerCase();
+      option.textContent = size;
+      tamañoSelect.appendChild(option);
+    });
+  });
+</script>
