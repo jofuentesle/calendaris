@@ -94,30 +94,31 @@ const options = {
 
     <div class="contact-info-container">
       <form id="calendar-form" class="contact-info" method="POST">
-        <!-- Nombre -->
-        <div class="relative w-full">
-          <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre *</label>
-          <input id="nombre" name="nombre" required placeholder="Introduce tu nombre" class="form-btn">
-        </div>
+        <fieldset class="contact-block">
+          <!-- Nombre -->
+          <div class="relative w-full">
+            <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre *</label>
+            <input id="nombre" name="nombre" required placeholder="Introduce tu nombre" class="form-btn">
+          </div>
 
-        <!-- Email -->
-        <div class="relative w-full">
-          <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
-          <input id="email" name="email" type="email" required placeholder="Introduce tu email" class="form-btn">
-        </div>
+          <!-- Email -->
+          <div class="relative w-full">
+            <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
+            <input id="email" name="email" type="email" required placeholder="Introduce tu email" class="form-btn">
+          </div>
 
-        <!-- Teléfono -->
-        <div class="relative w-full">
-          <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
-          <input id="telefono" name="telefono" type="tel" placeholder="Introduce tu teléfono" class="form-btn">
-        </div>
+          <!-- Teléfono -->
+          <div class="relative w-full">
+            <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+            <input id="telefono" name="telefono" type="tel" placeholder="Introduce tu teléfono" class="form-btn">
+          </div>
 
-        <!-- Empresa -->
-        <div class="relative w-full">
-          <label for="empresa" class="block text-sm font-medium text-gray-700">Empresa</label>
-          <input id="empresa" name="empresa" placeholder="Introduce tu empresa" class="form-btn">
-        </div>
-
+          <!-- Empresa -->
+          <div class="relative w-full">
+            <label for="empresa" class="block text-sm font-medium text-gray-700">Empresa</label>
+            <input id="empresa" name="empresa" placeholder="Introduce tu empresa" class="form-btn">
+          </div>
+        </fieldset>  
         <!-- Tipo de Calendario con botones seleccionables -->
         <div class="col-span-2 text-center">
           <label for="tipoCalendario" class="block text-sm font-bold text-gray-700 mb-2">Tipo de Calendario*</label>
@@ -175,7 +176,7 @@ const options = {
         <sl-checkbox name="politicaPrivacidad" required class="w-full col-span-2">Acepto la política de privacidad *</sl-checkbox>
 
       </form>
-    </div>
+      </div>
   </section>
 
   <!-- Script para interactividad -->
