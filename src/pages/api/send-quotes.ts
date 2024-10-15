@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import sendgrid from '@sendgrid/mail';
 
-// Configura la API Key de SendGrid
 sendgrid.setApiKey(import.meta.env.SENDGRID_API_KEY);
 
 export const post: APIRoute = async ({ request }) => {
@@ -17,9 +16,9 @@ export const post: APIRoute = async ({ request }) => {
     const cantidad = formData.get('cantidad') as string;
 
     if (!nombre || !email || !tipoCalendario || !tamaño || !cantidad) {
-      return new Response('Faltan campos requeridos', { status: 400 });
+      return new Response(JSON.stringify({ success: false, message: 'Faltan campos requeridos' }), { status: 400 });
     }
-    console.log(formData);
+
     const message = `
       Nombre: ${nombre}
       Email: ${email}
@@ -31,7 +30,7 @@ export const post: APIRoute = async ({ request }) => {
     `;
 
     const msg = {
-      to: 'ventas@reprodisseny.com',
+      to: 'jordi@reprodisseny.com',
       from: 'noreply@reprodisseny.com',
       subject: `Solicitud de oferta de calendario - ${tipoCalendario}`,
       text: message,
@@ -39,9 +38,9 @@ export const post: APIRoute = async ({ request }) => {
 
     await sendgrid.send(msg);
 
-    return new Response('Correo enviado correctamente', { status: 200 });
+    return new Response(JSON.stringify({ success: true, message: 'Correo enviado correctamente' }), { status: 200 });
   } catch (error) {
     console.error('Error al enviar el correo:', error);
-    return new Response('Error al enviar el correo', { status: 500 });
+    return new Response(JSON.stringify({ success: false, message: 'Error al enviar el correo', error: error.message }), { status: 500 });
   }
 };

@@ -168,7 +168,7 @@ const options = {
     <h2 class="text-2xl font-bold mb-4 text-center">Configura tu Calendario</h2>
 
     <div class="contact-info-container">
-      <form id="calendar-form" class="contact-info" method="POST" novalidate>
+      <form id="calendar-form" method="POST">
         <fieldset class="col-span-2 text-left">
            <!-- Nombre -->
             <div class="input-icon-container relative w-full mb-4">
@@ -296,165 +296,192 @@ const options = {
       </div>
     </section>
     <script type="module">
-        // Referencias a los elementos del formulario
-        const form = document.getElementById('calendar-form');
-        const responseMessage = document.getElementById('response-message');
-        const tipoCalendarioInput = document.getElementById('tipoCalendario-input');
-        const tamañoInput = document.getElementById('tamaño-input');
-        const cantidadInput = document.getElementById('cantidad-input');
-        const calendarBtns = document.querySelectorAll('.calendar-btn');
-        const sizeContainers = document.querySelectorAll('.size-container');
-        const quantityBtns = document.querySelectorAll('.quantity-btn');
-      
-        // Función para mostrar errores
-        function showError(elementId, message) {
-          const errorElement = document.getElementById(elementId);
-          errorElement.textContent = message;
-          errorElement.classList.remove('hidden');
+      document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('calendar-form');
+      const responseMessage = document.getElementById('response-message');
+      const tipoCalendarioInput = document.getElementById('tipoCalendario-input');
+      const tamañoInput = document.getElementById('tamaño-input');
+      const cantidadInput = document.getElementById('cantidad-input');
+      const sizeContainers = document.querySelectorAll('.size-container');
+
+      // Mostrar errores
+      function showError(elementId, message) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.textContent = message;
+        errorElement.classList.remove('hidden');
+      }
+
+      // Ocultar errores
+      function hideError(elementId) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.classList.add('hidden');
+      }
+
+      // Validación del formulario
+      function validateForm() {
+        let isValid = true;
+
+        const nombre = document.getElementById('nombre');
+        const email = document.getElementById('email');
+        const politicaPrivacidad = document.getElementById('politicaPrivacidad');
+
+        if (!nombre.value) {
+          showError('nombre-error', 'Este campo es obligatorio.');
+          isValid = false;
+        } else {
+          hideError('nombre-error');
         }
-      
-        // Función para ocultar errores
-        function hideError(elementId) {
-          const errorElement = document.getElementById(elementId);
-          errorElement.classList.add('hidden');
+
+        if (!email.value || !email.value.includes('@')) {
+          showError('email-error', 'Por favor, introduce un email válido.');
+          isValid = false;
+        } else {
+          hideError('email-error');
         }
-      
-        // Validar los campos del formulario
-        function validateForm() {
-          let isValid = true;
-      
-          // Validar nombre
-          const nombre = document.getElementById('nombre');
-          if (!nombre.value) {
-            showError('nombre-error', 'Este campo es obligatorio.');
-            isValid = false;
-          } else {
-            hideError('nombre-error');
-          }
-      
-          // Validar email
-          const email = document.getElementById('email');
-          if (!email.value || !email.value.includes('@')) {
-            showError('email-error', 'Por favor, introduce un email válido.');
-            isValid = false;
-          } else {
-            hideError('email-error');
-          }
-      
-          // Validar tipo de calendario
-          if (!tipoCalendarioInput.value) {
-            showError('tipoCalendario-error', 'Selecciona un tipo de calendario.');
-            isValid = false;
-          } else {
-            hideError('tipoCalendario-error');
-          }
-      
-          // Validar tamaño
-          if (!tamañoInput.value) {
-            showError('tamaño-error', 'Selecciona un tamaño.');
-            isValid = false;
-          } else {
-            hideError('tamaño-error');
-          }
-      
-          // Validar cantidad
-          if (!cantidadInput.value) {
-            showError('cantidad-error', 'Selecciona una cantidad.');
-            isValid = false;
-          } else {
-            hideError('cantidad-error');
-          }
-      
-          // Validar política de privacidad
-          const politicaPrivacidad = document.getElementById('politicaPrivacidad');
-          if (!politicaPrivacidad.checked) {
-            showError('politicaPrivacidad-error', 'Debes aceptar la política de privacidad.');
-            isValid = false;
-          } else {
-            hideError('politicaPrivacidad-error');
-          }
-      
-          return isValid;
+
+        if (!tipoCalendarioInput.value) {
+          showError('tipoCalendario-error', 'Selecciona un tipo de calendario.');
+          isValid = false;
+        } else {
+          hideError('tipoCalendario-error');
         }
-      
-        // Manejar la selección de tipo de calendario y mostrar las medidas correspondientes
-        calendarBtns.forEach(button => {
-          button.addEventListener('click', () => {
-            // Quitar la clase 'selected' de los botones previos
-            calendarBtns.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-      
-            // Guardar el tipo de calendario seleccionado
-            tipoCalendarioInput.value = button.getAttribute('data-value');
-      
-            // Ocultar todas las medidas y mostrar solo la correspondiente
-            sizeContainers.forEach(container => container.classList.remove('show'));
-            const selectedSizeContainer = document.querySelector(`.size-container.${button.getAttribute('data-value')}`);
-            if (selectedSizeContainer) {
-              selectedSizeContainer.classList.add('show');
-            }
-      
-            // Limpiar selección de tamaño previo
-            tamañoInput.value = '';
-            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
-          });
-        });
-      
-        // Manejar la selección de tamaño (medida del calendario)
-        document.querySelectorAll('.size-btn').forEach(button => {
-          button.addEventListener('click', () => {
-            // Quitar la clase 'selected' de los botones previos dentro del contenedor activo
-            button.parentElement.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-      
-            // Guardar el valor seleccionado en el campo oculto de tamaño
-            tamañoInput.value = button.textContent.trim();  // Actualización aquí
-          });
-        });
-      
-        // Manejar la selección de cantidad
-        quantityBtns.forEach(button => {
-          button.addEventListener('click', () => {
-            quantityBtns.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-            cantidadInput.value = button.getAttribute('data-value');
-          });
-        });
-      
-        // Manejar el envío del formulario
-        form.addEventListener('submit', async function (event) {
-          event.preventDefault();
-      
-          // Validar el formulario antes de enviar
-          const isValid = validateForm();
-          if (!isValid) {
-            responseMessage.textContent = 'Por favor, corrige los errores del formulario.';
-            responseMessage.classList.add('text-red-500');
-            return;
+
+        if (!tamañoInput.value) {
+          showError('tamaño-error', 'Selecciona un tamaño.');
+          isValid = false;
+        } else {
+          hideError('tamaño-error');
+        }
+
+        if (!cantidadInput.value) {
+          showError('cantidad-error', 'Selecciona una cantidad.');
+          isValid = false;
+        } else {
+          hideError('cantidad-error');
+        }
+
+        if (!politicaPrivacidad.checked) {
+          showError('politicaPrivacidad-error', 'Debes aceptar la política de privacidad.');
+          isValid = false;
+        } else {
+          hideError('politicaPrivacidad-error');
+        }
+
+        return isValid;
+      }
+
+      // Manejar la selección de tipo de calendario y mostrar los tamaños correspondientes
+      const calendarBtns = document.querySelectorAll('.calendar-btn');
+      calendarBtns.forEach(button => {
+        button.addEventListener('click', () => {
+          // Remover selección previa y marcar nuevo botón seleccionado
+          calendarBtns.forEach(btn => btn.classList.remove('selected'));
+          button.classList.add('selected');
+
+          // Actualizar el input oculto de tipo de calendario
+          tipoCalendarioInput.value = button.getAttribute('data-value');
+
+          // Ocultar todos los contenedores de tamaños
+          sizeContainers.forEach(container => container.classList.remove('show'));
+
+          // Mostrar solo el contenedor de tamaños relacionado con el calendario seleccionado
+          const selectedSizeContainer = document.querySelector(`.size-container.${button.getAttribute('data-value')}`);
+          if (selectedSizeContainer) {
+            selectedSizeContainer.classList.add('show');
           }
-      
-          // Crear el FormData y enviar la solicitud
-          const formData = new FormData(form);
-          try {
-            const response = await fetch('../../pages/api/send-quotes.ts', {
-              method: 'POST',
-              body: formData
-            });
-      
-            if (response.ok) {
-              responseMessage.textContent = 'Correo enviado con éxito.';
-              responseMessage.classList.remove('text-red-500');
-              responseMessage.classList.add('text-green-500');
-              form.reset(); // Reiniciar el formulario
-            } else {
-              responseMessage.textContent = 'Error al enviar el correo. Inténtalo de nuevo.';
-              responseMessage.classList.add('text-red-500');
-            }
-          } catch (error) {
-            responseMessage.textContent = `Error en la solicitud: ${console.log(error)}`;
+
+          // Limpiar la selección de tamaño previo
+          tamañoInput.value = '';
+          document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+        });
+      });
+
+      // Manejar la selección de tamaño (medida del calendario)
+      document.querySelectorAll('.size-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          // Quitar la clase 'selected' de los botones previos dentro del contenedor activo
+          button.parentElement.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+          button.classList.add('selected');
+
+          // Guardar el valor seleccionado en el campo oculto de tamaño
+          tamañoInput.value = button.textContent.trim();
+        });
+      });
+
+      // Manejar la selección de cantidad
+      const quantityBtns = document.querySelectorAll('.quantity-btn');
+      quantityBtns.forEach(button => {
+        button.addEventListener('click', () => {
+          quantityBtns.forEach(btn => btn.classList.remove('selected'));
+          button.classList.add('selected');
+          cantidadInput.value = button.getAttribute('data-value');
+        });
+      });
+
+      // Enviar el formulario
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        if (!validateForm()) {
+          responseMessage.textContent = 'Por favor, corrige los errores del formulario.';
+          responseMessage.classList.add('text-red-500');
+          return;
+        }
+
+        const formData = new FormData(form);
+        try {
+          const response = await fetch('/api/send-quotes', {
+            method: 'post',
+            body: formData,
+          });
+          alert(formData.values);
+          const result = await response.json();
+          if (response.ok) {
+            responseMessage.textContent = 'Correo enviado con éxito.';
+            responseMessage.classList.remove('text-red-500');
+            responseMessage.classList.add('text-green-500');
+            form.reset(); // Reiniciar el formulario
+          } else {
+            responseMessage.textContent = `Error al enviar el correo: ${result.message}`;
             responseMessage.classList.add('text-red-500');
           }
-        });
-      </script>
+        } catch (error) {
+          alert(error);
+          console.error('Error al enviar el formulario:', error);
+          responseMessage.textContent = 'Error en la solicitud. Inténtalo de nuevo.';
+          responseMessage.classList.add('text-red-500');
+        }
+      });
+});
+
+document.getElementById('calendar-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('/api/send-quotes', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+      const responseMessage = document.getElementById('response-message');
+
+      if (response.ok) {
+        responseMessage.textContent = 'Correo enviado con éxito.';
+        responseMessage.style.color = 'green';
+        form.reset(); // Reinicia el formulario tras el envío
+      } else {
+        responseMessage.textContent = `Error al enviar el correo: ${result.message}`;
+        responseMessage.style.color = 'red';
+      }
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error);
+      document.getElementById('response-message').textContent = 'Error al enviar la solicitud. Inténtalo de nuevo.';
+    }
+  });
+
+    </script>
   
 </body>
