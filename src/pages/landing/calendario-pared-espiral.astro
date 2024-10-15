@@ -4,6 +4,8 @@ import Hero2 from '~/components/widgets/Hero2.astro';
 import Features from '~/components/widgets/Features.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 
+import DynamicForm from '~/components/widgets/DynamicForm.astro';
+
 //Importamos images para las rutas
 import Img1 from '~/assets/images/pared/ParedEspiral.jpg';
 import Img2 from '~/assets/images/pared/ParedEspiral1.jpg';
@@ -69,6 +71,7 @@ const metadata = {
     
   />
 
+  <DynamicForm/>
   <Features 
     id="features"
     tagline="Caracteristicas Clave"

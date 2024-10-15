@@ -1,6 +1,10 @@
 [build]
   publish = "dist"
   command = "npm run build"
+
+[functions]
+directory = "src/pages/api"
+
 [build.processing.html]
   pretty_urls = false
 [[headers]]
