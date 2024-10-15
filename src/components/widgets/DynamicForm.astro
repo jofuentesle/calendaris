@@ -31,60 +31,135 @@ const options = {
   <style>
     /* Clase de selección para todos los botones */
     .selected {
-      border: 2px solid #007BFF;
-      color: #007BFF;
-      background-color: transparent;
+    border: 2px solid #007BFF;
+    color: #007BFF;
+    background-color: transparent;
     }
 
     /* Estilos generales para botones */
     .size-btn, .quantity-btn, .calendar-btn {
-      transition: border-color 0.3s ease, color 0.3s ease;
+    transition: border-color 0.3s ease, color 0.3s ease;
     }
 
     .size-btn:hover, .quantity-btn:hover, .calendar-btn:hover {
-      border-color: #0056b3;
+    border-color: #0056b3;
+    }
+
+    /* Botones adaptables al ancho */
+    .size-btn, .quantity-btn, .calendar-btn {
+    width: 100%;
+    }
+
+    @media (min-width: 640px) {
+    .size-btn, .quantity-btn, .calendar-btn {
+        width: auto;
+    }
     }
 
     .form-btn {
-      display: block;
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 9999px;
-      text-align: center;
-      background-color: white;
-      transition: border-color 0.3s ease, color 0.3s ease;
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 9999px;
+    text-align: left; /* Alinear texto a la izquierda */
+    background-color: white;
+    transition: border-color 0.3s ease, color 0.3s ease;
     }
 
     .form-btn:hover {
-      border-color: #007BFF;
+    border-color: #007BFF;
     }
 
     /* Distribuir el formulario de contacto en una columna para pantallas pequeñas */
     .contact-info {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    width: 100%;
     }
 
     /* Para pantallas mayores de 768px, mostrar en dos columnas */
     @media (min-width: 768px) {
-      .contact-info {
+    .contact-info {
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
-      }
+    }
     }
 
     /* Ocultar las medidas inicialmente */
     .size-container {
-      display: none;
+    display: none;
     }
 
     /* Mostrar las medidas seleccionadas */
     .show {
-      display: flex;
+    display: flex;
     }
+
+    /* Estilos para los inputs con icono */
+    .input-icon-container {
+    position: relative;
+    width: 100%;
+    }
+
+    .input-icon-container input {
+    width: 100%;
+    padding-left: 2.5rem; /* Espacio para el icono */
+    padding-right: 1rem;
+    }
+
+    .input-icon-container .icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #aaa;
+    transition: opacity 0.3s ease;
+    }
+
+    /* Ocultar el icono cuando se introduce texto */
+    .input-icon-container input:not(:placeholder-shown) + .icon {
+    opacity: 0;
+    }
+
+    /* Mejorar visibilidad del icono al hacer foco */
+    .input-icon-container input:focus + .icon {
+        color: #007BFF;
+    }
+
+    /* Estilos del input */
+    .input-icon-container input {
+        width: 100%;
+        padding-left: 2.5rem; /* Espacio para el icono */
+        padding-right: 1rem;
+        padding-top: 0.5rem; /* Ajusta según sea necesario */
+        padding-bottom: 0.5rem; /* Ajusta según sea necesario */
+        line-height: 1.5rem; /* Ajusta según sea necesario */
+    }
+
+    /* Estilos del icono */
+    .input-icon-container .icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #aaa;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Estilos error */
+    .error-message {
+      color: red;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    .hidden {
+      display: none;
+    }
+
   </style>
 </head>
 
@@ -93,32 +168,61 @@ const options = {
     <h2 class="text-2xl font-bold mb-4 text-center">Configura tu Calendario</h2>
 
     <div class="contact-info-container">
-      <form id="calendar-form" class="contact-info" method="POST">
-        <fieldset class="contact-block">
-          <!-- Nombre -->
-          <div class="relative w-full">
-            <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre *</label>
-            <input id="nombre" name="nombre" required placeholder="Introduce tu nombre" class="form-btn">
-          </div>
-
-          <!-- Email -->
-          <div class="relative w-full">
-            <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
-            <input id="email" name="email" type="email" required placeholder="Introduce tu email" class="form-btn">
-          </div>
-
-          <!-- Teléfono -->
-          <div class="relative w-full">
-            <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
-            <input id="telefono" name="telefono" type="tel" placeholder="Introduce tu teléfono" class="form-btn">
-          </div>
-
-          <!-- Empresa -->
-          <div class="relative w-full">
-            <label for="empresa" class="block text-sm font-medium text-gray-700">Empresa</label>
-            <input id="empresa" name="empresa" placeholder="Introduce tu empresa" class="form-btn">
-          </div>
-        </fieldset>  
+      <form id="calendar-form" class="contact-info" method="POST" novalidate>
+        <fieldset class="col-span-2 text-left">
+           <!-- Nombre -->
+            <div class="input-icon-container relative w-full mb-4">
+                <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre *</label>
+                <div class="relative">
+                    <input id="nombre" name="nombre" required placeholder="Introduce tu nombre" class="form-btn pl-10 py-2" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <!-- SVG para 'Nombre' -->
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                </div>
+                <span class="error-message hidden" id="nombre-error">Este campo es obligatorio.</span>
+            </div>
+          
+            <!-- Email -->
+            <div class="input-icon-container relative w-full mb-4">
+              <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
+              <div class="relative">
+                <input id="email" name="email" type="email" required placeholder="Introduce tu email" class="form-btn pl-10" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon absolute left-3 top-11 w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <!-- SVG para 'Email' -->
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
+                </svg>
+              </div>
+              <span class="error-message hidden" id="email-error">Por favor, introduce un email válido.</span>
+            </div>  
+          
+            <!-- Teléfono -->
+            <div class="input-icon-container relative w-full mb-4">
+              <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+              <div class="relative">
+                <input id="telefono" name="telefono" type="tel" placeholder="Introduce tu teléfono" class="form-btn pl-10" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon absolute left-3 top-11 w-5 h-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <!-- SVG para 'Teléfono' -->
+                    <path fill-rule="evenodd" d="M2 3.5A1.5 1.5 0 0 1 3.5 2h1.148a1.5 1.5 0 0 1 1.465 1.175l.716 3.223a1.5 1.5 0 0 1-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 0 0 6.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 0 1 1.767-1.052l3.223.716A1.5 1.5 0 0 1 18 15.352V16.5a1.5 1.5 0 0 1-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 0 1 2.43 8.326 13.019 13.019 0 0 1 2 5V3.5Z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span class="error-message hidden" id="telefono-error">Por favor, introduce un número válido.</span>
+            </div>
+          
+            <!-- Empresa -->
+            <div class="input-icon-container relative w-full mb-4">
+              <label for="empresa" class="block text-sm font-medium text-gray-700">Empresa</label>
+              <div class="relative">
+                <input id="empresa" name="empresa" placeholder="Introduce tu empresa" class="form-btn pl-10" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon absolute left-3 top-11 w-6 h-6 text-gray-500" viewBox="0 0 24 24" fill="currentColor">
+                    <!-- SVG para 'Empresa' -->
+                    <path fill-rule="evenodd" d="M3 2.25a.75.75 0 0 0 0 1.5v16.5h-.75a.75.75 0 0 0 0 1.5H15v-18a.75.75 0 0 0 0-1.5H3ZM6.75 19.5v-2.25a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-.75.75h-3a.75.75 0 0 1-.75-.75ZM6 6.75A.75.75 0 0 1 6.75 6h.75a.75.75 0 0 1 0 1.5h-.75A.75.75 0 0 1 6 6.75ZM6.75 9a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75ZM6 12.75a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 0 1.5h-.75a.75.75 0 0 1-.75-.75ZM10.5 6a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75Zm-.75 3.75A.75.75 0 0 1 10.5 9h.75a.75.75 0 0 1 0 1.5h-.75a.75.75 0 0 1-.75-.75ZM10.5 12a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75ZM16.5 6.75v15h5.25a.75.75 0 0 0 0-1.5H21v-12a.75.75 0 0 0 0-1.5h-4.5Zm1.5 4.5a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75h-.008a.75.75 0 0 1-.75-.75v-.008Zm.75 2.25a.75.75 0 0 0-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 0 0 .75-.75v-.008a.75.75 0 0 0-.75-.75h-.008ZM18 17.25a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75h-.008a.75.75 0 0 1-.75-.75v-.008Z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span class="error-message text-red-500 text-sm"></span>
+            </div>
+          </fieldset>
+          
         <!-- Tipo de Calendario con botones seleccionables -->
         <div class="col-span-2 text-center">
           <label for="tipoCalendario" class="block text-sm font-bold text-gray-700 mb-2">Tipo de Calendario*</label>
@@ -129,12 +233,12 @@ const options = {
             <button type="button" class="calendar-btn py-2 px-4 rounded-full border border-gray-300" data-value="pared-espiral">Pared Espiral</button>
           </div>
           <input type="hidden" name="tipoCalendario" id="tipoCalendario-input" required />
+          <span class="error-message hidden" id="tipoCalendario-error">Selecciona un tipo de calendario.</span>
         </div>
 
         <!-- Tamaño dinámico con valor por defecto, todos creados en el DOM -->
         <div class="col-span-2 text-center">
           <label for="tamaño" class="block text-sm font-bold text-gray-700 mb-2">Tamaño*</label>
-
           <!-- Contenedor de medidas por cada tipo de calendario -->
           <div id="tamaño" class="size-container mesa-espiral flex justify-center gap-4 flex-wrap">
             <button type="button" class="size-btn py-2 px-4 rounded-full border border-gray-300">21x10cm</button>
@@ -157,6 +261,7 @@ const options = {
           </div>
 
           <input type="hidden" name="tamaño" id="tamaño-input" required />
+          <span class="error-message hidden" id="tamaño-error">Selecciona un tamaño.</span>
         </div>
 
         <!-- Cantidad con selección destacada -->
@@ -170,80 +275,186 @@ const options = {
             <button type="button" class="quantity-btn py-2 px-4 rounded-full border border-gray-300" data-value="1000">1000</button>
           </div>
           <input type="hidden" name="cantidad" id="cantidad-input" required />
+          <span class="error-message hidden" id="cantidad-error">Selecciona una cantidad.</span>
         </div>
 
         <!-- Aceptación de política de privacidad -->
-        <sl-checkbox name="politicaPrivacidad" required class="w-full col-span-2">Acepto la política de privacidad *</sl-checkbox>
-
-      </form>
+        <div class="col-span-2">
+            <label class="flex items-center">
+              <input type="checkbox" name="politicaPrivacidad" id="politicaPrivacidad" required class="mr-2" />
+              Acepto la política de privacidad *
+            </label>
+            <span class="error-message hidden" id="politicaPrivacidad-error">Debes aceptar la política de privacidad.</span>
+          </div>
+  
+          <!-- Botón de Envío -->
+          <div class="col-span-2 text-center mt-4">
+            <button type="submit" class="py-2 px-4 bg-blue-600 text-white rounded-full">Solicita oferta hoy</button>
+            <div id="response-message" class="text-center mt-4"></div>
+          </div>
+        </form>
       </div>
-  </section>
-
-  <!-- Script para interactividad -->
-  <script type="module">
-    const tipoCalendarioInput = document.getElementById('tipoCalendario-input');
-    const tamañoInput = document.getElementById('tamaño-input');
-    const cantidadInput = document.getElementById('cantidad-input');
-    const calendarBtns = document.querySelectorAll('.calendar-btn');
-    const sizeContainers = document.querySelectorAll('.size-container');
-    const ctaButton = document.getElementById('cta-button');
-
-    // Manejar la selección de tipo de calendario y mostrar las medidas correspondientes
-    calendarBtns.forEach(button => {
-      button.addEventListener('click', () => {
-        // Quitar la clase 'selected' de los botones previos
-        calendarBtns.forEach(btn => btn.classList.remove('selected'));
-        button.classList.add('selected');
-
-        // Guardar el tipo de calendario seleccionado
-        tipoCalendarioInput.value = button.getAttribute('data-value');
-
-        // Ocultar todas las medidas y mostrar solo la correspondiente
-        sizeContainers.forEach(container => container.classList.remove('show'));
-        document.querySelector(`.${button.getAttribute('data-value')}`).classList.add('show');
-      });
-    });
-
-    // Manejar la selección de cantidad
-    document.querySelectorAll('.quantity-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('.quantity-btn').forEach(btn => btn.classList.remove('selected'));
-        button.classList.add('selected');
-        cantidadInput.value = button.getAttribute('data-value');
-      });
-    });
-
-    // Manejar el envío al hacer clic en el botón CTA
-    ctaButton.addEventListener('click', (event) => {
-      event.preventDefault();
-      const nombre = document.getElementById('nombre').value;
-      const email = document.getElementById('email').value;
-      const telefono = document.getElementById('telefono').value;
-      const empresa = document.getElementById('empresa').value;
-      const tipoCalendario = tipoCalendarioInput.value;
-      const tamaño = tamañoInput.value;
-      const cantidad = cantidadInput.value;
-
-      console.log({
-        nombre,
-        email,
-        telefono,
-        empresa,
-        tipoCalendario,
-        tamaño,
-        cantidad,
-      });
-    });
-
-    // Delegación de eventos para las medidas
-    sizeContainers.forEach(container => {
-      container.addEventListener('click', (event) => {
-        if (event.target.classList.contains('size-btn')) {
-          container.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
-          event.target.classList.add('selected');
-          tamañoInput.value = event.target.textContent;
+    </section>
+    <script type="module">
+        // Referencias a los elementos del formulario
+        const form = document.getElementById('calendar-form');
+        const responseMessage = document.getElementById('response-message');
+        const tipoCalendarioInput = document.getElementById('tipoCalendario-input');
+        const tamañoInput = document.getElementById('tamaño-input');
+        const cantidadInput = document.getElementById('cantidad-input');
+        const calendarBtns = document.querySelectorAll('.calendar-btn');
+        const sizeContainers = document.querySelectorAll('.size-container');
+        const quantityBtns = document.querySelectorAll('.quantity-btn');
+      
+        // Función para mostrar errores
+        function showError(elementId, message) {
+          const errorElement = document.getElementById(elementId);
+          errorElement.textContent = message;
+          errorElement.classList.remove('hidden');
         }
-      });
-    });
-  </script>
+      
+        // Función para ocultar errores
+        function hideError(elementId) {
+          const errorElement = document.getElementById(elementId);
+          errorElement.classList.add('hidden');
+        }
+      
+        // Validar los campos del formulario
+        function validateForm() {
+          let isValid = true;
+      
+          // Validar nombre
+          const nombre = document.getElementById('nombre');
+          if (!nombre.value) {
+            showError('nombre-error', 'Este campo es obligatorio.');
+            isValid = false;
+          } else {
+            hideError('nombre-error');
+          }
+      
+          // Validar email
+          const email = document.getElementById('email');
+          if (!email.value || !email.value.includes('@')) {
+            showError('email-error', 'Por favor, introduce un email válido.');
+            isValid = false;
+          } else {
+            hideError('email-error');
+          }
+      
+          // Validar tipo de calendario
+          if (!tipoCalendarioInput.value) {
+            showError('tipoCalendario-error', 'Selecciona un tipo de calendario.');
+            isValid = false;
+          } else {
+            hideError('tipoCalendario-error');
+          }
+      
+          // Validar tamaño
+          if (!tamañoInput.value) {
+            showError('tamaño-error', 'Selecciona un tamaño.');
+            isValid = false;
+          } else {
+            hideError('tamaño-error');
+          }
+      
+          // Validar cantidad
+          if (!cantidadInput.value) {
+            showError('cantidad-error', 'Selecciona una cantidad.');
+            isValid = false;
+          } else {
+            hideError('cantidad-error');
+          }
+      
+          // Validar política de privacidad
+          const politicaPrivacidad = document.getElementById('politicaPrivacidad');
+          if (!politicaPrivacidad.checked) {
+            showError('politicaPrivacidad-error', 'Debes aceptar la política de privacidad.');
+            isValid = false;
+          } else {
+            hideError('politicaPrivacidad-error');
+          }
+      
+          return isValid;
+        }
+      
+        // Manejar la selección de tipo de calendario y mostrar las medidas correspondientes
+        calendarBtns.forEach(button => {
+          button.addEventListener('click', () => {
+            // Quitar la clase 'selected' de los botones previos
+            calendarBtns.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+      
+            // Guardar el tipo de calendario seleccionado
+            tipoCalendarioInput.value = button.getAttribute('data-value');
+      
+            // Ocultar todas las medidas y mostrar solo la correspondiente
+            sizeContainers.forEach(container => container.classList.remove('show'));
+            const selectedSizeContainer = document.querySelector(`.size-container.${button.getAttribute('data-value')}`);
+            if (selectedSizeContainer) {
+              selectedSizeContainer.classList.add('show');
+            }
+      
+            // Limpiar selección de tamaño previo
+            tamañoInput.value = '';
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+          });
+        });
+      
+        // Manejar la selección de tamaño (medida del calendario)
+        document.querySelectorAll('.size-btn').forEach(button => {
+          button.addEventListener('click', () => {
+            // Quitar la clase 'selected' de los botones previos dentro del contenedor activo
+            button.parentElement.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+      
+            // Guardar el valor seleccionado en el campo oculto de tamaño
+            tamañoInput.value = button.textContent.trim();  // Actualización aquí
+          });
+        });
+      
+        // Manejar la selección de cantidad
+        quantityBtns.forEach(button => {
+          button.addEventListener('click', () => {
+            quantityBtns.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            cantidadInput.value = button.getAttribute('data-value');
+          });
+        });
+      
+        // Manejar el envío del formulario
+        form.addEventListener('submit', async function (event) {
+          event.preventDefault();
+      
+          // Validar el formulario antes de enviar
+          const isValid = validateForm();
+          if (!isValid) {
+            responseMessage.textContent = 'Por favor, corrige los errores del formulario.';
+            responseMessage.classList.add('text-red-500');
+            return;
+          }
+      
+          // Crear el FormData y enviar la solicitud
+          const formData = new FormData(form);
+          try {
+            const response = await fetch('../../pages/api/send-quotes.ts', {
+              method: 'POST',
+              body: formData
+            });
+      
+            if (response.ok) {
+              responseMessage.textContent = 'Correo enviado con éxito.';
+              responseMessage.classList.remove('text-red-500');
+              responseMessage.classList.add('text-green-500');
+              form.reset(); // Reiniciar el formulario
+            } else {
+              responseMessage.textContent = 'Error al enviar el correo. Inténtalo de nuevo.';
+              responseMessage.classList.add('text-red-500');
+            }
+          } catch (error) {
+            responseMessage.textContent = `Error en la solicitud: ${console.log(error)}`;
+            responseMessage.classList.add('text-red-500');
+          }
+        });
+      </script>
+  
 </body>
