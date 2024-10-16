@@ -11,6 +11,7 @@ import icon from 'astro-icon';
 import compress from 'astro-compress';
 
 import netlify from '@astrojs/netlify'; // Asegúrate de que esto está presente
+import vercel from "@astrojs/vercel/serverless";
 
 import astrowind from './vendor/integration';
 
@@ -32,10 +33,10 @@ const whenExternalScripts = (items = []) =>
 
 export default defineConfig({
   output: 'server', // Esta es la clave para habilitar SSR
-  adapter: netlify({
-    edgeMiddleware: true
-  }),
-  //adapter: vercel(),
+  //adapter: netlify({
+    //edgeMiddleware: true
+  //}),
+  adapter: vercel(),
   //adapter:  netlify({
     //edgeMiddleware: true
   //}),

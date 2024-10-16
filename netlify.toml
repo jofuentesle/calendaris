@@ -1,9 +1,13 @@
 [build]
   publish = "dist"
   command = "npm run build"
+  functions = "netlify/functions"
 
-[functions]
-directory = "src/pages/api"
+[[redirects]]
+  from = "/api/*"
+  to = "/netlify/functions/:splat"
+  status = 200
+
 
 [build.processing.html]
   pretty_urls = false

@@ -116,18 +116,19 @@ const metadata = {
       },
     ]}
   />
-       <!-- CallToAction (2/3 width on large screens) -->
-          <CallToAction
-            title="Solicita tu Presupuesto para Calendarios de Pared con Espiral"
-            subtitle="Imprime calendarios personalizados para tu empresa con entrega rápida en Barcelona y Cataluña. Contacta para recibir la mejor oferta."
-            actions={[
-                {
-                variant: 'primary',
-                text: '¡Solicita oferta hoy',
-                href: '/formularios/calendarios-pared-espiral',
-                icon: 'tabler:mail',
-                },
-              ]}
-            />
+       <!-- Formulario de solicitud -->
+  <div id="form-section">
+    <form id="calendar-form" method="POST" action="/api/send-form">
+      <!-- Formulario generado arriba -->
+    </form>
+  </div>
+
+  <CallToAction
+    title="Solicita tu Presupuesto"
+    subtitle="Compra calendarios tipo revista para pared y recibe la mejor oferta."
+    actions={[
+      { variant: 'primary', text: '¡Solicita oferta hoy!', href: '#form-section', icon: 'tabler:mail' },
+    ]}
+  />
  
 </Layout>

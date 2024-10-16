@@ -1,4 +1,5 @@
-import 'dotenv/config'; 
+import dotenv from 'dotenv'; 
+dotenv.config();
 import sendGrid from '@sendgrid/mail';
 
 if (!process.env.SENDGRID_API_KEY) {
