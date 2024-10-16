@@ -2,7 +2,7 @@
 import WidgetWrapper from '../ui/WidgetWrapper.astro';
 import type { CallToAction, Widget } from '~/types';
 import Headline from '~/components/ui/Headline.astro';
-import DynamicForm from './DynamicForm.astro';
+import Button from '~/components/ui/Button.astro';
 
 interface Props extends Widget {
   title?: string;
@@ -13,23 +13,22 @@ interface Props extends Widget {
 }
 
 const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline = await Astro.slots.render('tagline'),
+  actions = await Astro.slots.render('actions'),
+
   id,
   isDark = false,
   classes = {},
+  bg = await Astro.slots.render('bg'),
 } = Astro.props;
-
-// Asignamos las variables que requieren 'await' después
-const title = await Astro.slots.render('title');
-const subtitle = await Astro.slots.render('subtitle');
-const tagline = await Astro.slots.render('tagline');
-const bg = await Astro.slots.render('bg');
 ---
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
   <div
     class="max-w-3xl mx-auto text-center p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600"
   >
-    <!-- Headline -->
     <Headline
       title={title}
       subtitle={subtitle}
@@ -40,10 +39,20 @@ const bg = await Astro.slots.render('bg');
         subtitle: 'text-xl text-muted dark:text-slate-400',
       }}
     />
-
-    <!-- Formulario Dinámico con botón de envío incluido -->
-    <div class="mt-8 w-full">
-      <DynamicForm />
-    </div>
+    {
+      actions && (
+        <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 mt-6">
+          {Array.isArray(actions) ? (
+            actions.map((action) => (
+              <div class="flex w-full sm:w-auto">
+                <Button {...(action || {})} class="w-full sm:mb-0" />
+              </div>
+            ))
+          ) : (
+            <Fragment set:html={actions} />
+          )}
+        </div>
+      )
+    }
   </div>
 </WidgetWrapper>

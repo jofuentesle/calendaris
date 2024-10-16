@@ -19,17 +19,19 @@ const { metadata } = Astro.props;
     <Fragment slot="header">
       <slot name="header">
         <Header
-          links={headerData?.links[0] ? [headerData.links[0]] : undefined}
-          actions={[
-            {
-              class: 'btn-secondary w-full sm:mb-0',
-              text: 'Suscribirme ahora',
-              href: '/news-letter',
-            },
-          ]}
-          showToggleTheme
-          position="right"
-        />
+  links={headerData?.links[0] ? [headerData.links[0]] : undefined}
+  actions={[
+    {
+      class: 'bg-primary text-white flex items-center space-x-2 px-4 py-2 rounded-full w-full sm:mb-0', // Aseguramos que el botón use background primario
+      text: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+               <path stroke-linecap="round" stroke-linejoin="round" d="M3 10a1 1 0 011-1h5a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zm0-6a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 18a1 1 0 011-1h8a1 1" />
+             </svg> 932748990`,  // El icono de teléfono junto al número
+      href: 'tel:932748990', // Teléfono para que el usuario pueda llamar directamente
+    },
+  ]}
+  showToggleTheme
+  position="right"
+/>
       </slot>
     </Fragment>
     <slot />

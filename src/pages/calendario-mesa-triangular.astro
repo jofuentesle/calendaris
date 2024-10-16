@@ -7,7 +7,7 @@ import Img1 from '~/assets/images/mesa/SobremesaTriangular.jpg';
 import Img2 from '~/assets/images/mesa/SobremesaTriangular1.jpg';
 import Img3 from '~/assets/images/mesa/SobremesaTriangular2.jpg';
 import Img4 from '~/assets/images/mesa/SobremesaTriangular3.jpg';
-import DynamicForm from '~/components/widgets/DynamicForm.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
 
 const galleryImages = [
   { src: Img1.src, alt: 'Imprimir calendarios de mesa personalizados plegados en Barcelona'},
@@ -117,5 +117,19 @@ const metadata = {
 />
 <!-- CallToAction (2/3 width on large screens) -->
    
-   <DynamicForm/>
+   <!-- CallToAction (2/3 width on large screens) -->
+   <CallToAction
+   title="Solicita tu presupuesto"
+   subtitle="Nuestros comerciales contactaran con la mejor oferta"
+   actions={[
+       {
+       variant: 'primary',
+       text: '¡Solicita oferta hoy',
+       href: '/formularios/calendarios-mesa-espiral',
+       icon: 'tabler:mail',
+       },
+     ]}
+   />  
+
+
   </Layout>
