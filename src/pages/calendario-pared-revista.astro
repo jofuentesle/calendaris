@@ -2,7 +2,8 @@
 import Layout from '~/layouts/LandingLayout2.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
 import Features from '~/components/widgets/Features.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+import CallToActionProps from '~/components/widgets/CallToAction.astro';
+import { CallToAction } from '~/types';
 
 import Img1 from '~/assets/images/pared/ParedRevista.jpg';
 import Img2 from '~/assets/images/pared/ParedRevista1.jpg';
@@ -52,6 +53,19 @@ const metadata = {
   }
 };
 
+const actions: CallToAction[] = [
+  {
+    variant: 'primary',
+    text: 'Solicita tu presupuesto personalizado',
+    href: '/contact',
+    icon: 'tabler:mail', // Icono SVG
+  },
+];
+
+// Mejorar contenido SEO
+const title = "Solicita Presupuesto para Calendarios de Pared Tipo Revista";
+const subtitle = "Consigue calendarios de pared tipo revista personalizados para 2025. Ideales para empresas que quieren promocionar su marca con calendarios de alta calidad. Pide tu oferta personalizada hoy.";
+const tagline = "calendarios de pared tipo revista personalizados";
 
 ---
 <Layout metadata={metadata}>
@@ -114,17 +128,14 @@ const metadata = {
   ]}
 />
 
-       <!-- CallToAction (2/3 width on large screens) -->
-          <CallToAction
-            title="Solicita tu Presupuesto para Calendarios Personalizados"
-            subtitle="Compra calendarios tipo revista para pared y recibe la mejor oferta. Impresión rápida y entrega en toda Barcelona."
-            actions={[
-                {
-                variant: 'primary',
-                text: '¡Solicita oferta hoy',
-                href: '/formularios/calendarios-pared-revista',
-                icon: 'tabler:mail',
-                },
-              ]}
-            />
+    <!-- CallToAction (2/3 width on large screens) -->
+    <CallToActionProps 
+      title={title}
+      subtitle={subtitle}
+      tagline={tagline}
+      actions={actions} 
+      id="cta-calendarios-pared-revista"
+      isDark={false}
+      classes={{ container: 'custom-container-class' }}
+    /> 
 </Layout>

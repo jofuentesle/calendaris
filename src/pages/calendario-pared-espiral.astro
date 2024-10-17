@@ -2,7 +2,8 @@
 import Layout from '~/layouts/LandingLayout2.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
 import Features from '~/components/widgets/Features.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+import CallToActionProps from '~/components/widgets/CallToAction.astro';
+import { CallToAction } from '~/types';
 
 import DynamicForm from '~/components/widgets/DynamicForm.astro';
 
@@ -55,6 +56,20 @@ const metadata = {
     "keywords": "calendarios de pared con espiral, calendarios promocionales, impresión de calendarios, comprar calendarios pared online, imprenta de calendarios en Barcelona"
   }
 };
+
+const actions: CallToAction[] = [
+  {
+    variant: 'primary',
+    text: 'Solicita tu presupuesto personalizado',
+    href: '/contact',
+    icon: 'tabler:mail', // Icono SVG
+  },
+];
+
+// Mejorar contenido SEO
+const title = "Obtén tu Presupuesto para Calendarios de Pared con Espiral";
+const subtitle = "Imprime calendarios de pared con espiral personalizados para promocionar tu empresa todo el año. Ideal para promociones empresariales y marketing. Solicita tu presupuesto hoy y destaca con un diseño único.";
+const tagline = "calendarios de pared con espiral personalizados";
 ---
 <Layout metadata={metadata}>
   <!-- Hero2 Widget ******************* -->
@@ -123,12 +138,14 @@ const metadata = {
     </form>
   </div>
 
-  <CallToAction
-    title="Solicita tu Presupuesto"
-    subtitle="Compra calendarios tipo revista para pared y recibe la mejor oferta."
-    actions={[
-      { variant: 'primary', text: '¡Solicita oferta hoy!', href: '#form-section', icon: 'tabler:mail' },
-    ]}
-  />
+  <CallToActionProps 
+  title={title}
+  subtitle={subtitle}
+  tagline={tagline}
+  actions={actions} 
+  id="cta-calendarios-pared-espiral"
+  isDark={false}
+  classes={{ container: 'custom-container-class' }}
+/>
  
 </Layout>

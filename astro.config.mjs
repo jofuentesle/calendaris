@@ -9,6 +9,7 @@ import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import compress from 'astro-compress';
+import astroIcon from 'astro-icon';
 
 import netlify from '@astrojs/netlify'; // Asegúrate de que esto está presente
 import vercel from "@astrojs/vercel/serverless";
@@ -45,6 +46,12 @@ export default defineConfig({
   integrations: [
     tailwind({
       applyBaseStyles: false,
+    }),
+    astroIcon({
+      collections: {
+        // Habilitar la colección de íconos 'tabler'
+        tabler: () => import('@iconify-json/tabler/icons.json'),
+      },
     }),
     sitemap(),
     mdx(),
