@@ -2,7 +2,8 @@
 import Layout from '../layouts/LandingLayout2.astro';
 import Hero2 from '../components/widgets/Hero2.astro';
 import Features from '../components/widgets/Features.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+import CallToActionProps from '~/components/widgets/CallToAction.astro';
+import { CallToAction } from '~/types';
 
 //Importamos images galeria
 import Img1 from '~/assets/images/mesa/SobremesaEspiral.jpg';
@@ -61,19 +62,19 @@ const metadata = {
   }
 };
 
-const actions = [
+const actions: CallToAction[] = [
   {
     variant: 'primary',
-    text: 'Solicita tu oferta hoy',
+    text: 'Solicita tu presupuesto personalizado',
     href: '/contact',
-    icon: '', // Icono SVG
+    icon: 'tabler:mail', // Icono SVG
   },
 ];
 
 // Mejorar contenido SEO
 const title = "Solicita Presupuesto para Calendarios de Mesa con Espiral";
 const subtitle = "Consigue la mejor oferta para calendarios personalizados de sobremesa. Nuestros comerciales te contactarán con una propuesta a medida.";
-const tagline = "Ofertas exclusivas para empresas. ¡Promociona tu marca durante todo el año!";
+const tagline = "calendarios de mesa personalizados";
 ---
 <Layout metadata={metadata}>
   <!-- Hero2 Widget ******************* -->
@@ -134,7 +135,7 @@ const tagline = "Ofertas exclusivas para empresas. ¡Promociona tu marca durante
 />
 
 
-<CallToAction 
+<CallToActionProps 
   title={title}
   subtitle={subtitle}
   tagline={tagline}

@@ -2,12 +2,13 @@
 import Layout from '../layouts/LandingLayout2.astro';
 import Hero2 from '../components/widgets/Hero2.astro';
 import Features from '../components/widgets/Features.astro';
+import CallToActionProps from '~/components/widgets/CallToAction.astro';
+import { CallToAction } from '~/types';
 
 import Img1 from '~/assets/images/mesa/SobremesaTriangular.jpg';
 import Img2 from '~/assets/images/mesa/SobremesaTriangular1.jpg';
 import Img3 from '~/assets/images/mesa/SobremesaTriangular2.jpg';
 import Img4 from '~/assets/images/mesa/SobremesaTriangular3.jpg';
-import CallToAction from '~/components/widgets/CallToAction.astro';
 
 const galleryImages = [
   { src: Img1.src, alt: 'Imprimir calendarios de mesa personalizados plegados en Barcelona'},
@@ -17,28 +18,27 @@ const galleryImages = [
 ];
 
 const metadata = {
-  title: "Calendarios de Mesa Personalizados  en Barcelona | Imprenta Repro Disseny",
-  description: "Imprime calendarios de mesa personalizados y plegados en Barcelona. Calendarios con fotos personalizados para empresas. Perfectos para promocionar tu negocio.",
+  title: "Calendarios de Mesa Personalizados en Barcelona | Promociona Tu Marca Todo el Año - Repro Disseny",
+  description: "Imprime calendarios de mesa personalizados en Barcelona con fotos y logotipos. Perfectos para empresas que desean promocionar su negocio todo el año. Pide tu presupuesto personalizado y recibe calendarios de alta calidad a precios competitivos. ¡Promociona tu marca de manera efectiva con calendarios plegados y económicos!",
   keywords: [
-    "Calendarios de mesa personalizados",
-    "Calendario triangular de sobremesa",
-    "Calendario publicitario",
-    "Calendario de mesa económico",
-    "Calendarios de empresa personalizados",
-    "Impresión de calendarios triangulares",
-    "Calendario de sobremesa triangular personalizado",
-    "imprimir calendarios Barcelona plegados",
-    "calendarios de mesa triangular",
-    "imprenta de calendarios en Barcelona",
-    "calendario con fotos personalizado",
-    "comprar calendarios en Barcelona"
+  "Calendarios de mesa personalizados",
+  "Calendarios de sobremesa publicitarios",
+  "Calendarios económicos para empresas",
+  "Imprenta de calendarios Barcelona",
+  "Calendarios con fotos personalizados",
+  "Calendarios triangulares de mesa",
+  "Impresión de calendarios publicitarios",
+  "Calendarios plegados personalizados",
+  "Comprar calendarios de empresa Barcelona",
+  "Impresión de calendarios económicos",
+  "Calendarios para empresas en Barcelona"
   ],
   canonical: "https://calendarios.reprodisseny.com/calendarios-mesa-triangular",
   jsonLd: {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "Calendarios de Mesa Personalizados para Empresas en Barcelona",
-    "description": "Solicita calendarios de mesa personalizados plegados con fotos y logotipos. Ideal para promocionar tu marca en Barcelona y Cataluña todo el año.",
+    "description": "Solicita calendarios de mesa personalizados plegados con fotos y logotipos. Perfectos para promocionar tu marca todo el año en Barcelona. Pide tu presupuesto hoy y sorprende a tus clientes con un regalo corporativo práctico y elegante.",
     "image": "../../assets/images/mesa/SobremesaTriangular.jpg",
     "brand": {
       "@type": "Brand",
@@ -46,7 +46,7 @@ const metadata = {
     },
     "offers": {
       "@type": "Offer",
-      "url": "https://https://calendarios.reprodisseny.com/calendarios-mesa-triangular",
+      "url": "https://calendarios.reprodisseny.com/calendarios-mesa-triangular",
       "priceCurrency": "EUR",
       "price": "5.99",
       "availability": "https://schema.org/InStock"
@@ -55,6 +55,20 @@ const metadata = {
   }
 };
 
+//CallToAction
+const actions:CallToAction[] = [
+  {
+    variant: 'primary',
+    text: 'Solicita tu presupuesto personalizado',
+    href: '/contact',
+    icon: 'tabler:mail', // Icono SVG
+  },
+];
+
+// Mejorar contenido SEO
+const title = "Solicita Presupuesto para Calendarios de Mesa Triangulares";
+const subtitle = "Obtén la mejor oferta para calendarios de sobremesa triangulares personalizados. Nos pondremos en contacto contigo para ofrecerte una propuesta ajustada a tus necesidades.";
+const tagline = "calendarios de mesa triangulares personalizados";
 ---
 
 <Layout metadata={metadata}>
@@ -115,21 +129,15 @@ const metadata = {
     },
   ]}
 />
-<!-- CallToAction (2/3 width on large screens) -->
    
-   <!-- CallToAction (2/3 width on large screens) -->
-   <CallToAction
-   title="Solicita tu presupuesto"
-   subtitle="Nuestros comerciales contactaran con la mejor oferta"
-   actions={[
-       {
-       variant: 'primary',
-       text: '¡Solicita oferta hoy',
-       href: '/formularios/calendarios-mesa-espiral',
-       icon: 'tabler:mail',
-       },
-     ]}
-   />  
-
-
+  <!-- CallToAction (2/3 width on large screens) -->
+   <CallToActionProps 
+      title={title}
+      subtitle={subtitle}
+      tagline={tagline}
+      actions={actions} 
+      id="cta-calendarios-triangulares"
+      isDark={false}
+      classes={{ container: 'custom-container-class' }}
+    />  
   </Layout>
