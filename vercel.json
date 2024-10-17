@@ -11,5 +11,11 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/solicitar-presupuesto",
+      "destination": "/solicitar-presupuesto"
+    }
   ]
 }

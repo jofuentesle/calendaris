@@ -9,7 +9,7 @@ const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
-  selects = [],
+  selects = [], // Aquí se usará para los tipos de calendario
   inputs,
   textarea,
   disclaimer,
@@ -20,6 +20,24 @@ const {
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+const calendarOptions = [
+  { value: 'mesa-espiral', label: 'Mesa Espiral' },
+  { value: 'mesa-triangular', label: 'Mesa Triangular' },
+  { value: 'pared-revista', label: 'Pared Revista' },
+  { value: 'pared-espiral', label: 'Pared Espiral' },
+];
+
+// Opciones de tamaño dinámico según tipo de calendario
+const sizesByType = {
+  'mesa-espiral': ['21x10cm', '15x15cm', '21x15cm'],
+  'mesa-triangular': ['A5', '25x15cm'],
+  'pared-espiral': ['24x34cm', '34x24cm'],
+  'pared-revista': ['34x48cm'],
+};
+
+// Cantidades disponibles
+const quantities = [50, 100, 200, 500, 1000];
 ---
 
 <WidgetWrapper
@@ -37,7 +55,23 @@ const {
       <div class="flex flex-col max-w-xl mx-auto rounded-lg backdrop-blur border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8 w-full">
         <FormContainer
           inputs={inputs}
-          selects={selects}
+          selects={[
+            {
+              name: 'tipoCalendario',
+              label: 'Tipo de Calendario',
+              options: calendarOptions
+            },
+            {
+              name: 'tamaño',
+              label: 'Tamaño',
+              options: sizesByType // Este se actualizará en función del tipo seleccionado
+            },
+            {
+              name: 'cantidad',
+              label: 'Cantidad',
+              options: quantities
+            }
+          ]}
           textarea={textarea}
           disclaimer={disclaimer}
           button={button}
