@@ -3,7 +3,6 @@ import Layout from '~/layouts/LandingLayout2.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
 import Features from '~/components/widgets/Features.astro';
 import CallToActionProps from '~/components/widgets/CallToAction.astro';
-import { CallToAction } from '~/types';
 
 import Img1 from '~/assets/images/pared/ParedRevista.jpg';
 import Img2 from '~/assets/images/pared/ParedRevista1.jpg';
@@ -53,14 +52,6 @@ const metadata = {
   }
 };
 
-const actions: CallToAction[] = [
-  {
-    variant: 'primary',
-    text: 'Solicita tu presupuesto personalizado',
-    href: '/contact',
-    icon: 'tabler:mail', // Icono SVG
-  },
-];
 
 // Mejorar contenido SEO
 const title = "Solicita Presupuesto para Calendarios de Pared Tipo Revista";
@@ -76,7 +67,7 @@ const tagline = "calendarios de pared tipo revista personalizados";
     title="Calendarios de pared 2025 personalizados"
     subtitle="Impresión de alta calidad y diseño atractivo para promocionar tu marca en Barcelona."
     actions={[
-      { variant: 'primary', text: 'Pide tu oferta!', href: '#form-section', icon: 'tabler:square-rounded-arrow-right' },
+      { variant: 'primary', text: 'Pide tu oferta!', href: `/solicitar-presupuesto-calendarios?tipo=pared-revista`, icon: 'tabler:square-rounded-arrow-right' },
       { text: 'Saber más', href: '#features' },
     ]}
     galleryImages={galleryImages}
@@ -133,7 +124,14 @@ const tagline = "calendarios de pared tipo revista personalizados";
       title={title}
       subtitle={subtitle}
       tagline={tagline}
-      actions={actions} 
+      actions={[
+        {
+          variant: 'primary',
+          text: 'Solicita tu presupuesto personalizado',
+          href: `/solicitar-presupuesto-calendarios?tipo=pared-revista`,
+          icon: 'tabler:mail', // Icono SVG
+        },
+      ]}  
       id="cta-calendarios-pared-revista"
       isDark={false}
       classes={{ container: 'custom-container-class' }}

@@ -4,12 +4,10 @@ import Headline from '~/components/ui/Headline.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import type { Contact as Props } from '~/types';
 
-
 const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
-  selects = [], // Aquí se usará para los tipos de calendario
   inputs,
   textarea,
   disclaimer,
@@ -21,14 +19,6 @@ const {
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
 
-const calendarOptions = [
-  { value: 'mesa-espiral', label: 'Mesa Espiral' },
-  { value: 'mesa-triangular', label: 'Mesa Triangular' },
-  { value: 'pared-revista', label: 'Pared Revista' },
-  { value: 'pared-espiral', label: 'Pared Espiral' },
-];
-
-// Opciones de tamaño dinámico según tipo de calendario
 const sizesByType = {
   'mesa-espiral': ['21x10cm', '15x15cm', '21x15cm'],
   'mesa-triangular': ['A5', '25x15cm'],
@@ -36,48 +26,141 @@ const sizesByType = {
   'pared-revista': ['34x48cm'],
 };
 
-// Cantidades disponibles
 const quantities = [50, 100, 200, 500, 1000];
+
+let selectedSize = '';
+let selectedQuantity = '';
 ---
 
 <WidgetWrapper
-  id={id} 
-  isDark={isDark} 
-  containerClass={`max-w-7xl mx-auto 
-  ${classes?.container ?? ''}`} 
-  bg={bg}>
-
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`}
+  bg={bg}
+>
   <!-- Encabezado del formulario -->
-  <Headline title={title} subtitle={subtitle} tagline={tagline} />
 
-  {
-    inputs && (
-      <div class="flex flex-col max-w-xl mx-auto rounded-lg backdrop-blur border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8 w-full">
-        <FormContainer
-          inputs={inputs}
-          selects={[
-            {
-              name: 'tipoCalendario',
-              label: 'Tipo de Calendario',
-              options: calendarOptions
-            },
-            {
-              name: 'tamaño',
-              label: 'Tamaño',
-              options: sizesByType // Este se actualizará en función del tipo seleccionado
-            },
-            {
-              name: 'cantidad',
-              label: 'Cantidad',
-              options: quantities
-            }
-          ]}
-          textarea={textarea}
-          disclaimer={disclaimer}
-          button={button}
-          description={description}
-        />
+  <div class="flex flex-col max-w-xl mx-auto rounded-lg backdrop-blur border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8 w-full">
+    <!-- Formulario de contacto -->
+    <form id="contact-form" method="POST">
+      <!-- Nombre -->
+      <div class="input-icon-container relative w-full mb-4">
+        <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre *</label>
+        <input id="nombre" name="nombre" required placeholder="Introduce tu nombre" class="form-input border border-gray-300 rounded-full py-2 px-4 w-full focus:outline-none focus:ring focus:border-blue-300" />
       </div>
-    )
-  }
+
+      <!-- Teléfono -->
+      <div class="relative mb-4">
+        <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono *</label>
+        <input id="telefono" name="telefono" type="tel" required placeholder="Introduce tu teléfono" class="form-input border border-gray-300 rounded-full py-2 px-4 w-full focus:outline-none focus:ring focus:border-blue-300" />
+      </div>
+
+      <!-- Email -->
+      <div class="relative mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
+        <input id="email" name="email" type="email" required placeholder="Introduce tu email" class="form-input border border-gray-300 rounded-full py-2 px-4 w-full focus:outline-none focus:ring focus:border-blue-300" />
+      </div>
+
+      <!-- Empresa -->
+      <div class="relative mb-4">
+        <label for="empresa" class="block text-sm font-medium text-gray-700">Empresa</label>
+        <input id="empresa" name="empresa" placeholder="Introduce tu empresa" class="form-input border border-gray-300 rounded-full py-2 px-4 w-full focus:outline-none focus:ring focus:border-blue-300" />
+      </div>
+
+      <!-- Tamaño del calendario -->
+      <div class="text-center mb-4">
+        <label for="tamaño" class="block text-sm font-bold text-gray-700 mb-2">Tamaño del calendario *</label>
+        <div class="flex justify-center gap-4 flex-wrap">
+          {sizesByType['mesa-espiral'].map(size => (
+            <button type="button" class="size-btn py-2 px-4 rounded-full border border-gray-300" data-value={size} onClick={() => {
+              document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+              selectedSize = size;
+              document.getElementById('size-input').value = size;
+              event.currentTarget.classList.add('selected');
+            }}>
+              {size}
+            </button>
+          ))}
+        </div>
+        <input type="hidden" name="tamaño" id="size-input" required />
+        <span class="error-message hidden">Selecciona un tamaño.</span>
+      </div>
+
+      <!-- Cantidad con botones -->
+      <div class="text-center mb-4">
+        <label for="cantidad" class="block text-sm font-bold text-gray-700 mb-2">Cantidad *</label>
+        <div class="flex justify-center gap-4 flex-wrap">
+          {quantities.map(quantity => (
+            <button type="button" class="quantity-btn py-2 px-4 rounded-full border border-gray-300" data-value={quantity} onClick={() => {
+              document.querySelectorAll('.quantity-btn').forEach(btn => btn.classList.remove('selected'));
+              selectedQuantity = quantity;
+              document.getElementById('quantity-input').value = quantity;
+              event.currentTarget.classList.add('selected');
+            }}>
+              {quantity}
+            </button>
+          ))}
+        </div>
+        <input type="hidden" name="cantidad" id="quantity-input" required />
+        <span class="error-message hidden">Selecciona una cantidad.</span>
+      </div>
+
+      <!-- Aceptación de política de privacidad -->
+      <div class="mb-4">
+        <label class="flex items-center">
+          <input type="checkbox" name="politicaPrivacidad" id="politicaPrivacidad" required class="mr-2" />
+          Acepto la política de privacidad *
+        </label>
+        <span class="error-message hidden">Debes aceptar la política de privacidad.</span>
+      </div>
+
+      <!-- Botón de envío -->
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary">Solicitud de precio</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.querySelectorAll('.size-btn').forEach(button => {
+      button.addEventListener('click', (event) => {
+        document.getElementById('size-input').value = button.getAttribute('data-value');
+        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('selected'));
+        event.currentTarget.classList.add('selected');
+      });
+    });
+
+    document.querySelectorAll('.quantity-btn').forEach(button => {
+      button.addEventListener('click', (event) => {
+        document.getElementById('quantity-input').value = button.getAttribute('data-value');
+        document.querySelectorAll('.quantity-btn').forEach(btn => btn.classList.remove('selected'));
+        event.currentTarget.classList.add('selected');
+      });
+    });
+  </script>
+
+  <style>
+    .selected {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+
+    .form-input {
+      border-width: 2px;
+      border-style: solid;
+      border-color: gray;
+      border-radius: 9999px;
+      transition: border-color 0.3s;
+    }
+
+    .form-input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+    }
+
+    .size-btn, .quantity-btn {
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+  </style>
 </WidgetWrapper>

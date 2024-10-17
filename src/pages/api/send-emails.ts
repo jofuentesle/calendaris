@@ -1,3 +1,4 @@
+import { IncomingMessage, ServerResponse } from 'http';
 import dotenv from 'dotenv'; 
 dotenv.config();
 import sendGrid from '@sendgrid/mail';
@@ -8,40 +9,40 @@ if (!process.env.SENDGRID_API_KEY) {
 
 sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-export async function post(context) {
-  const { request } = context;
-    const l ="hola";
-  if (request.method === 'POST') {
+export async function post(req: IncomingMessage, res: ServerResponse) {
+  let body = '';
+
+  // Obtener los datos del cuerpo de la solicitud
+  req.on('data', chunk => {
+    body += chunk.toString();
+  });
+
+  req.on('end', async () => {
+    const { name, email, telefono, empresa, tamaño, cantidad, tipoCalendario } = JSON.parse(body);
+
     try {
-      const formData = await request.formData();
-      const name = formData.get('name');
-      const email = formData.get('email');
-  
+      await sendgrid.send({
+        to: 'tu-email@empresa.com', // Cambia a tu dirección de correo electrónico
+        from: 'noreply@empresa.com', // Verifica que tu dominio está autorizado en SendGrid
+        subject: `Solicitud de presupuesto de calendarios - ${tipoCalendario}`,
+        html: `
+          <p><strong>Nombre:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Teléfono:</strong> ${telefono}</p>
+          <p><strong>Empresa:</strong> ${empresa}</p>
+          <p><strong>Tamaño del calendario:</strong> ${tamaño}</p>
+          <p><strong>Cantidad:</strong> ${cantidad}</p>
+        `,
+      });
 
-      // Validación básica de los campos
-      if (!name || !email ) {
-        return new Response(JSON.stringify({ error: 'Todos los campos son obligatorios' }), { status: 400 });
-      }
-
-      // Configuración del correo
-      const msg = {
-        to: 'jordi@reprodisseny.com',
-        from: 'jfuentesleiva@gmail.com',
-        replyTo: { email: String(email), name: String(name) },
-        subject: `Nuevo mensaje de contacto de ${String(name)}`,
-        text: String(l),
-      };
-
-      // Envío del correo con SendGrid
-      await sendGrid.send(msg);
-
-      return new Response(JSON.stringify({ success: 'Correo enviado con éxito' }), { status: 200 });
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ message: 'Correo enviado correctamente.' }));
     } catch (error) {
       console.error('Error al enviar el correo:', error);
-      return new Response(JSON.stringify({ error: 'Error al enviar el correo' }), { status: 500 });
+      res.statusCode = 500;
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ message: 'Error al enviar el correo.' }));
     }
-  } else {
-    // Si el método no es POST, devolver un error
-    return new Response(JSON.stringify({ error: 'Método no permitido' }), { status: 405 });
-  }
+  });
 }

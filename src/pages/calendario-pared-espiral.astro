@@ -3,9 +3,6 @@ import Layout from '~/layouts/LandingLayout2.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
 import Features from '~/components/widgets/Features.astro';
 import CallToActionProps from '~/components/widgets/CallToAction.astro';
-import { CallToAction } from '~/types';
-
-import DynamicForm from '~/components/widgets/DynamicForm.astro';
 
 //Importamos images para las rutas
 import Img1 from '~/assets/images/pared/ParedEspiral.jpg';
@@ -57,14 +54,6 @@ const metadata = {
   }
 };
 
-const actions: CallToAction[] = [
-  {
-    variant: 'primary',
-    text: 'Solicita tu presupuesto personalizado',
-    href: '/contact',
-    icon: 'tabler:mail', // Icono SVG
-  },
-];
 
 // Mejorar contenido SEO
 const title = "Obtén tu Presupuesto para Calendarios de Pared con Espiral";
@@ -79,14 +68,12 @@ const tagline = "calendarios de pared con espiral personalizados";
     title="Calendarios de Pared con Espiral: Promoción Empresarial Continua"
     subtitle="Imprime calendarios publicitarios de pared con espiral personalizados para promocionar tu marca todo el año. Ofrecemos impresión de alta calidad en Barcelona."
     actions={[
-      { variant: 'primary', text: 'Pide tu oferta!', href: '#form-section', icon: 'tabler:square-rounded-arrow-right' },
+      { variant: 'primary', text: 'Pide tu oferta!', href: `/solicitar-presupuesto-calendarios?tipo=pared-espiral`, icon: 'tabler:square-rounded-arrow-right' },
       { text: 'Saber más', href: '#features' },
     ]}
     galleryImages={galleryImages}
-    
   />
 
-  <DynamicForm/>
   <Features 
     id="features"
     tagline="Caracteristicas Clave"
@@ -142,7 +129,14 @@ const tagline = "calendarios de pared con espiral personalizados";
   title={title}
   subtitle={subtitle}
   tagline={tagline}
-  actions={actions} 
+  actions={[
+    {
+      variant: 'primary',
+      text: 'Solicita tu presupuesto personalizado',
+      href: `/solicitar-presupuesto-calendarios?tipo=pared-espiral`,
+      icon: 'tabler:mail', // Icono SVG
+    },
+  ]}  
   id="cta-calendarios-pared-espiral"
   isDark={false}
   classes={{ container: 'custom-container-class' }}

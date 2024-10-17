@@ -3,7 +3,6 @@ import Layout from '../layouts/LandingLayout2.astro';
 import Hero2 from '../components/widgets/Hero2.astro';
 import Features from '../components/widgets/Features.astro';
 import CallToActionProps from '~/components/widgets/CallToAction.astro';
-import { CallToAction } from '~/types';
 
 import Img1 from '~/assets/images/mesa/SobremesaTriangular.jpg';
 import Img2 from '~/assets/images/mesa/SobremesaTriangular1.jpg';
@@ -55,16 +54,6 @@ const metadata = {
   }
 };
 
-//CallToAction
-const actions:CallToAction[] = [
-  {
-    variant: 'primary',
-    text: 'Solicita tu presupuesto personalizado',
-    href: '/contact',
-    icon: 'tabler:mail', // Icono SVG
-  },
-];
-
 // Mejorar contenido SEO
 const title = "Solicita Presupuesto para Calendarios de Mesa Triangulares";
 const subtitle = "Obtén la mejor oferta para calendarios de sobremesa triangulares personalizados. Nos pondremos en contacto contigo para ofrecerte una propuesta ajustada a tus necesidades.";
@@ -79,7 +68,7 @@ const tagline = "calendarios de mesa triangulares personalizados";
     title="Impresión de Calendarios de Mesa en Barcelona | Diseño Triangular y Plegado"
     subtitle="Imprime calendarios de mesa personalizados y plegados en Barcelona. Perfectos para la promoción de tu empresa durante todo el año."
     actions={[
-     { variant: 'primary', text: 'Solicita tu oferta', href: '#form-section', icon: 'tabler:square-rounded-arrow-right' },
+     { variant: 'primary', text: 'Solicita tu oferta', href: `/solicitar-presupuesto-calendarios?tipo=mesa-triangular`, icon: 'tabler:square-rounded-arrow-right' },
      { text: 'Ver características', href: '#features' },
     ]}
        galleryImages={galleryImages}
@@ -135,7 +124,14 @@ const tagline = "calendarios de mesa triangulares personalizados";
       title={title}
       subtitle={subtitle}
       tagline={tagline}
-      actions={actions} 
+      actions={[
+        {
+          variant: 'primary',
+          text: 'Solicita tu presupuesto personalizado',
+          href: `/solicitar-presupuesto-calendarios?tipo=mesa-triangular`,
+          icon: 'tabler:mail', // Icono SVG
+        },
+      ]} 
       id="cta-calendarios-triangulares"
       isDark={false}
       classes={{ container: 'custom-container-class' }}

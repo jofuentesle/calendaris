@@ -16,101 +16,73 @@ const calendarOptions = {
   'mesa-espiral': {
     title: 'Solicita presupuesto para Calendarios de Mesa con Espiral',
     subtitle: 'Personaliza tus calendarios de mesa con espiral y promociona tu marca durante todo el año.',
+    medidas: ['15x15 cm', '20x20 cm', '25x25 cm'], // Opciones específicas
   },
   'mesa-triangular': {
     title: 'Solicita presupuesto para Calendarios de Mesa Triangular',
     subtitle: 'Perfectos para oficinas y mesas de trabajo, personaliza tus calendarios triangulares.',
+    medidas: ['10x20 cm', '15x30 cm'] // Opciones específicas
   },
   'pared-espiral': {
     title: 'Solicita presupuesto para Calendarios de Pared con Espiral',
     subtitle: 'Promociona tu marca durante todo el año con nuestros calendarios de pared con espiral.',
+    medidas: ['30x40 cm', '40x60 cm', '50x70 cm'] // Opciones específicas
   },
   'pared-revista': {
     title: 'Solicita presupuesto para Calendarios de Pared tipo Revista',
     subtitle: 'Nuestros calendarios tipo revista son perfectos para destacar tu marca de manera elegante.',
+    medidas: ['A3', 'A4', 'A5'] // Opciones específicas
   },
 };
 
-// Obtener los valores correspondientes al tipo de calendario
-const { title, subtitle } = calendarOptions[tipoCalendario] || calendarOptions['mesa-espiral'];
+// Verificar si 'tipoCalendario' es null y asignar un valor por defecto
+const tipoCalendarioValido: string = tipoCalendario !== null ? tipoCalendario : 'mesa-espiral';
+
+// Obtener los valores correspondientes al tipo de calendario o usar los valores por defecto
+const { title, subtitle } = calendarOptions[tipoCalendarioValido];
 
 ---
 
 <Layout metadata={metadata}>
   <!-- HeroText Widget ******************* -->
 
-  <HeroText tagline="Contact" title="Let's Connect!" />
+  <HeroText tagline="Contacta con nosotros" title={title} subtitle={subtitle} />
 
-  <ContactUs
-  id="form"
-  title={title}
-  subtitle={subtitle}
-  inputs={[
-    {
-      type: 'text',
-      name: 'name',
-      label: 'Nombre *',
-    },
-    {
-      type: 'email',
-      name: 'email',
-      label: 'Email *',
-    },
-    {
-      type: 'text',
-      name: 'tamaño',
-      label: 'Tamaño del Calendario',
-    },
-    {
-      type: 'number',
-      name: 'cantidad',
-      label: 'Cantidad',
-    }
-  ]}
-  textarea={{
-    label: 'Mensaje adicional',
-  }}
-  disclaimer={{
-    label:
-      'Acepto la política de privacidad.',
-  }}
-  description="Nuestro equipo se pondrá en contacto contigo en menos de 24 horas."
-/>
+   <!-- Usamos el componente Contact y añadimos los botones para tamaño y cantidad -->
+   <ContactUs
+   title={title}
+   subtitle={subtitle}
+   inputs={[
+     {
+       type: 'text',
+       name: 'name',
+       label: 'Nombre *',
+      
+     },
+     {
+       type: 'email',
+       name: 'email',
+       label: 'Email *',
+       
+     },
+     {
+       type: 'tel',
+       name: 'telefono',
+       label: 'Teléfono *',
+       
+     },
+     {
+       type: 'text',
+       name: 'empresa',
+       label: 'Empresa',
+       
+     },
+   ]}
+  
+   disclaimer={{
+     label: 'Acepto la política de privacidad.',
+   }}
+   description="Nuestro equipo se pondrá en contacto contigo en menos de 24 horas."
+ />
 
-  <!-- Features2 Widget ************** -->
-
-  <Features2
-    title="We are here to help!"
-    items={[
-      {
-        title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
-      },
-      {
-        title: 'Contact sales',
-        description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
-      },
-      {
-        title: 'Technical support',
-        description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
-      },
-      {
-        title: 'Phone',
-        description: '+1 (234) 567-890',
-        icon: 'tabler:headset',
-      },
-      {
-        title: 'Email',
-        description: 'contact@support.com',
-        icon: 'tabler:mail',
-      },
-      {
-        title: 'Location',
-        description: '1234 Lorem Ipsum St, 12345, Miami, EEUU',
-        icon: 'tabler:map-pin',
-      },
-    ]}
-  />
 </Layout>
