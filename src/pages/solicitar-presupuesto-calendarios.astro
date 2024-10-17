@@ -75,60 +75,31 @@ const { title, subtitle, medidas = [] } = calendarOptions[tipoCalendario];
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Lógica para la selección de medidas
-      const sizeButtons = document.querySelectorAll('.size-btn');
-      const sizeInput = document.getElementById('size-input');
+      const formId = `contact-form-${id}`;
       
-      if (sizeButtons && sizeInput) {
-        sizeButtons.forEach(button => {
-          button.addEventListener('click', () => {
-            const selectedSize = button.getAttribute('data-value');
-
-            // Desmarcar todos los botones previamente seleccionados
-            sizeButtons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-
-            // Asignar el valor seleccionado al input oculto
-            sizeInput.value = selectedSize || '';
-          });
-        });
-      }
-
-      // Lógica para la selección de cantidad
-      const quantityButtons = document.querySelectorAll('.quantity-btn');
-      const quantityInput = document.getElementById('quantity-input');
-
-      if (quantityButtons && quantityInput) {
-        quantityButtons.forEach(button => {
-          button.addEventListener('click', () => {
-            const selectedQuantity = button.getAttribute('data-value');
-
-            // Desmarcar todos los botones previamente seleccionados
-            quantityButtons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-
-            // Asignar el valor seleccionado al input oculto
-            quantityInput.value = selectedQuantity || '';
-          });
-        });
-      }
-
+      // Lógica para la selección de medidas y cantidad usando ID dinámico
+      const sizeButtons = document.querySelectorAll(`#${formId} .size-btn`);
+      const sizeInput = document.getElementById(`${formId}-size-input`);
+      const quantityButtons = document.querySelectorAll(`#${formId} .quantity-btn`);
+      const quantityInput = document.getElementById(`${formId}-quantity-input`);
+  
       // Manejador de envío de formulario con Fetch
-      const form = document.getElementById('contact-form');
-      if (form) {
-        form.addEventListener('submit', async (event) => {
-          event.preventDefault();  // Prevenir comportamiento por defecto
-          
-          const formData = new FormData(form);
+      const contactForm = document.getElementById(formId); // Cambio de nombre a contactForm
+      if (contactForm) {
+        contactForm.addEventListener('submit', async (event) => {
+          event.preventDefault(); // Prevenir comportamiento por defecto
+          const formData = new FormData(contactForm);
           const data = Object.fromEntries(formData.entries());
-
+  
+          console.log(data); // Verificar los datos
+  
           try {
             const response = await fetch('/api/send-email', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(data),
             });
-
+  
             const result = await response.json();
             if (response.ok) {
               alert('Correo enviado correctamente.');
@@ -143,4 +114,5 @@ const { title, subtitle, medidas = [] } = calendarOptions[tipoCalendario];
       }
     });
   </script>
+  
 </Layout>

@@ -25,7 +25,7 @@ const quantities = [50, 100, 200, 500, 1000];
   bg={bg}
 >
   <div class="flex flex-col max-w-xl mx-auto rounded-lg backdrop-blur border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8 w-full">
-    <form id="contact-form" method="POST" action="/api/send-email">
+    <form id={`contact-form-${id}`}  method="POST" action="/api/send-email">
       <!-- Nombre -->
       {inputs?.map(input => (
         <div class="relative mb-4">
@@ -77,6 +77,48 @@ const quantities = [50, 100, 200, 500, 1000];
       <div class="text-center mt-4">
         <button type="submit" class="btn btn-primary">Solicitud de precio</button>
       </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const formId = `contact-form-${id}`;
+          
+          // Lógica para la selección de medidas y cantidad usando ID dinámico
+          const sizeButtons = document.querySelectorAll(`#${formId} .size-btn`);
+          const sizeInput = document.getElementById(`${formId}-size-input`);
+          const quantityButtons = document.querySelectorAll(`#${formId} .quantity-btn`);
+          const quantityInput = document.getElementById(`${formId}-quantity-input`);
+      
+          // Manejador de envío de formulario con Fetch
+          const contactForm = document.getElementById(formId);
+          if (contactForm) {
+            contactForm.addEventListener('submit', async (event) => {
+              event.preventDefault();
+              const formData = new FormData(contactForm);
+              const data = Object.fromEntries(formData.entries());
+      
+              console.log(data); // Verificar los datos
+      
+              try {
+                const response = await fetch('/api/send-email', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(data),
+                });
+      
+                const result = await response.json();
+                if (response.ok) {
+                  alert('Correo enviado correctamente.');
+                } else {
+                  alert('Error al enviar el correo.');
+                }
+              } catch (error) {
+                console.error('Error:', error);
+                alert('Error al enviar el correo.');
+              }
+            });
+          }
+        });
+      </script>
+      
     </form>
   </div>
 </WidgetWrapper>
