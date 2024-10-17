@@ -15,8 +15,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Configuración optimizada para sitio estático en Plesk
 export default defineConfig({
-  output: 'hybrid',  // Salida estática optimizada para Plesk
-  site: 'https://tapasbattle.com/',
+  output: 'server',  // Salida estática optimizada para Plesk
   adapter: node({
     mode: "standalone"
   }),

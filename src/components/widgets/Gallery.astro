@@ -3,91 +3,76 @@
 const { images = [] } = Astro.props;
 ---
 <script>
-  // Core de Swiper y estilos
   import Swiper, { Swiper as SwiperInstance } from 'swiper';
   import { Navigation, Thumbs, FreeMode } from 'swiper/modules';
-  import 'swiper/css';
   import 'swiper/css';
   import 'swiper/css/navigation';
   import 'swiper/css/free-mode';
   import 'swiper/css/thumbs';
-  // Photoswipe y estilos
+
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
   import 'photoswipe/style.css';
 
-  let mainSwiper: SwiperInstance|null = null;
-  let thumbsSwiper:SwiperInstance|null = null;
+  let mainSwiper = null;
+  let thumbsSwiper = null;
 
-
-  // Ejecutar el script cuando el DOM esté completamente cargado
   function initializeSwiper() {
-
-    // Destruir instancias anteriores si existen
+    // Destruir instancias anteriores
     if (mainSwiper) {
-    mainSwiper.destroy();
-    mainSwiper = null;
-    lightbox.destroy();
-  }
-  if (thumbsSwiper) {
-    thumbsSwiper.destroy(); // Destruir correctamente
-    thumbsSwiper = null;
-  }
-  // Inicializar Swiper de nuevo
-  thumbsSwiper = new Swiper(".thumbs", {
-    spaceBetween: 10,
-    slidesPerView: 4,
-    freeMode: true,
-    watchSlidesProgress: true,
-    modules: [FreeMode],
-  });
-
-  mainSwiper = new Swiper(".main", {
-    modules: [Navigation, Thumbs],
-    loop: true,
-    slidesPerView:"auto",
-    breakpoints: {
-    // Cuando la pantalla es >= 768px
-    768: {
-      slidesPerView: 1,
-      spaceBetween: 30
-    },
-    // Cuando la pantalla es >= 1024px
-    1024: {
-      slidesPerView: 1,
-      spaceBetween: 40
+      mainSwiper.destroy();
+      mainSwiper = null;
     }
-  },
-    spaceBetween: 40,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    thumbs: {
-      swiper: thumbsSwiper,
-    },
-    
-  });
+    if (thumbsSwiper) {
+      thumbsSwiper.destroy();
+      thumbsSwiper = null;
+    }
+
+    // Verificar si los elementos hijos existen antes de inicializar
+    const mainSwiperEl = document.querySelector('.main .swiper-wrapper');
+    const thumbsSwiperEl = document.querySelector('.thumbs .swiper-wrapper');
+
+    if (mainSwiperEl && thumbsSwiperEl && mainSwiperEl.children.length > 0 && thumbsSwiperEl.children.length > 0) {
+      thumbsSwiper = new Swiper('.thumbs', {
+        spaceBetween: 10,
+        slidesPerView: 4,
+        freeMode: true,
+        watchSlidesProgress: true,
+        modules: [FreeMode],
+      });
+
+      mainSwiper = new Swiper('.main', {
+        modules: [Navigation, Thumbs],
+        loop: true,
+        spaceBetween: 40,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        thumbs: {
+          swiper: thumbsSwiper,
+        },
+      });
+    }
   }
 
-  // Configurar e inicializar Photoswipe
-const lightbox = new PhotoSwipeLightbox({
-  gallery: '#my-slider',
-  children: 'a',
-  pswpModule: () => import('photoswipe')
-});
-lightbox.init();
-
-   //Re-inicializar Swiper cada vez que se monta el componente
-   document.addEventListener('astro:after-swap', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     initializeSwiper();
+
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '#my-slider',
+      children: 'a',
+      pswpModule: () => import('photoswipe'),
+    });
     lightbox.init();
-  });
-  //Llamamos función principal
-  setTimeout(() => {
-    initializeSwiper();
-  });
 
+    // Re-inicializar Swiper después de la navegación de Astro
+    document.addEventListener('astro:after-swap', () => {
+      initializeSwiper();
+      lightbox.init();
+    });
+  });
 </script>
+
 
 <!-- Contenedor principal de Swiper -->
 <main>

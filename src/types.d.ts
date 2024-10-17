@@ -314,5 +314,6 @@ export interface Contact extends Omit<Headline, 'classes'>, Form, Widget {
   label?: string;
   icons?: string;
   options?: Array<{ value: string; label: string; image:string; }>;
+  medidas?: string[];
   
 }

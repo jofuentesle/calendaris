@@ -2,87 +2,145 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import ContactUs from '~/components/widgets/Contact.astro';
-import Features2 from '~/components/widgets/Features2.astro';
 
 const metadata = {
   title: 'Solicitar presupuesto calendarios',
 };
 
 // Obtener el parámetro 'tipo' de la URL
-const tipoCalendario = Astro.url.searchParams.get('tipo');
+const tipoCalendario = Astro.url.searchParams.get('tipo') || 'mesa-espiral';
 
 // Definir los valores por defecto para cada tipo de calendario
 const calendarOptions = {
   'mesa-espiral': {
     title: 'Solicita presupuesto para Calendarios de Mesa con Espiral',
     subtitle: 'Personaliza tus calendarios de mesa con espiral y promociona tu marca durante todo el año.',
-    medidas: ['15x15 cm', '20x20 cm', '25x25 cm'], // Opciones específicas
+    medidas: ['21x10cm', '15x15cm'],
   },
   'mesa-triangular': {
     title: 'Solicita presupuesto para Calendarios de Mesa Triangular',
     subtitle: 'Perfectos para oficinas y mesas de trabajo, personaliza tus calendarios triangulares.',
-    medidas: ['10x20 cm', '15x30 cm'] // Opciones específicas
+    medidas: ['A5', '25x15cm'],
   },
   'pared-espiral': {
     title: 'Solicita presupuesto para Calendarios de Pared con Espiral',
     subtitle: 'Promociona tu marca durante todo el año con nuestros calendarios de pared con espiral.',
-    medidas: ['30x40 cm', '40x60 cm', '50x70 cm'] // Opciones específicas
+    medidas: ['24x34cm', '34x24cm'],
   },
   'pared-revista': {
     title: 'Solicita presupuesto para Calendarios de Pared tipo Revista',
     subtitle: 'Nuestros calendarios tipo revista son perfectos para destacar tu marca de manera elegante.',
-    medidas: ['A3', 'A4', 'A5'] // Opciones específicas
+    medidas: ['34x48cm'],
   },
 };
 
-// Verificar si 'tipoCalendario' es null y asignar un valor por defecto
-const tipoCalendarioValido: string = tipoCalendario !== null ? tipoCalendario : 'mesa-espiral';
-
 // Obtener los valores correspondientes al tipo de calendario o usar los valores por defecto
-const { title, subtitle } = calendarOptions[tipoCalendarioValido];
-
+const { title, subtitle, medidas = [] } = calendarOptions[tipoCalendario];
 ---
 
 <Layout metadata={metadata}>
-  <!-- HeroText Widget ******************* -->
-
   <HeroText tagline="Contacta con nosotros" title={title} subtitle={subtitle} />
 
-   <!-- Usamos el componente Contact y añadimos los botones para tamaño y cantidad -->
-   <ContactUs
-   title={title}
-   subtitle={subtitle}
-   inputs={[
-     {
-       type: 'text',
-       name: 'name',
-       label: 'Nombre *',
-      
-     },
-     {
-       type: 'email',
-       name: 'email',
-       label: 'Email *',
-       
-     },
-     {
-       type: 'tel',
-       name: 'telefono',
-       label: 'Teléfono *',
-       
-     },
-     {
-       type: 'text',
-       name: 'empresa',
-       label: 'Empresa',
-       
-     },
-   ]}
-  
-   disclaimer={{
-     label: 'Acepto la política de privacidad.',
-   }}
-   description="Nuestro equipo se pondrá en contacto contigo en menos de 24 horas."
- />
+  <ContactUs
+    title={title}
+    subtitle={subtitle}
+    medidas={medidas}
+    inputs={[
+      {
+        type: 'text',
+        name: 'name',
+        label: 'Nombre *',
+      },
+      {
+        type: 'email',
+        name: 'email',
+        label: 'Email *',
+      },
+      {
+        type: 'tel',
+        name: 'telefono',
+        label: 'Teléfono *',
+      },
+      {
+        type: 'text',
+        name: 'empresa',
+        label: 'Empresa',
+      },
+    ]}
+    disclaimer={{
+      label: 'Acepto la política de privacidad.',
+    }}
+    description="Nuestro equipo se pondrá en contacto contigo en menos de 24 horas."
+  />
 
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Lógica para la selección de medidas
+      const sizeButtons = document.querySelectorAll('.size-btn');
+      const sizeInput = document.getElementById('size-input');
+      
+      if (sizeButtons && sizeInput) {
+        sizeButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const selectedSize = button.getAttribute('data-value');
+
+            // Desmarcar todos los botones previamente seleccionados
+            sizeButtons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+
+            // Asignar el valor seleccionado al input oculto
+            sizeInput.value = selectedSize || '';
+          });
+        });
+      }
+
+      // Lógica para la selección de cantidad
+      const quantityButtons = document.querySelectorAll('.quantity-btn');
+      const quantityInput = document.getElementById('quantity-input');
+
+      if (quantityButtons && quantityInput) {
+        quantityButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const selectedQuantity = button.getAttribute('data-value');
+
+            // Desmarcar todos los botones previamente seleccionados
+            quantityButtons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+
+            // Asignar el valor seleccionado al input oculto
+            quantityInput.value = selectedQuantity || '';
+          });
+        });
+      }
+
+      // Manejador de envío de formulario con Fetch
+      const form = document.getElementById('contact-form');
+      if (form) {
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();  // Prevenir comportamiento por defecto
+          
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData.entries());
+
+          try {
+            const response = await fetch('/api/send-email', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+              alert('Correo enviado correctamente.');
+            } else {
+              alert('Error al enviar el correo.');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('Error al enviar el correo.');
+          }
+        });
+      }
+    });
+  </script>
 </Layout>

@@ -12,18 +12,17 @@ sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 export async function post(req: IncomingMessage, res: ServerResponse) {
   let body = '';
 
-  // Obtener los datos del cuerpo de la solicitud
   req.on('data', chunk => {
     body += chunk.toString();
   });
 
   req.on('end', async () => {
-    const { name, email, telefono, empresa, tamaño, cantidad, tipoCalendario } = JSON.parse(body);
-
     try {
-      await sendgrid.send({
-        to: 'tu-email@empresa.com', // Cambia a tu dirección de correo electrónico
-        from: 'noreply@empresa.com', // Verifica que tu dominio está autorizado en SendGrid
+      const { name, email, telefono, empresa, tamaño, cantidad, tipoCalendario } = JSON.parse(body);
+
+      await sendGrid.send({
+        to: 'jfuentesleiva@gmail.com', // Cambia esto a tu dirección
+        from: 'noreply@reprodisseny.com',
         subject: `Solicitud de presupuesto de calendarios - ${tipoCalendario}`,
         html: `
           <p><strong>Nombre:</strong> ${name}</p>
@@ -35,14 +34,17 @@ export async function post(req: IncomingMessage, res: ServerResponse) {
         `,
       });
 
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({ message: 'Correo enviado correctamente.' }));
-    } catch (error) {
-      console.error('Error al enviar el correo:', error);
-      res.statusCode = 500;
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({ message: 'Error al enviar el correo.' }));
-    }
+     // Devolver respuesta JSON exitosa
+     res.statusCode = 200;
+     res.setHeader('Content-Type', 'application/json');
+     res.end(JSON.stringify({ message: 'Correo enviado correctamente.' }));
+
+   } catch (error) {
+     console.error('Error al enviar el correo:', error);
+     res.statusCode = 500;
+     res.setHeader('Content-Type', 'application/json');
+     res.end(JSON.stringify({ message: 'Error al enviar el correo.' }));
+   }
   });
 }
+
