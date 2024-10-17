@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "start2": "serve dist/",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -17,8 +18,7 @@
     "lint:eslint": "eslint ."
   },
   "dependencies": {
-    "@astrojs/netlify": "^5.5.3",
-    "@astrojs/node": "^8.3.3",
+    "@astrojs/node": "^8.3.4",
     "@astrojs/rss": "^4.0.7",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/vercel": "^7.8.1",

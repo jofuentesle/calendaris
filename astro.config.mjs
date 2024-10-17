@@ -1,8 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-
 import { defineConfig } from 'astro/config';
-
+import node from "@astrojs/node";
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
@@ -11,49 +10,29 @@ import icon from 'astro-icon';
 import compress from 'astro-compress';
 import astroIcon from 'astro-icon';
 
-import netlify from '@astrojs/netlify'; // Asegúrate de que esto está presente
-import vercel from "@astrojs/vercel/serverless";
-
 import astrowind from './vendor/integration';
-
-import {
-  readingTimeRemarkPlugin,
-  responsiveTablesRehypePlugin,
-  lazyImagesRehypePlugin,
-} from './src/utils/frontmatter.mjs';
-
-
-
-
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const hasExternalScripts = false;
-const whenExternalScripts = (items = []) =>
-  hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
-
+// Configuración optimizada para sitio estático en Plesk
 export default defineConfig({
-  output: 'server', // Esta es la clave para habilitar SSR
-  //adapter: netlify({
-    //edgeMiddleware: true
-  //}),
-  adapter: vercel(),
-  //adapter:  netlify({
-    //edgeMiddleware: true
-  //}),
-
-
+  output: 'hybrid',  // Salida estática optimizada para Plesk
+  site: 'https://tapasbattle.com/',
+  adapter: node({
+    mode: "standalone"
+  }),
+  server: {
+    host: true
+  },  // Asegúrate de reemplazar esto por tu dominio real
   integrations: [
     tailwind({
       applyBaseStyles: false,
     }),
     astroIcon({
       collections: {
-        // Habilitar la colección de íconos 'tabler'
         tabler: () => import('@iconify-json/tabler/icons.json'),
       },
     }),
-    sitemap(),
+    sitemap(), // Genera el sitemap automáticamente para SEO
     mdx(),
     icon({
       include: {
@@ -72,11 +51,9 @@ export default defineConfig({
       },
     }),
 
-    ...whenExternalScripts(() =>
-      partytown({
-        config: { forward: ['dataLayer.push'] },
-      })
-    ),
+    partytown({
+      config: { forward: ['dataLayer.push'] },
+    }),
 
     compress({
       CSS: true,
@@ -101,8 +78,8 @@ export default defineConfig({
   },
 
   markdown: {
-    remarkPlugins: [readingTimeRemarkPlugin],
-    rehypePlugins: [responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
+    remarkPlugins: [],
+    rehypePlugins: [],
   },
 
   vite: {
@@ -112,5 +89,4 @@ export default defineConfig({
       },
     },
   },
-
 });
