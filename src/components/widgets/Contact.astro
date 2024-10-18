@@ -5,6 +5,7 @@ import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import type { Contact as Props } from '~/types';
 
 const {
+  id = 'default-id',
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
@@ -13,8 +14,6 @@ const {
   disclaimer,
   button,
   description,
-
-  id,
   isDark = false,
   classes = {},
   bg = await Astro.slots.render('bg'),

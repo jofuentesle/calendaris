@@ -1,51 +1,154 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import sendGrid from '@sendgrid/mail';
-sendGrid.setApiKey( import.meta.env.SENDGRID_API_KEY );
+import FormContainer from '~/components/ui/Form.astro';
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 
+// Configuración de SendGrid
+sendGrid.setApiKey(import.meta.env.SENDGRID_API_KEY);
+
+
+const metadata = {
+  title: 'Solicitar presupuesto calendarios',
+};
+
+// Obtener el parámetro 'tipo' de la URL
+const tipoCalendario = Astro.url.searchParams.get('tipo');
+
+// Definir los valores por defecto para cada tipo de calendario
+const calendarOptions = {
+  'mesa-espiral': {
+    title: 'Solicita presupuesto para Calendarios de Mesa con Espiral',
+    subtitle: 'Personaliza tus calendarios de mesa con espiral y promociona tu marca durante todo el año.',
+    medidas: ['15x15 cm', '20x20 cm', '25x25 cm'], // Opciones específicas
+  },
+  'mesa-triangular': {
+    title: 'Solicita presupuesto para Calendarios de Mesa Triangular',
+    subtitle: 'Perfectos para oficinas y mesas de trabajo, personaliza tus calendarios triangulares.',
+    medidas: ['10x20 cm', '15x30 cm'] // Opciones específicas
+  },
+  'pared-espiral': {
+    title: 'Solicita presupuesto para Calendarios de Pared con Espiral',
+    subtitle: 'Promociona tu marca durante todo el año con nuestros calendarios de pared con espiral.',
+    medidas: ['30x40 cm', '40x60 cm', '50x70 cm'] // Opciones específicas
+  },
+  'pared-revista': {
+    title: 'Solicita presupuesto para Calendarios de Pared tipo Revista',
+    subtitle: 'Nuestros calendarios tipo revista son perfectos para destacar tu marca de manera elegante.',
+    medidas: ['A3', 'A4', 'A5'] // Opciones específicas
+  },
+};
+
+// Verificar si 'tipoCalendario' es null y asignar un valor por defecto
+const tipoCalendarioValido: string = tipoCalendario !== null ? tipoCalendario : 'mesa-espiral';
+
+// Obtener los valores correspondientes al tipo de calendario o usar los valores por defecto
+const { title, subtitle } = calendarOptions[tipoCalendarioValido];
+
+const inputs = [
+  { type: 'text', name: 'name', label: 'Nombre', required: true },
+  { type: 'email', name: 'email', label: 'Email', required: true },
+  { type: 'tel', name: 'telefono', label: 'Teléfono', required: true },
+  { type: 'text', name: 'empresa', label: 'Empresa', required: false },
+];
+
+const textarea = {
+  label: 'Mensaje',
+  name: 'message',
+  required: true,
+};
+
+const disclaimer = {
+  label: 'Al enviar este formulario, aceptas nuestra política de privacidad.',
+};
+
+const button = 'Enviar';
+
+const description = "Completa el formulario para solicitar un presupuesto para nuestros calendarios.";
+
+// Lógica del servidor para enviar el correo a través de SendGrid
 if (Astro.request.method === 'POST') {
-  try{
-    // Getting posted data from our contact form
+  try {
+    // Obtener los datos del formulario
     const data = await Astro.request.formData();
     const name = data.get('name');
     const email = data.get('email');
+    const telefono = data.get('telefono');
+    const empresa = data.get('empresa');
     const message = data.get('message');
 
-    // TODO: Do not forget to do validation and error handling over received data from your contact form.
-
-    // Sending email
+    // Configurar el mensaje para enviar a través de SendGrid
     const msg = {
-      to: 'jfuentesleiva@gmail.com', // Change to your recipient
-      from: 'noreply@reprodisseny.com', // Change to your verified sender
-      replyTo: {email:email, name:name},
-      subject: `Contact form submission from ${name}`,
-      text: message,
-    }
+      to: 'jfuentesleiva@gmail.com',
+      from: 'noreply@reprodisseny.com',
+      replyTo: { email, name },
+      subject: `Solicitud de presupuesto de ${name}`,
+      text: `Mensaje: ${message}\nTeléfono: ${telefono}\nEmpresa: ${empresa}`,
+    };
+
     await sendGrid.send(msg).then(() => {
-      console.log('Email sent')
+      console.log('Correo enviado correctamente');
     }).catch((error) => {
-      console.error(error)
+      console.error('Error al enviar el correo:', error);
     });
 
   } catch (error) {
-    console.error(error);
+    console.error('Error al procesar el formulario:', error);
   }
 }
 ---
-<Layout>
 
-    <form method="POST">
-      <div>
-        <input type="text" name="name" placeholder="Name" />
-      </div>
-      <div>
-        <input type="email" name="email" placeholder="Email" />
-      </div>
-      <div>
-        <textarea name="message" placeholder="Message"></textarea>
-      </div>
-      <div>
-        <button type="submit">Send</button>
-      </div>
-    </form>
+<Layout metadata={metadata}>
+  <WidgetWrapper containerClass="max-w-7xl mx-auto">
+    <Headline title="Solicitar presupuesto" subtitle="Conéctate con nosotros" />
+    
+    <!-- Contenedor del formulario -->
+    <div class="flex flex-col max-w-xl mx-auto rounded-lg backdrop-blur border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8 w-full">
+      <FormContainer
+        inputs={inputs}
+        textarea={textarea}
+        disclaimer={disclaimer}
+        button={button}
+        description={description}
+      />
+    </div>
+  </WidgetWrapper>
+
+  <!-- Script para interceptar el envío del formulario y manejarlo con Fetch sin redirección -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector('#contact-form');
+      
+      if (form instanceof HTMLFormElement) {
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault(); // Evita la redirección predeterminada
+
+          const formData = new FormData(form);
+          const jsonData = Object.fromEntries(formData.entries());
+
+          try {
+            const response = await fetch(window.location.href, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded', // Cambiado a form-urlencoded
+              },
+              body: new URLSearchParams(jsonData).toString(), // Convertir datos para URL encoding
+            });
+
+            if (response.ok) {
+              alert('Correo enviado correctamente');
+            } else {
+              alert('Error al enviar el correo');
+            }
+          } catch (error) {
+            console.error('Error en la solicitud:', error);
+            alert('Error en el envío del formulario');
+          }
+        });
+      } else {
+        console.error('El elemento no es un formulario HTML válido.');
+      }
+    });
+  </script>
 </Layout>

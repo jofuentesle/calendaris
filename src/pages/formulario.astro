@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/LandingLayout2.astro';
+import HeroText from '../components/widgets/HeroText.astro';
 import sendGrid from '@sendgrid/mail';
 
 sendGrid.setApiKey(import.meta.env.SENDGRID_API_KEY);
@@ -34,9 +35,15 @@ if (Astro.request.method === 'POST') {
   }
 }
 
----
+const metadata = {
+  title: 'Solicita precios para tus calendarios',
+};
 
-<Layout>
+---
+<Layout metadata={metadata}>
+  <!-- HeroText Widget ******************* -->
+
+  <HeroText tagline="Contact" title="Let's Connect!" />
   <section>
     <form method="POST">
       <div>
