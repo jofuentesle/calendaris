@@ -189,6 +189,7 @@ export interface Input {
   placeholder?: string;
   options?:{value: string, label:string,  image?: string }[];
   icons?: string;
+  required?: boolean;
 }
 
 export interface Textarea {
@@ -313,7 +314,19 @@ export interface Contact extends Omit<Headline, 'classes'>, Form, Widget {
   name?: string;
   label?: string;
   icons?: string;
-  options?: Array<{ value: string; label: string; image:string; }>;
+  buttonText?: string;
+  options?: Array<{ value: string; label: string; image: string }>;
   medidas?: string[];
-  
+  method?:string;
+  requiredFields: {
+    modeloCalendario: string;
+    medidas: string[];
+    cantidad: string;
+    name: string;
+    telefono: string;
+    email: string;
+  };
+  optionalFields?: {
+    empresa?: string;
+  };
 }

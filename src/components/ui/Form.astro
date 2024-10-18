@@ -11,7 +11,7 @@ const {
       } = Astro.props;
 ---
 
-<form id="dynamicForm" method="POST" action="../../pages/api/send-quotes">
+<form id="dynamicForm" method="POST" action="../../pages/api/send-emails">
   {inputs && inputs.map(({ type = 'text', name,  label = '', options = [], icons = null }) => (
     <div class="mb-6 content-between">
       <label for={name} class="block text-sm font-medium">{label}</label>
