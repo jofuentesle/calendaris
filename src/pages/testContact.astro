@@ -8,7 +8,6 @@ import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 // Configuración de SendGrid
 sendGrid.setApiKey(import.meta.env.SENDGRID_API_KEY);
 
-
 const metadata = {
   title: 'Solicitar presupuesto calendarios',
 };
@@ -21,36 +20,64 @@ const calendarOptions = {
   'mesa-espiral': {
     title: 'Solicita presupuesto para Calendarios de Mesa con Espiral',
     subtitle: 'Personaliza tus calendarios de mesa con espiral y promociona tu marca durante todo el año.',
-    medidas: ['15x15 cm', '20x20 cm', '25x25 cm'], // Opciones específicas
+    medidas: ['15x15 cm', '20x20 cm', '25x25 cm'],
   },
   'mesa-triangular': {
     title: 'Solicita presupuesto para Calendarios de Mesa Triangular',
     subtitle: 'Perfectos para oficinas y mesas de trabajo, personaliza tus calendarios triangulares.',
-    medidas: ['10x20 cm', '15x30 cm'] // Opciones específicas
+    medidas: ['10x20 cm', '15x30 cm'],
   },
   'pared-espiral': {
     title: 'Solicita presupuesto para Calendarios de Pared con Espiral',
     subtitle: 'Promociona tu marca durante todo el año con nuestros calendarios de pared con espiral.',
-    medidas: ['30x40 cm', '40x60 cm', '50x70 cm'] // Opciones específicas
+    medidas: ['30x40 cm', '40x60 cm', '50x70 cm'],
   },
   'pared-revista': {
     title: 'Solicita presupuesto para Calendarios de Pared tipo Revista',
     subtitle: 'Nuestros calendarios tipo revista son perfectos para destacar tu marca de manera elegante.',
-    medidas: ['A3', 'A4', 'A5'] // Opciones específicas
+    medidas: ['A3', 'A4', 'A5'],
   },
 };
 
-// Verificar si 'tipoCalendario' es null y asignar un valor por defecto
-const tipoCalendarioValido: string = tipoCalendario !== null ? tipoCalendario : 'mesa-espiral';
-
-// Obtener los valores correspondientes al tipo de calendario o usar los valores por defecto
-const { title, subtitle } = calendarOptions[tipoCalendarioValido];
+const tipoCalendarioValido = tipoCalendario !== null ? tipoCalendario : 'mesa-espiral';
+const { medidas: medidasDefault } = calendarOptions[tipoCalendarioValido];
 
 const inputs = [
   { type: 'text', name: 'name', label: 'Nombre', required: true },
   { type: 'email', name: 'email', label: 'Email', required: true },
   { type: 'tel', name: 'telefono', label: 'Teléfono', required: true },
   { type: 'text', name: 'empresa', label: 'Empresa', required: false },
+  {
+    type: 'select', 
+    name: 'tipo', 
+    label: 'Tipo Calendario', 
+    required: true,
+    options: [
+      { value: 'mesa-espiral', label: 'Mesa Espiral' },
+      { value: 'mesa-triangular', label: 'Mesa Triangular' },
+      { value: 'pared-espiral', label: 'Pared Espiral' },
+      { value: 'pared-revista', label: 'Pared Revista' },
+    ],
+  },
+  {
+    type: 'select', 
+    name: 'medida', 
+    label: 'Medida Calendario', 
+    required: true,
+    options: medidasDefault.map(medida => ({ value: medida, label: medida })),
+  },
+  {
+    type: 'select', 
+    name: 'cantidad', 
+    label: 'Cantidad', 
+    required: true,
+    options: [
+      { value: '100', label: '100' },
+      { value: '200', label: '200' },
+      { value: '500', label: '500' },
+      { value: '1000', label: '1000' },
+    ],
+  },
 ];
 
 const textarea = {
@@ -70,21 +97,31 @@ const description = "Completa el formulario para solicitar un presupuesto para n
 // Lógica del servidor para enviar el correo a través de SendGrid
 if (Astro.request.method === 'POST') {
   try {
-    // Obtener los datos del formulario
     const data = await Astro.request.formData();
     const name = data.get('name');
     const email = data.get('email');
     const telefono = data.get('telefono');
-    const empresa = data.get('empresa');
-    const message = data.get('message');
+    const empresa = data.get('empresa') || 'No proporcionado';
+    const tipo = data.get('tipo');
+    const medida = data.get('medida');
+    const cantidad = data.get('cantidad');
 
-    // Configurar el mensaje para enviar a través de SendGrid
+    const messageContent = `
+      Nombre: ${name}
+      Email: ${email}
+      Teléfono: ${telefono}
+      Empresa: ${empresa}
+      Tipo de Calendario: ${tipo}
+      Medida: ${medida}
+      Cantidad: ${cantidad}
+    `;
+
     const msg = {
       to: 'jfuentesleiva@gmail.com',
       from: 'noreply@reprodisseny.com',
       replyTo: { email, name },
       subject: `Solicitud de presupuesto de ${name}`,
-      text: `Mensaje: ${message}\nTeléfono: ${telefono}\nEmpresa: ${empresa}`,
+      text: messageContent,
     };
 
     await sendGrid.send(msg).then(() => {
@@ -112,43 +149,79 @@ if (Astro.request.method === 'POST') {
         button={button}
         description={description}
       />
+      <div id="form-feedback" class="hidden mt-4 p-4 text-white bg-red-500 rounded"></div> <!-- Contenedor para mensajes al final del formulario -->
     </div>
   </WidgetWrapper>
 
-  <!-- Script para interceptar el envío del formulario y manejarlo con Fetch sin redirección -->
+  <!-- Script para validar email, teléfono y mostrar feedback -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.querySelector('#contact-form');
-      
-      if (form instanceof HTMLFormElement) {
-        form.addEventListener('submit', async (event) => {
-          event.preventDefault(); // Evita la redirección predeterminada
+      const feedback = document.querySelector('#form-feedback');
 
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        const email = form.querySelector('input[name="email"]');
+        const telefono = form.querySelector('input[name="telefono"]');
+        let valid = true;
+        let message = '';
+
+        // Validar email
+        if (!email.value.includes('@')) {
+          message += 'Por favor, introduce un email válido.<br>';
+          email.classList.add('border-red-500');
+          valid = false;
+        } else {
+          email.classList.remove('border-red-500');
+        }
+
+        // Validar teléfono (sólo números y al menos 9 dígitos)
+        if (!/^\d{9,}$/.test(telefono.value)) {
+          message += 'Por favor, introduce un número de teléfono válido.<br>';
+          telefono.classList.add('border-red-500');
+          valid = false;
+        } else {
+          telefono.classList.remove('border-red-500');
+        }
+
+        if (valid) {
+          feedback.classList.add('hidden');
           const formData = new FormData(form);
           const jsonData = Object.fromEntries(formData.entries());
 
-          try {
-            const response = await fetch(window.location.href, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded', // Cambiado a form-urlencoded
-              },
-              body: new URLSearchParams(jsonData).toString(), // Convertir datos para URL encoding
-            });
-
+          fetch(window.location.href, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams(jsonData).toString(),
+          })
+          .then(response => {
             if (response.ok) {
-              alert('Correo enviado correctamente');
+              feedback.classList.remove('bg-red-500');
+              feedback.classList.add('bg-green-500');
+              feedback.innerHTML = 'Correo enviado correctamente.';
+              feedback.classList.remove('hidden');
+              form.reset(); // Restablecer formulario
             } else {
-              alert('Error al enviar el correo');
+              feedback.innerHTML = 'Error al enviar el correo.';
+              feedback.classList.add('bg-red-500');
+              feedback.classList.remove('hidden');
             }
-          } catch (error) {
+          })
+          .catch(error => {
             console.error('Error en la solicitud:', error);
-            alert('Error en el envío del formulario');
-          }
-        });
-      } else {
-        console.error('El elemento no es un formulario HTML válido.');
-      }
+            feedback.innerHTML = 'Error en el envío del formulario.';
+            feedback.classList.add('bg-red-500');
+            feedback.classList.remove('hidden');
+          });
+        } else {
+          feedback.innerHTML = message;
+          feedback.classList.add('bg-red-500');
+          feedback.classList.remove('hidden');
+        }
+      });
     });
   </script>
 </Layout>
