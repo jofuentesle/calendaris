@@ -139,7 +139,7 @@ if (Astro.request.method === 'POST') {
 
 <Layout metadata={metadata}>
   <WidgetWrapper containerClass="max-w-7xl mx-auto">
-    <Headline title="Solicitar presupuesto" subtitle="Conéctate con nosotros" />
+    <Headline title="Solicitar presupuesto para tus Calendarios Personalizados" subtitle="Conéctate con nosotros para personalizar el calendario perfecto y promocionar tu marca todo el año." />
     
     <!-- Contenedor del formulario -->
     <div class="flex flex-col max-w-xl mx-auto rounded-lg backdrop-blur border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8 w-full">
@@ -158,8 +158,8 @@ if (Astro.request.method === 'POST') {
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.querySelector('#contact-form');
-      const tipoSelect = form.querySelector('select[name="tipo"]');
-      const medidaSelect = form.querySelector('select[name="medida"]');
+      const tipoSelect = form?.querySelector('select[name="tipo"]');
+      const medidaSelect = form?.querySelector('select[name="medida"]');
       const feedback = document.querySelector('#form-feedback');
 
       const medidas = {
@@ -200,7 +200,8 @@ if (Astro.request.method === 'POST') {
             feedback.classList.add('bg-green-500');
             feedback.innerHTML = 'Correo enviado correctamente.';
             feedback.classList.remove('hidden');
-            form.reset(); // Restablecer formulario
+            form.reset();
+            redirectToHome()  // Restablecer formulario
           } else {
             feedback.innerHTML = 'Error al enviar el correo.';
             feedback.classList.add('bg-red-500');
@@ -214,5 +215,12 @@ if (Astro.request.method === 'POST') {
         }
       });
     });
+
+    function redirectToHome() {
+      setTimeout(() => {
+      window.location.href = '/'; // Redirigir a la página de inicio (cambiar si es necesario)
+      }, 3000); // 3000 ms = 3 segundos
+    }
+
   </script>
 </Layout>
