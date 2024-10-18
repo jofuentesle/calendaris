@@ -20,28 +20,29 @@ const calendarOptions = {
   'mesa-espiral': {
     title: 'Solicita presupuesto para Calendarios de Mesa con Espiral',
     subtitle: 'Personaliza tus calendarios de mesa con espiral y promociona tu marca durante todo el año.',
-    medidas: ['15x15 cm', '20x20 cm', '25x25 cm'],
+    medidas: ['15x15 cm', '21x10 cm', 'Din A5'],
   },
   'mesa-triangular': {
     title: 'Solicita presupuesto para Calendarios de Mesa Triangular',
     subtitle: 'Perfectos para oficinas y mesas de trabajo, personaliza tus calendarios triangulares.',
-    medidas: ['10x20 cm', '15x30 cm'],
+    medidas: ['15x15 cm', '21x10 cm', 'Din A5'],
   },
   'pared-espiral': {
     title: 'Solicita presupuesto para Calendarios de Pared con Espiral',
     subtitle: 'Promociona tu marca durante todo el año con nuestros calendarios de pared con espiral.',
-    medidas: ['30x40 cm', '40x60 cm', '50x70 cm'],
+    medidas: ['38x48 cm'],
   },
   'pared-revista': {
     title: 'Solicita presupuesto para Calendarios de Pared tipo Revista',
     subtitle: 'Nuestros calendarios tipo revista son perfectos para destacar tu marca de manera elegante.',
-    medidas: ['A3', 'A4', 'A5'],
+    medidas: ['34 x 24 cm (cerrado)'],
   },
 };
 
 const tipoCalendarioValido = tipoCalendario !== null ? tipoCalendario : 'mesa-espiral';
 const { medidas: medidasDefault } = calendarOptions[tipoCalendarioValido];
 
+// Entradas del formulario
 const inputs = [
   { type: 'text', name: 'name', label: 'Nombre', required: true },
   { type: 'email', name: 'email', label: 'Email', required: true },
@@ -102,9 +103,9 @@ if (Astro.request.method === 'POST') {
     const email = data.get('email');
     const telefono = data.get('telefono');
     const empresa = data.get('empresa') || 'No proporcionado';
-    const tipo = data.get('tipo');
-    const medida = data.get('medida');
-    const cantidad = data.get('cantidad');
+    const tipo = data.get('tipo') || 'No seleccionado';
+    const medida = data.get('medida') || 'No seleccionado';
+    const cantidad = data.get('cantidad') || 'No seleccionado';
 
     const messageContent = `
       Nombre: ${name}
@@ -153,71 +154,61 @@ if (Astro.request.method === 'POST') {
     </div>
   </WidgetWrapper>
 
-  <!-- Script para validar email, teléfono y mostrar feedback -->
+  <!-- Script para actualizar dinámicamente las medidas -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.querySelector('#contact-form');
+      const tipoSelect = form.querySelector('select[name="tipo"]');
+      const medidaSelect = form.querySelector('select[name="medida"]');
       const feedback = document.querySelector('#form-feedback');
 
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        
-        const email = form.querySelector('input[name="email"]');
-        const telefono = form.querySelector('input[name="telefono"]');
-        let valid = true;
-        let message = '';
+      const medidas = {
+        'mesa-espiral': ['15x15 cm', '21x10 cm', 'Din A5'],    
+        'mesa-triangular': ['15x15 cm', '21x10 cm', 'Din A5'],
+        'pared-espiral': ['38x48 cm'],
+        'pared-revista': ['34 x 24 cm (cerrado)']
+      };
 
-        // Validar email
-        if (!email.value.includes('@')) {
-          message += 'Por favor, introduce un email válido.<br>';
-          email.classList.add('border-red-500');
-          valid = false;
-        } else {
-          email.classList.remove('border-red-500');
-        }
+      tipoSelect.addEventListener('change', (event) => {
+        const selectedTipo = event.target.value;
+        medidaSelect.innerHTML = '';
+        medidas[selectedTipo].forEach(medida => {
+          const option = document.createElement('option');
+          option.value = medida;
+          option.textContent = medida;
+          medidaSelect.appendChild(option);
+        });
+      });
 
-        // Validar teléfono (sólo números y al menos 9 dígitos)
-        if (!/^\d{9,}$/.test(telefono.value)) {
-          message += 'Por favor, introduce un número de teléfono válido.<br>';
-          telefono.classList.add('border-red-500');
-          valid = false;
-        } else {
-          telefono.classList.remove('border-red-500');
-        }
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Evita la redirección predeterminada
 
-        if (valid) {
-          feedback.classList.add('hidden');
-          const formData = new FormData(form);
-          const jsonData = Object.fromEntries(formData.entries());
+        const formData = new FormData(form);
+        const jsonData = Object.fromEntries(formData.entries());
 
-          fetch(window.location.href, {
+        try {
+          const response = await fetch(window.location.href, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: new URLSearchParams(jsonData).toString(),
-          })
-          .then(response => {
-            if (response.ok) {
-              feedback.classList.remove('bg-red-500');
-              feedback.classList.add('bg-green-500');
-              feedback.innerHTML = 'Correo enviado correctamente.';
-              feedback.classList.remove('hidden');
-              form.reset(); // Restablecer formulario
-            } else {
-              feedback.innerHTML = 'Error al enviar el correo.';
-              feedback.classList.add('bg-red-500');
-              feedback.classList.remove('hidden');
-            }
-          })
-          .catch(error => {
-            console.error('Error en la solicitud:', error);
-            feedback.innerHTML = 'Error en el envío del formulario.';
+          });
+
+          if (response.ok) {
+            feedback.classList.remove('bg-red-500');
+            feedback.classList.add('bg-green-500');
+            feedback.innerHTML = 'Correo enviado correctamente.';
+            feedback.classList.remove('hidden');
+            form.reset(); // Restablecer formulario
+          } else {
+            feedback.innerHTML = 'Error al enviar el correo.';
             feedback.classList.add('bg-red-500');
             feedback.classList.remove('hidden');
-          });
-        } else {
-          feedback.innerHTML = message;
+          }
+        } catch (error) {
+          console.error('Error en la solicitud:', error);
+          feedback.innerHTML = 'Error en el envío del formulario.';
           feedback.classList.add('bg-red-500');
           feedback.classList.remove('hidden');
         }

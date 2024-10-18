@@ -8,19 +8,19 @@ export const headerData = {
       links: [
         {
           text: 'Calendario para mesa triangular',
-          href: getPermalink('/testContact'),
+          href: getPermalink('/solicitud-presupuesto'),
         },
         {
           text: 'Calendario para mesa con espiral',
-          href: getPermalink('/testContact'),
+          href: getPermalink('/solicitud-presupuesto'),
         },
         {
           text: 'Calendario para pared tipo revista',
-          href: getPermalink('/calendario-pared-revista'),
+          href: getPermalink('/solicitud-presupuesto'),
         },
         {
           text: 'Calendario para pared con espiral',
-          href: getPermalink('/calendario-pared-espiral'),
+          href: getPermalink('/solicitud-presupuesto'),
         },
         
       ],
