@@ -1,60 +1,125 @@
 ---
+import type { Form as Props } from '~/types';
+import Button from '~/components/ui/Button.astro';
+
 const { 
-  id = 'contact-form', 
-  title, 
-  subtitle, 
-  inputs, 
-  disclaimer, 
-  button, 
-  description 
-} = Astro.props;
+        inputs = [], 
+        textarea, 
+        disclaimer, 
+        button = 'Enviar', 
+        description = '' 
+      } = Astro.props;
 ---
 
-<form id={id} method="POST" class="space-y-6">
-  <h2 class="text-2xl font-bold">{title}</h2>
-  <p class="text-sm">{subtitle}</p>
-
-  {/* Renderizado de los inputs */}
-  {inputs.map(input => (
-    <div class="mb-4">
-      <label for={input.name} class="block text-sm font-medium text-gray-700">
-        {input.label}
-      </label>
-      {input.type === 'select' ? (
-        <select id={input.name} name={input.name} class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-          {input.options.map(option => (
+<form id="conent" method="POST" action="../../pages/api/send-emails">
+  {inputs && inputs.map(({ type = 'text', name,  label = '', options = [], icons = null }) => (
+    <div class="mb-6 content-between">
+      <label for={name} class="block text-sm font-medium">{label}</label>
+      {type === 'select' ? (
+        <select name={name} id={name} required class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200">
+          <option value="" disabled selected>Selecciona una opción</option>
+          {options.map(option => (
             <option value={option.value}>{option.label}</option>
           ))}
         </select>
+      ) : type ==='radio' ? (
+
+          // Lógica para Radio Buttons
+          options.map(option => (
+          <div class="inline-flex items-center mb-2">
+            <input 
+              type="radio" 
+              id={option.value} 
+              name={name} 
+              value={option.value} 
+              class="hidden" 
+              required
+            />
+            <label for={option.value} class="cursor-pointer">
+              <img 
+                src={option.image}
+                alt={option.label} 
+                class="h-10 w-10 rounded-full border-2 border-gray-300"
+              />
+              <span class="text-sm font-medium text-gray-700">{option.label}</span>
+            </label>
+          </div>
+        ))
       ) : (
+
+        <div class="relative">
+          {icons && (
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {icons}
+              </svg>
+            </span>
+          )}
         <input
-          type={input.type}
-          name={input.name}
-          id={input.name}
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required={input.required}
+          type={type}
+          name={name}
+          id={name}
+          required
+          class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200"
+          placeholder={`Ingrese su ${label.toLowerCase()}`}
         />
+        </div>
       )}
     </div>
   ))}
+ 
+  {
+    textarea && (
+      <div>
+        <label for="textarea" class="block text-sm font-medium">
+          {textarea.label}
+        </label>
+        <textarea
+          id="textarea"
+          name={textarea.name ? textarea.name : 'message'}
+          rows={textarea.rows ? textarea.rows : 4}
+          placeholder={textarea.placeholder}
+          class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+        />
+      </div>
+    )
+  }
 
-  {/* Renderizado del disclaimer */}
-  {disclaimer && (
-    <div class="flex items-start">
-      <input id="disclaimer" name="disclaimer" type="checkbox" required class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" />
-      <label for="disclaimer" class="ml-2 block text-sm text-gray-900">
-        {disclaimer.label}
-      </label>
-    </div>
-  )}
+  {
+    disclaimer && (
+      <div class="mt-3 flex items-start">
+        <div class="flex mt-0.5">
+          <input
+            id="disclaimer"
+            name="disclaimer"
+            type="checkbox"
+            class="cursor-pointer mt-1 py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+          />
+        </div>
+        <div class="ml-3">
+          <label for="disclaimer" class="cursor-pointer select-none text-sm text-gray-600 dark:text-gray-400">
+            {disclaimer.label}
+          </label>
+        </div>
+      </div>
+    )
+  }
 
-  {/* Botón de envío */}
-  <div>
-    <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      {button || 'Enviar'}
-    </button>
-  </div>
+  {
+    button && (
+      <div class="mt-10 grid">
+        <Button variant="primary" type="submit">
+          {button}
+        </Button>
+      </div>
+    )
+  }
 
-  {/* Descripción final */}
-  {description && <p class="mt-2 text-sm text-gray-500">{description}</p>}
+  {
+    description && (
+      <div class="mt-3 text-center">
+        <p class="text-sm text-gray-600 dark:text-gray-400">{description}</p>
+      </div>
+    )
+  }
 </form>
